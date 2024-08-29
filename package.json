@@ -5,7 +5,8 @@
     "description": "Se trata de una API de destinada a gestión de pedidos para la parte\r de un almacén de una empresa, su utilidad es que los empleados puedan\r ver los pedidos pendientes, con diferentes estados:",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "dev": "nodemon app.js",
+        "initdb": "node ./src/db/initDb.js"
     },
     "keywords": [],
     "author": "",
