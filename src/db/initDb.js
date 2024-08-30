@@ -8,8 +8,8 @@ const DROP_TABLES =
 const USER_TABLE_SQL = `
     CREATE TABLE IF NOT EXISTS users(
         id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-        password VARCHAR(100) NOT NULL,
         username VARCHAR(30) NOT NULL,
+        password VARCHAR(100) NOT NULL,
         role ENUM ('administrador', 'empleado', 'cliente', 'comercial') DEFAULT 'cliente',
         createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
         modifiedAt DATETIME DEFAULT CURRENT_TIMESTAMP
@@ -68,6 +68,13 @@ const INVOICE_LINES_TABLE_SQL = `
     )
         `;
 
+const ADMINISTRATOR_SQL = `
+    INSERT INTO users (
+        username, password, role)
+        VALUES (?, ?, 'administrador'); 
+    )
+        `;
+
 const main = async () => {
     try {
         const pool = await getPool();
@@ -88,6 +95,14 @@ const main = async () => {
         console.log('Creando tabla de líneas de facturación...');
         await pool.query(INVOICE_LINES_TABLE_SQL);
         console.log('Tablas creadas');
+
+        //creamos el primer usuario administrador
+        console.log('Creando administrador...');
+        await pool.query(ADMINISTRATOR_SQL, [
+            process.env.ADMIN_USER_USERNAME,
+            process.env.ADMIN_USER_PASSWORD,
+        ]);
+        console.log('Administrador creado');
 
         process.exit(0);
     } catch (err) {
