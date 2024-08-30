@@ -10,10 +10,7 @@ import morgan from 'morgan';
 const { PORT } = process.env;
 
 //importamos las rutas
-import userRouter from './src/routes/userRoutes.js';
-
-//importamos la funcion controladora de errores
-import generateError from './src/utils/generateError.js';
+import { userRouter, warehoseRouter } from './src/routes/index.js';
 
 //creamos el servidor
 const app = express();
@@ -29,9 +26,10 @@ app.use(morgan('dev'));
 
 //middleware para indicar las rutas
 app.use(userRouter);
-//app.use(warehoseRouter);
+app.use(warehoseRouter);
 
 //middleware de manejo de errores
+// eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
     console.error(err);
 
@@ -41,6 +39,7 @@ app.use((err, req, res, next) => {
     });
 });
 //middleware de ruta no encontrada
+// eslint-disable-next-line no-unused-vars
 app.use((req, res, next) => {
     res.status(404).send({
         status: 'Error',
