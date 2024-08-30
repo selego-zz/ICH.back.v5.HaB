@@ -46,8 +46,8 @@ O cambiar los permisos de los usuarios
 | Campo      | Tipo         | Descripción                                  |
 | ---------- | ------------ | -------------------------------------------- |
 | id         | INT UNSIGNED | Identificador único del usuario              |
-| password   | VARCHAR(100) | Contraseña del usuario (hash)                |
 | username   | VARCHAR(30)  | Nombre de usuario del usuario                |
+| password   | VARCHAR(100) | Contraseña del usuario (hash)                |
 | role       | ENUM         | Rol("admin", "empleado", comercial, cliente) |
 | createdAt  | DATETIME     | Fecha y hora de creación del usuario         |
 | modifiedAt | DATETIME     | Fecha y hora de la última modificación       |
@@ -107,9 +107,12 @@ O cambiar los permisos de los usuarios
 
 ✅
 
--   **POST** - [`/api/users/register`] - Crea un nuevo usuario, Solo puede hacerlo el administrador
+-   **POST** - [`/api/users/register`] - Crea un nuevo usuario, -requiere token de administrador.
 -   **POST** - [`/api/users/login`] - Logea a un usuario retornando un token.
 -   **GET** - [`/api/users`] - Retorna información privada del usuario con el id del token.
+-   **GET** - [`/api/users/all`] - Retorna información de todos los usuarios -requiere token de administrador.
+-   **DELETE** - [`/api/users`] - Borra el usuario con el id del token.
+-   **DELETE** - [`/api/users/:iduser`] - Borra el usuario con el iduser -requiere token de administrador.
 
 ## Endpoints de almacen
 
