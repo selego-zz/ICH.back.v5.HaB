@@ -1,11 +1,11 @@
 const getUserController = (req, res, next) => {
     try {
+        //los datos están en req.user
         res.send({
             status: 'ok',
-            message: 'TODO: getUserController',
+            data: req.user,
         });
     } catch (err) {
-        console.error(err);
         next(err);
     }
 };
