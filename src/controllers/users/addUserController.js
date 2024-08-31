@@ -1,5 +1,7 @@
 const addUserController = (req, res, next) => {
     try {
+        console.log('addUserController');
+
         res.send({
             status: 'ok',
             message: 'TODO: addUserController',
