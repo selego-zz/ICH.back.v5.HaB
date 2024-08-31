@@ -30,7 +30,10 @@ const authAdminController = (req, res, next) => {
             next();
         } catch (err) {
             console.error(err);
-            generateError('token inválido', 401);
+            generateError(
+                'No tiene permisos necesarios para realizar esa acción',
+                401,
+            );
         }
     } catch (err) {
         next(err);

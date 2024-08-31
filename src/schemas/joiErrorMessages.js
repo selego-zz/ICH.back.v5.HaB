@@ -1,5 +1,7 @@
 const joiErrorMessages = {
     'any.required': 'El campo "{#key}" es requerido',
+    'any.only':
+        'El rol debe ser uno de los siguientes valores: administrador, empleado, cliente, comercial.',
     'string.base': 'El valor de "{#key}" debe ser una cadena',
     'string.empty': 'El campo "{#key}" no debe estar vacío',
     'number.base': 'El valor de "{#key}" debe ser un número',

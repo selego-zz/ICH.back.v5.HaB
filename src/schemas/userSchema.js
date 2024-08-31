@@ -13,9 +13,13 @@ import joiErrorMessages from './joiErrorMessages.js';
  */
 
 const userSchema = Joi.object().keys({
-    username: Joi.string().required().max(30).messages(joiErrorMessages),
-    password: Joi.string().required().max(100).messages(joiErrorMessages),
-    email: Joi.string().email().max(100).messages(joiErrorMessages),
+    username: Joi.string().max(30).required().messages(joiErrorMessages),
+    password: Joi.string().max(100).required().messages(joiErrorMessages),
+    email: Joi.string().email().max(100).optional().messages(joiErrorMessages),
+    role: Joi.string()
+        .valid('administrador', 'empleado', 'cliente', 'comercial')
+        .default('cliente')
+        .messages(joiErrorMessages),
 });
 
 export default userSchema;
