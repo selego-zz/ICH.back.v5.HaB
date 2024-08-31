@@ -1,8 +1,13 @@
-const getAllUsersController = (req, res, next) => {
+//importamos dependencias
+import { getAllUsersModel } from '../../models/index.js';
+
+const getAllUsersController = async (req, res, next) => {
     try {
+        const data = await getAllUsersModel();
+
         res.send({
             status: 'ok',
-            message: 'TODO: getAllUsersController',
+            data,
         });
     } catch (err) {
         console.error(err);
