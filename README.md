@@ -112,8 +112,8 @@ O cambiar los permisos de los usuarios
 -   **POST** - [`/api/users/login`] - Logea a un usuario retornando un token. ✅
 -   **GET** - [`/api/users`] - Retorna información privada del usuario con el id del token. ✅
 -   **GET** - [`/api/users/all`] - Retorna información de todos los usuarios -requiere token de administrador. ✅
--   **DELETE** - [`/api/users`] - Borra el usuario con el id del token.
--   **DELETE** - [`/api/users/:iduser`] - Borra el usuario con el iduser -requiere token de administrador.
+-   **DELETE** - [`/api/users`] - Borra el usuario con el id del token. ✅
+-   **DELETE** - [`/api/users/:iduser`] - Borra el usuario con el iduser -requiere token de administrador. ✅
 
 ## Endpoints de almacen
 
