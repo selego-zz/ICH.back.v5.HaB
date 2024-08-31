@@ -1,7 +1,7 @@
 //importamos las dependencias
 import bcrypt from 'bcrypt';
-import getPool from '../db/getPool.js';
-import generateError from '../utils/generateError.js';
+import { getPool } from '../db/index.js';
+import { generateError } from '../utils/index.js';
 /**
  *     INSERT INTO users
  *         (username, password, email, role)
@@ -15,10 +15,6 @@ const insertUserModel = async (username, password, email, role) => {
         const pool = await getPool();
 
         //comprobamos que no exista ni el usuario, ni el email (caso de que suministren email)
-
-        const args = [username, await bcrypt.hash(password, 10)];
-        let SQL = `INSERT INTO users (username, password`;
-
         let [resultado] = await pool.query(
             'SELECT id FROM users WHERE username = ?',
             [username],
@@ -29,6 +25,9 @@ const insertUserModel = async (username, password, email, role) => {
                 'Ya existe un usuario con ese nombre de usuario',
                 409,
             );
+
+        const args = [username, await bcrypt.hash(password, 10)];
+        let SQL = `INSERT INTO users (username, password`;
 
         if (email) {
             [resultado] = await pool.query(

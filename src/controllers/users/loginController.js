@@ -3,10 +3,10 @@
 import bcrypt from 'bcrypt';
 // para gemerar el web token
 import jwt from 'jsonwebtoken';
-import validateSchema from '../../utils/validateSchema.js';
-import userSchema from '../../schemas/userSchema.js';
-import getPool from '../../db/getPool.js';
-import generateError from '../../utils/generateError.js';
+
+import { validateSchema, generateError } from '../../utils/index.js';
+import { userSchema } from '../../schemas/index.js';
+import { getUserByUsernameModel } from '../../models/index.js';
 
 //OJO: TOKEN_EXPIRATION está en .env
 const loginController = async (req, res, next) => {
@@ -16,26 +16,33 @@ const loginController = async (req, res, next) => {
         //validamos los datos del usuario con joi
         await validateSchema(userSchema, user);
 
-        const pool = await getPool();
-
         //si ha pasado la validación, tenemos como mínimo un usuario y una contraseña
-        const [[{ password }]] = await pool.query(
-            'SELECT password FROM users WHERE username = ?',
-            [user.username],
-        );
-        let validPass;
+        const dbUser = await getUserByUsernameModel(user.username);
 
-        if (password.length > 0)
-            validPass = await bcrypt.compare(password, user.password);
+        let validPass;
+        console.log(dbUser);
+
+        if (dbUser)
+            validPass = await bcrypt.compare(user.password, dbUser.password);
 
         if (!validPass) generateError('Usuario o contraseña incorrectos', 401);
 
+        //en este punto el usuario está logueado, con datos válidos.
+        //creamos el token
+        const tokenInfo = {
+            id: dbUser.id,
+            role: dbUser.role,
+            email: dbUser.email,
+        };
+        const token = jwt.sign(tokenInfo, process.env.SECRET, {
+            expiresIn: process.env.TOKEN_EXPIRATION,
+        });
+
         res.send({
             status: 'ok',
-            message: 'TODO: loginController',
+            data: token,
         });
     } catch (err) {
-        console.error(err);
         next(err);
     }
 };

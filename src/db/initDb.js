@@ -1,7 +1,7 @@
 import 'dotenv/config';
 
 import getPool from './getPool.js';
-import insertUserModel from '../models/insertUserModel.js';
+import insertUserModel from '../models/index.js';
 
 const DROP_TABLES =
     'DROP TABLE IF EXISTS invoice_lines, invoice_headers, users';
