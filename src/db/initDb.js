@@ -1,6 +1,7 @@
 import 'dotenv/config';
 
 import getPool from './getPool.js';
+import insertUserModel from '../models/insertUserModel.js';
 
 const DROP_TABLES =
     'DROP TABLE IF EXISTS invoice_lines, invoice_headers, users';
@@ -8,8 +9,9 @@ const DROP_TABLES =
 const USER_TABLE_SQL = `
     CREATE TABLE IF NOT EXISTS users(
         id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-        username VARCHAR(30) NOT NULL,
+        username VARCHAR(30) UNIQUE NOT NULL,
         password VARCHAR(100) NOT NULL,
+        email VARCHAR(100),
         role ENUM ('administrador', 'empleado', 'cliente', 'comercial') DEFAULT 'cliente',
         createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
         modifiedAt DATETIME DEFAULT CURRENT_TIMESTAMP
@@ -68,13 +70,6 @@ const INVOICE_LINES_TABLE_SQL = `
     )
         `;
 
-const ADMINISTRATOR_SQL = `
-    INSERT INTO users (
-        username, password, role)
-        VALUES (?, ?, 'administrador'); 
-    )
-        `;
-
 const main = async () => {
     try {
         const pool = await getPool();
@@ -98,10 +93,12 @@ const main = async () => {
 
         //creamos el primer usuario administrador
         console.log('Creando administrador...');
-        await pool.query(ADMINISTRATOR_SQL, [
+        await insertUserModel(
             process.env.ADMIN_USER_USERNAME,
             process.env.ADMIN_USER_PASSWORD,
-        ]);
+            process.env.ADMIN_USER_PASSWORD,
+            'administrador',
+        );
         console.log('Administrador creado');
 
         process.exit(0);
