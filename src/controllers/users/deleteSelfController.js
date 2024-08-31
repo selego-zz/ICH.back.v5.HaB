@@ -1,8 +1,12 @@
-const deleteSelfController = (req, res, next) => {
+//importamos dependencias
+import { deleteUserModel } from '../../models/index.js';
+
+const deleteSelfController = async (req, res, next) => {
     try {
+        await deleteUserModel(req.user.id);
         res.send({
             status: 'ok',
-            message: 'TODO: deleteSelfController',
+            message: 'Usuario eliminado',
         });
     } catch (err) {
         console.error(err);
