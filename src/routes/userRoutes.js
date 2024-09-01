@@ -5,6 +5,7 @@ import express from 'express';
 import {
     addUserController,
     loginController,
+    updateUserController,
     getUserController,
     getAllUsersController,
     deleteUserController,
@@ -25,6 +26,9 @@ router.post(`/users/register`, authAdminController, addUserController);
 
 //POST-[`/api/users/login`] - Logea a un usuario retornando un token.
 router.post(`/users/login`, loginController);
+
+//PUT-[`/api/users`] -  Actualiza los datos de un usuario.
+router.put(`/users/:iduser`, authUserController, updateUserController);
 
 //GET-[`/api/users`] - Retorna información privada del usuario con el id del token.
 router.get(`/users`, authUserController, getUserController);
