@@ -13,8 +13,8 @@ const updateUserController = async (req, res, next) => {
 
         await validateSchema(userUpdateSchema, req.body);
 
-        const { username, password, email, role } = req.body;
-        await updateUserModel(iduser, username, password, email, role);
+        const { username, password, email, code, role } = req.body;
+        await updateUserModel(iduser, username, password, email, code, role);
 
         res.send({
             status: 'ok',

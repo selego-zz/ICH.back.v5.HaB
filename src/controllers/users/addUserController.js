@@ -10,7 +10,7 @@ const addUserController = async (req, res, next) => {
         await validateSchema(userSchema, req.body);
 
         //tomamos los datos del usuario
-        const { username, password, email, role } = req.body;
+        const { username, password, email, code, role } = req.body;
 
         //comprobamos que no existe un usuario con ese username
         const exist = await getUserByUsernameModel(username);
@@ -19,7 +19,7 @@ const addUserController = async (req, res, next) => {
             generateError('El usuario ya existe en la base de datos', 409);
 
         //username y password no son undefinded, por que se ha validado, los otros son opcionales
-        await insertUserModel(username, password, email, role);
+        await insertUserModel(username, password, email, code, role);
 
         res.send({
             status: 'ok',

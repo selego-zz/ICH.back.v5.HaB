@@ -49,6 +49,7 @@ O cambiar los permisos de los usuarios
 | username   | VARCHAR(30)  | Nombre de usuario del usuario                |
 | password   | VARCHAR(100) | Contraseña del usuario (hash)                |
 | email      | VARCHAR(100) | Mail para enviar el albarán                  |
+| code       | VARCHAR(10)  | Codigo identificativo del usuario            |
 | role       | ENUM         | Rol("admin", "empleado", comercial, cliente) |
 | createdAt  | DATETIME     | Fecha y hora de creación del usuario         |
 | modifiedAt | DATETIME     | Fecha y hora de la última modificación       |

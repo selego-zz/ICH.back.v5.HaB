@@ -12,6 +12,7 @@ const USER_TABLE_SQL = `
         username VARCHAR(30) UNIQUE NOT NULL,
         password VARCHAR(100) NOT NULL,
         email VARCHAR(100),
+        code VARCHAR(10),
         role ENUM ('administrador', 'empleado', 'cliente', 'comercial') DEFAULT 'cliente',
         createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
         modifiedAt DATETIME DEFAULT CURRENT_TIMESTAMP

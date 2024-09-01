@@ -16,6 +16,7 @@ const userSchema = Joi.object().keys({
     username: Joi.string().max(30).required().messages(joiErrorMessages),
     password: Joi.string().max(100).required().messages(joiErrorMessages),
     email: Joi.string().email().max(100).optional().messages(joiErrorMessages),
+    code: Joi.string().max(30).messages(joiErrorMessages),
     role: Joi.string()
         .valid('administrador', 'empleado', 'cliente', 'comercial')
         .default('cliente')
