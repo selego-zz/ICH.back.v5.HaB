@@ -16,6 +16,7 @@ const userUpdateSchema = Joi.object().keys({
     username: Joi.string().max(30).optional().messages(joiErrorMessages),
     password: Joi.string().max(100).optional().messages(joiErrorMessages),
     email: Joi.string().email().max(100).optional().messages(joiErrorMessages),
+    code: Joi.string().max(10).optional().messages(joiErrorMessages),
     role: Joi.string()
         .optional()
         .valid('administrador', 'empleado', 'cliente', 'comercial')

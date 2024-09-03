@@ -9,7 +9,7 @@ import { generateError } from '../utils/index.js';
  *         (?, ?, 'administrador')
  */
 
-const insertUserModel = async (username, password, email, role) => {
+const insertUserModel = async (username, password, email, code, role) => {
     // tomamos el pool de la base de datos
     const pool = await getPool();
 
@@ -41,6 +41,11 @@ const insertUserModel = async (username, password, email, role) => {
     if (role) {
         SQL += `, role`;
         args.push(role);
+    }
+
+    if (code) {
+        SQL += `, code`;
+        args.push(code);
     }
 
     SQL += `) VALUES (?, ?`;

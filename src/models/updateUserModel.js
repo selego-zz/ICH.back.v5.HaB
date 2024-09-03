@@ -1,7 +1,7 @@
 import { getPool } from '../db/index.js';
 import bcrypt from 'bcrypt';
 
-const updateUserModel = async (id, username, password, email, role) => {
+const updateUserModel = async (id, username, password, email, code, role) => {
     const pool = await getPool();
 
     if (username)
@@ -19,6 +19,8 @@ const updateUserModel = async (id, username, password, email, role) => {
             email,
             id,
         ]);
+    if (code)
+        await pool.query('UPDATE users SET code = ? where id = ?', [code, id]);
     if (role)
         await pool.query('UPDATE users SET role = ? where id = ?', [role, id]);
 };

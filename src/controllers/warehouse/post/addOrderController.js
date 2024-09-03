@@ -1,8 +1,10 @@
 const addOrderController = (req, res, next) => {
     try {
+        console.log(req.body);
+
         res.send({
             status: 'ok',
-            message: 'TODO: addOrderController',
+            data: req.body,
         });
     } catch (err) {
         console.error(err);
