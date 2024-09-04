@@ -23,7 +23,13 @@ const getPool = async () => {
             await pool.query(`CREATE DATABASE IF NOT EXISTS ${MYSQL_DB}`);
 
             //Seleccionamos la base de datos creada
-            await pool.query(`USE ${MYSQL_DB}`);
+            pool = mysql.createPool({
+                host: MYSQL_HOST,
+                user: MYSQL_USER,
+                password: MYSQL_PASSWORD,
+                database: MYSQL_DB,
+                timezone: 'Z',
+            });
         }
 
         return pool;
