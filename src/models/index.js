@@ -1,8 +1,11 @@
-import insertUserModel from './insertUserModel.js';
-import getUserByUsernameModel from './getUserByUsernameModel.js';
-import getAllUsersModel from './getAllUsersModel.js';
-import deleteUserModel from './deleteUserModel.js';
-import updateUserModel from './updateUserModel.js';
+import {
+    insertUserModel,
+    getUserByUsernameModel,
+    getAllUsersModel,
+    deleteUserModel,
+    updateUserModel,
+    getUserByIdModel,
+} from './users/index.js';
 
 export {
     insertUserModel,
@@ -10,4 +13,5 @@ export {
     getAllUsersModel,
     deleteUserModel,
     updateUserModel,
+    getUserByIdModel,
 };
