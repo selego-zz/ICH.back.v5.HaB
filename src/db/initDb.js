@@ -39,7 +39,7 @@ const INVOICE_HEADERS_TABLE_SQL = `
         country VARCHAR(50) NOT NULL,
         phone VARCHAR(15) NOT NULL,
         mail VARCHAR(50) NOT NULL,
-        shipping_name VARCHAR(10) NOT NULL,
+        shipping_name VARCHAR(100) NOT NULL,
         shipping_address VARCHAR(100) NOT NULL,
         shipping_postal_code CHAR(5) NOT NULL,
         shipping_city VARCHAR(50) NOT NULL,
