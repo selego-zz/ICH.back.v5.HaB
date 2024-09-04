@@ -1,13 +1,24 @@
-import insertUserModel from './insertUserModel.js';
-import getUserByUsernameModel from './getUserByUsernameModel.js';
-import getAllUsersModel from './getAllUsersModel.js';
-import deleteUserModel from './deleteUserModel.js';
-import updateUserModel from './updateUserModel.js';
-
-export {
+import {
     insertUserModel,
     getUserByUsernameModel,
     getAllUsersModel,
     deleteUserModel,
     updateUserModel,
+    getUserByIdModel,
+} from './users/index.js';
+
+import { addOrderModel, addHeader, addLine } from './warehouse/index.js';
+
+export {
+    // user Models
+    insertUserModel,
+    getUserByUsernameModel,
+    getAllUsersModel,
+    deleteUserModel,
+    updateUserModel,
+    getUserByIdModel,
+    //warehouse Models
+    addOrderModel,
+    addHeader,
+    addLine,
 };

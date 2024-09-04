@@ -1,5 +1,5 @@
 //importamos dependencias
-import { getPool } from '../db/index.js';
+import { getPool } from '../../db/index.js';
 
 const getAllUsersModel = async () => {
     //iniciamos la base de datos

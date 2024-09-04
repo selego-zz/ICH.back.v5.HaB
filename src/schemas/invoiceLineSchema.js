@@ -21,7 +21,7 @@ import Joi from '@hapi/joi';
  *     )
  */
 
-const invoiceLineSchema = Joi.object.keys({
+const invoiceLineSchema = Joi.object().keys({
     line: Joi.number().positive().required(),
     type: Joi.string().valid('p', 'a', 'f').default('p'),
     reference: Joi.string().max(15).required(),

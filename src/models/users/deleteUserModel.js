@@ -1,5 +1,5 @@
 //importamos dependencias
-import { getPool } from '../db/index.js';
+import { getPool } from '../../db/index.js';
 
 const deleteUserModel = async (id) => {
     const pool = await getPool();

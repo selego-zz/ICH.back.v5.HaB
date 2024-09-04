@@ -1,6 +1,16 @@
-const addOrderController = (req, res, next) => {
+//importamos dependencias
+import { validateSchema } from '../../../utils/index.js';
+import { ordersSchema } from '../../../schemas/index.js';
+import { addOrderModel } from '../../../models/warehouse/index.js';
+
+const addOrderController = async (req, res, next) => {
     try {
-        console.log(req.body);
+        await validateSchema(ordersSchema, req.body);
+        const orders = req.body;
+
+        orders.forEach((order) => {
+            addOrderModel(order);
+        });
 
         res.send({
             status: 'ok',
