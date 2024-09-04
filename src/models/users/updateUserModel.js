@@ -1,4 +1,4 @@
-import { getPool } from '../db/index.js';
+import { getPool } from '../../db/index.js';
 import bcrypt from 'bcrypt';
 
 const updateUserModel = async (id, username, password, email, code, role) => {

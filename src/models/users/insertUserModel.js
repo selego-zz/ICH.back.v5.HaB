@@ -1,6 +1,6 @@
 //importamos las dependencias
 import bcrypt from 'bcrypt';
-import { getPool } from '../db/index.js';
+import { getPool } from '../../db/index.js';
 import { generateError } from '../utils/index.js';
 /**
  *     INSERT INTO users
