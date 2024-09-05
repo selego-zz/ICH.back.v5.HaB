@@ -5,9 +5,8 @@ import {
     addHeaderModel,
     addLineModel,
     // importamos lectores
-    getOrderIdByNumber,
-    getAllHeaders,
-    getHeadersLines,
+    getHeadersLinesModel,
+    getAllHeadersModel,
 } from '../models/index.js';
 
 /*******************************************************************\
@@ -86,11 +85,12 @@ const addOrderService = async (order) => {
  */
 
 const getAllOrdersService = async (type) => {
-    const headers = await getAllHeaders(type);
+    const orders = await getAllHeadersModel(type);
 
-    for (const header of headers) {
-        header.lines = await getHeadersLines(type);
+    for (const header of orders) {
+        header.lines = await getHeadersLinesModel(type);
     }
+    return orders;
 };
 
 /*******************************************************************\
@@ -110,7 +110,7 @@ const getAllOrdersService = async (type) => {
  * @returns the order's id
  */
 const addLinesService = async (type, serie, number, lines) => {
-    const orderId = await getOrderIdByNumber(type, serie, number);
+    const orderId = await getHeadersLinesModel(type, serie, number);
     if (!orderId) generateError('Pedido no encontrado', 404);
     for (const line of lines) {
         await addLineModel(orderId, line);
@@ -128,7 +128,7 @@ const addLinesService = async (type, serie, number, lines) => {
  */
 
 const addLineService = async (type, serie, number, line) => {
-    const orderId = await getOrderIdByNumber(type, serie, number);
+    const orderId = await getHeadersLinesModel(type, serie, number);
     if (!orderId) generateError('Pedido no encontrado', 404);
 
     await addLineModel(orderId, line);

@@ -10,9 +10,9 @@ import {
 import {
     addHeaderModel,
     addLineModel,
-    getOrderIdByNumber,
-    getAllHeaders,
-    getHeadersLines,
+    getAllHeadersModel,
+    getHeadersLinesModel,
+    getOrderIdByNumberModel,
 } from './warehouse/index.js';
 
 export {
@@ -26,7 +26,7 @@ export {
     //warehouse Models
     addHeaderModel,
     addLineModel,
-    getOrderIdByNumber,
-    getAllHeaders,
-    getHeadersLines,
+    getAllHeadersModel,
+    getHeadersLinesModel,
+    getOrderIdByNumberModel,
 };

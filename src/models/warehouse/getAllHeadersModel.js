@@ -5,7 +5,7 @@ import { getPool } from '../../db/index.js';
  * @param {char} type
  * @returns array of json with the specified headers data
  */
-const getAllHeaders = async (type) => {
+const getAllHeadersModel = async (type) => {
     const pool = await getPool();
 
     const [res] = type
@@ -15,4 +15,4 @@ const getAllHeaders = async (type) => {
     return res;
 };
 
-export default getAllHeaders;
+export default getAllHeadersModel;
