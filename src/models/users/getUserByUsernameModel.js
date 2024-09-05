@@ -1,6 +1,12 @@
 //importamos dependencias
 import { getPool } from '../../db/index.js';
 
+/**
+ * Finds the info of a user based on his username
+ * @param {string} username - the username of the user you are wanting
+ * @returns a json with the user info
+ */
+
 const getUserByUsernameModel = async (username) => {
     try {
         // establecemos conexion a la base de datos

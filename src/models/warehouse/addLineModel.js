@@ -1,18 +1,25 @@
 import getPool from '../../db/getPool.js';
 
-const addHeader = async (header) => {
+/**
+ * Inserts a line in database
+ * @param {number} headerId - this line belongs to
+ * @param {json} line - line's data to insert into the database
+ * @returns line's id
+ */
+const addLineModel = async (orderId, line) => {
     //ha pasado por Joi, así que sabemos que tiene todos los valores obligatorios como mínimo
     const pool = await getPool();
 
     //voy a construir una primera cadena, con insert into header (id, number....
     //una segunda cadena que cierra la primera, y mete una interrogación por cada valor de la primera
     //finalment eun array con los valores para suministrar al query
-    let SQLInit = 'INSERT INTO invoice_headers (';
-    let SQLMiddle = ') VALUES (';
+    let SQLInit = 'INSERT INTO invoice_lines (header_id, ';
+    let SQLMiddle = ') VALUES (?, ';
     const SQLEnd = ')';
     const args = [];
+    args.push(orderId);
 
-    for (const [key, value] of Object.entries(header)) {
+    for (const [key, value] of Object.entries(line)) {
         SQLInit += key + ', ';
         SQLMiddle += '?, ';
         args.push(value);
@@ -21,7 +28,7 @@ const addHeader = async (header) => {
     SQLMiddle = SQLMiddle.slice(0, -2);
 
     const [res] = await pool.query(SQLInit + SQLMiddle + SQLEnd, args);
+
     return res.insertId;
 };
-
-export default addHeader;
+export default addLineModel;

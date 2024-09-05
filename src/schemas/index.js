@@ -3,6 +3,7 @@ import userUpdateSchema from './userUpdateSchema.js';
 import invoiceLineSchema from './invoiceLineSchema.js';
 import invoiceHeaderSchema from './invoiceHeaderSchema.js';
 import ordersSchema from './ordersSchema.js';
+import allLinesSchema from './allLinesSchema.js';
 
 export {
     userSchema,
@@ -10,4 +11,5 @@ export {
     invoiceLineSchema,
     invoiceHeaderSchema,
     ordersSchema,
+    allLinesSchema,
 };

@@ -7,7 +7,13 @@ import {
     getUserByIdModel,
 } from './users/index.js';
 
-import { addOrderModel, addHeader, addLine } from './warehouse/index.js';
+import {
+    addHeaderModel,
+    addLineModel,
+    getOrderIdByNumber,
+    getAllHeaders,
+    getHeadersLines,
+} from './warehouse/index.js';
 
 export {
     // user Models
@@ -18,7 +24,9 @@ export {
     updateUserModel,
     getUserByIdModel,
     //warehouse Models
-    addOrderModel,
-    addHeader,
-    addLine,
+    addHeaderModel,
+    addLineModel,
+    getOrderIdByNumber,
+    getAllHeaders,
+    getHeadersLines,
 };

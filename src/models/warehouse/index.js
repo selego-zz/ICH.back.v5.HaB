@@ -1,5 +1,13 @@
-import addOrderModel from './addOrderModel.js';
-import addHeader from './addHeader.js';
-import addLine from './addLine.js';
+import addHeaderModel from './addHeaderModel.js';
+import addLineModel from './addLineModel.js';
+import getOrderIdByNumber from './getOrderIdByNumber.js';
+import getAllHeaders from './getAllHeaders.js';
+import getHeadersLines from './getHeadersLines.js';
 
-export { addOrderModel, addHeader, addLine };
+export {
+    addHeaderModel,
+    addLineModel,
+    getOrderIdByNumber,
+    getAllHeaders,
+    getHeadersLines,
+};

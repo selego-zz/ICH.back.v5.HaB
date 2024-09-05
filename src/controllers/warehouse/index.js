@@ -4,7 +4,11 @@ import {
     deleteOrderLineController,
 } from './delete/index.js';
 import { getAllOrdersController, getOrderController } from './get/index.js';
-import { addLinesController, addOrderController } from './post/index.js';
+import {
+    addLinesController,
+    addOrderController,
+    addAllOrdersController,
+} from './post/index.js';
 import {
     updateLineController,
     updateOrderController,
@@ -28,6 +32,7 @@ export {
     getOrderController,
     addLinesController,
     addOrderController,
+    addAllOrdersController,
     updateLineController,
     updateOrderController,
     updateServedUnitsController,

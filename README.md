@@ -119,7 +119,7 @@ O cambiar los permisos de los usuarios
 
 ## Endpoints de almacen
 
--   **POST** - [`/api/warehouse`] - Inserta un conjunto de pedidos completos
+-   **POST** - [`/api/warehouse`] - Inserta un conjunto de pedidos completos ✅
 -   **POST** - [`/api/warehouse/:type/:series/:number`] - Añade un conjunto de líneas a un pedido
 
 -   **GET** - [`/api/warehouse`] - Retorna el listado completo de pedidos

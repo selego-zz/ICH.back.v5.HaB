@@ -8,6 +8,7 @@ import {
     getOrderController,
     addLinesController,
     addOrderController,
+    addAllOrdersController,
     updateLineController,
     updateOrderController,
     updateServedUnitsController,
@@ -20,18 +21,23 @@ import {
     unmarkOrderAsSentController,
 } from '../controllers/warehouse/index.js';
 
-import { authUserController } from '../middlewares/index.js';
+import {
+    authUserController,
+    authWorkerController,
+} from '../middlewares/index.js';
 
 const router = express.Router();
 
 //creamos las rutas
 
 //POST [`/api/warehouse`] - Inserta un conjunto de pedidos completos
-router.post(`/warehouse`, authUserController, addOrderController);
+router.post(`/warehouse/all`, authWorkerController, addAllOrdersController);
+//POST [`/api/warehouse`] - Inserta un conjunto de pedidos completos
+router.post(`/warehouse`, authWorkerController, addOrderController);
 //POST [`/api/warehouse/:type/:series/:number`] - Añade un conjunto de líneas a un pedido
 router.post(
     `/warehouse/:type/:series/:number`,
-    authUserController,
+    authWorkerController,
     addLinesController,
 );
 
@@ -47,81 +53,81 @@ router.get(
 //PUT [`/api/warehouse/:type/:series/:number`] - Corrige un pedido
 router.put(
     `/warehouse/:type/:series/:number`,
-    authUserController,
+    authWorkerController,
     updateOrderController,
 );
 //PUT [`/api/warehouse/:type/:series/:number/:line`] - Corrige una línea
 router.put(
     `/warehouse/:type/:series/:number/:line`,
-    authUserController,
+    authWorkerController,
     updateLineController,
 );
 //PUT [`/api/warehouse/Units/:type/:series/:number/:line`] - Cambia el número de unidades que se enviarán de una línea
 router.put(
     `/warehouse/Units/:type/:series/:number/:line`,
-    authUserController,
+    authWorkerController,
     updateServedUnitsController,
 );
 
 //PUT [`/api/warehouse/check/:type/:series/:number`] - Marca un pedido para enviar. P->A
 router.put(
     `/warehouse/check/:type/:series/:number`,
-    authUserController,
+    authWorkerController,
     markOrderAsReadyController,
 );
 //PUT [`/api/warehouse/check/:type/:series/:number/:line`] - Marca una línea para enviar P->A
 router.put(
     `/warehouse/check/:type/:series/:number/:line`,
-    authUserController,
+    authWorkerController,
     markLineAsReadyController,
 );
 
 //PUT [`/api/warehouse/uncheck/:type/:series/:number`] - Desmarca un pedido para enviar. A->P
 router.put(
     `/warehouse/uncheck/:type/:series/:number`,
-    authUserController,
+    authWorkerController,
     unmarkOrderAsReadyController,
 );
 //PUT [`/api/warehouse/uncheck/:type/:series/:number/:line`] - Desmarca una línea para enviar A-P
 router.put(
     `/warehouse/uncheck/:type/:series/:number/:line`,
-    authUserController,
+    authWorkerController,
     unmarkLineAsReadyController,
 );
 
 //PUT [`/api/warehouse/send/:type/:series/:number`] - Marca un pedido como enviado. A->F
 router.put(
     `/warehouse/send/:type/:series/:number`,
-    authUserController,
+    authWorkerController,
     markOrderAsSentController,
 );
 
 //PUT [`/api/warehouse/unsend/:type/:series/:number`] - Desmarca un pedido como enviado. F->A
 router.put(
     `/warehouse/unsend/:type/:series/:number`,
-    authUserController,
+    authWorkerController,
     unmarkOrderAsSentController,
 );
 
 //PUT [`/api/warehouse/shippingemail`] - envía un correo electrónico a la empresa de transporte
 router.put(
     `/warehouse/shippingemail`,
-    authUserController,
+    authWorkerController,
     sendTransportOrderController,
 );
 
 //DELETE [`/api/warehouse`] -Elimina el listado completo de pedidos
-router.delete(`/warehouse`, authUserController, deleteAllOrdersController);
+router.delete(`/warehouse`, authWorkerController, deleteAllOrdersController);
 //DELETE [`/api/warehouse/:type/:series/:number`] - Elimina un pedido
 router.delete(
     `/warehouse/:type/:series/:number`,
-    authUserController,
+    authWorkerController,
     deleteOrderController,
 );
 //DELETE [`/api/warehouse/:type/:series/:number/:line`] - Elimina una linea
 router.delete(
     `/warehouse/:type/:series/:number/:line`,
-    authUserController,
+    authWorkerController,
     deleteOrderLineController,
 );
 
