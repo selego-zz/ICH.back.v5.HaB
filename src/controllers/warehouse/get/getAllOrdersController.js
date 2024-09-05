@@ -1,8 +1,12 @@
-const getAllOrdersController = (req, res, next) => {
+import { getAllOrdersService } from '../../../services/index.js';
+const getAllOrdersController = async (req, res, next) => {
     try {
+        const { type } = req.params;
+        const data = await getAllOrdersService(type);
         res.send({
             status: 'ok',
-            message: 'TODO: getAllOrdersController',
+            message: 'consulta realizada',
+            data,
         });
     } catch (err) {
         console.error(err);

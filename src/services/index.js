@@ -1,6 +1,7 @@
 import {
     addOrderService,
     addAllOrdersService,
+    getOrderByNumber,
     addLinesService,
     addLineService,
     getAllOrdersService,
@@ -9,6 +10,7 @@ import {
 export {
     addOrderService,
     addAllOrdersService,
+    getOrderByNumber,
     addLinesService,
     addLineService,
     getAllOrdersService,

@@ -7,7 +7,7 @@ import getPool from '../../db/getPool.js';
  * @param { number } number - header's number
  * @returns header's id if found, undefined otherwise
  */
-const getHeadersLinesModel = async (type, serie, number) => {
+const getOrderIdByNumberModel = async (type, serie, number) => {
     //ha pasado por Joi, así que sabemos que tiene todos los valores obligatorios como mínimo
     const pool = await getPool();
 
@@ -18,4 +18,4 @@ const getHeadersLinesModel = async (type, serie, number) => {
 
     return res[0]?.id;
 };
-export default getHeadersLinesModel;
+export default getOrderIdByNumberModel;

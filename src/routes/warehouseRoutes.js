@@ -41,8 +41,8 @@ router.post(
     addLinesController,
 );
 
-//GET [`/api/warehouse`] - Retorna el listado completo de pedidos
-router.get(`/warehouse`, authUserController, getAllOrdersController);
+//GET [`/api/warehouse`] - Retorna el listado completo de pedidos, si se especifica un tipo, solo los de ese tipo
+router.get(`/warehouse/:type`, authUserController, getAllOrdersController);
 //GET [`/api/warehouse/:type/:series/:number`] - Retorna un pedido
 router.get(
     `/warehouse/:type/:series/:number`,

@@ -5,8 +5,10 @@ import {
     addHeaderModel,
     addLineModel,
     // importamos lectores
+    getHeaderModel,
     getHeadersLinesModel,
     getAllHeadersModel,
+    getOrderIdByNumberModel,
 } from '../models/index.js';
 
 /*******************************************************************\
@@ -93,6 +95,37 @@ const getAllOrdersService = async (type) => {
     return orders;
 };
 
+/**
+ * Gets the orders with the specified id
+ * @param {numer} id - id of the order you want
+ * @returns json with the sepcified order
+ */
+
+const getOrderService = async (orderId) => {
+    const order = await getHeaderModel(orderId);
+
+    order.lines = await getHeadersLinesModel(orderId);
+
+    return order;
+};
+
+/**
+ * Gets the orders with the specified type, series and number
+ * @param { char } type - the type of the order you want
+ * @param { string } serie - the serie of the order you want
+ * @param { number } number - the numer of the order you want
+ * @returns json with the sepcified order
+ */
+
+const getOrderByNumber = async (type, serie, number) => {
+    const orderId = await getOrderIdByNumberModel(type, serie, number);
+    const order = await getHeaderModel(orderId);
+
+    order.lines = await getHeadersLinesModel(orderId);
+
+    return order;
+};
+
 /*******************************************************************\
 ********************** CABECERA - GET *******************************
 \*******************************************************************/
@@ -142,6 +175,8 @@ const addLineService = async (type, serie, number, line) => {
 export {
     addOrderService,
     addAllOrdersService,
+    getOrderService,
+    getOrderByNumber,
     addLinesService,
     addLineService,
     getAllOrdersService,

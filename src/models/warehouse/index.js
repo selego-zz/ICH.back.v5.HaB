@@ -3,6 +3,7 @@ import addLineModel from './addLineModel.js';
 import getAllHeadersModel from './getAllHeadersModel.js';
 import getHeadersLinesModel from './getHeadersLinesModel.js';
 import getOrderIdByNumberModel from './getOrderIdByNumberModel.js';
+import getHeaderModel from './getHeaderModel.js';
 
 export {
     addHeaderModel,
@@ -10,4 +11,5 @@ export {
     getAllHeadersModel,
     getHeadersLinesModel,
     getOrderIdByNumberModel,
+    getHeaderModel,
 };
