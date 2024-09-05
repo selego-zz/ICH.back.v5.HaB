@@ -9,6 +9,10 @@ import {
     getHeadersLinesModel,
     getAllHeadersModel,
     getOrderIdByNumberModel,
+    //importamos actualizadores
+    updateLineModel,
+    updateHeaderModel,
+    getLineIdByNumberModel,
 } from '../models/index.js';
 
 /*******************************************************************\
@@ -131,6 +135,56 @@ const getOrderByNumber = async (type, serie, number) => {
 \*******************************************************************/
 
 /*******************************************************************\
+********************** CABECERA - PUT *******************************
+\*******************************************************************/
+
+/**
+ * Updated specified header in the database
+ * @param {JSON} header - header to be updated
+ */
+const updateHeaderService = async (order) => {
+    const orderId = getOrderByNumber(order.type, order.serie, order.number);
+    if (orderId === undefined && order.id === undefined)
+        throw new Error('Pedido no encontrado');
+    if (order.id && order.id != orderId)
+        throw new Error(
+            'Tipo, Serie, y Número no coinciden con los suministrados',
+        );
+    order.id = orderId; // si existía es igual y no causa daño, sino, se añade
+    const header = getHeaderData(order);
+    await updateHeaderModel(header);
+};
+
+/**
+ * Updated specified orders in the database
+ * @param {JSON} order - order to be updated
+ */
+const updateOrderService = async (order) => {
+    const orderId = getOrderByNumber(order.type, order.serie, order.number);
+    if (orderId === undefined && order.id === undefined)
+        throw new Error('Pedido no encontrado');
+    if (order.id && order.id != orderId)
+        throw new Error(
+            'Tipo, Serie, y Número no coinciden con los suministrados',
+        );
+    order.id = orderId; // si existía es igual y no causa daño, sino, se añade
+
+    const header = getHeaderData(order);
+    await updateHeaderModel(header);
+    order.lines.forEach((line) => {
+        if (!line.type) line.type = order.type;
+        if (!line.serie) line.serie = order.serie;
+        if (!line.number) line.number = order.number;
+        if (!line.header_id) line.header_id = order.id;
+    });
+    await updateLinesService(order.lines);
+};
+
+/*******************************************************************\
+********************** CABECERA - PUT *******************************
+\*******************************************************************/
+
+/*******************************************************************\
 *********************** LINEAS - POST *******************************
 \*******************************************************************/
 
@@ -172,12 +226,52 @@ const addLineService = async (type, serie, number, line) => {
 *********************** LINEAS - POST *******************************
 \*******************************************************************/
 
+/*******************************************************************\
+*********************** LINEAS - PUT *******************************
+\*******************************************************************/
+
+/**
+ * Updated specifieds lines in the database
+ * @param {[JSON]} lines - array of lines to be updated
+ */
+const updateLinesService = async (lines) => {
+    for (const line of lines) {
+        const lineId = getLineIdByNumberModel(
+            line.type,
+            line.serie,
+            line.number,
+            line.line,
+        );
+        if (lineId === undefined && line.id === undefined)
+            throw new Error('linea no encontrado');
+        if (line.id && line.id != lineId)
+            throw new Error(
+                'Tipo, Serie, y Número no coinciden con los suministrados',
+            );
+        line.id = lineId; // si existía es igual y no causa daño, sino, se añade
+
+        await updateLineModel(line);
+    }
+};
+
+/*******************************************************************\
+*********************** LINEAS - PUT *******************************
+\*******************************************************************/
+
 export {
+    //cabecera post
     addOrderService,
     addAllOrdersService,
+    //cabecera get
     getOrderService,
     getOrderByNumber,
+    // cabecera put
+    updateHeaderService,
+    updateOrderService,
+    // lines get
     addLinesService,
     addLineService,
     getAllOrdersService,
+    // lines put
+    updateLinesService,
 };

@@ -124,11 +124,11 @@ O cambiar los permisos de los usuarios
 
 -   **GET** - [`/api/warehouse`] - Retorna el listado completo de pedidos ✅
 -   **GET** - [`/api/warehouse/:type`] - Retorna el listado de pedidos del tipo especificado ✅
--   **GET** - [`/api/warehouse/:type/:series/:number`] - Retorna un pedido
+-   **GET** - [`/api/warehouse/:type/:series/:number`] - Retorna un pedido ✅
 
--   **PUT** - [`/api/warehouse/:type/:series/:number`] - Corrige un pedido
--   **PUT** - [`/api/warehouse/:type/:series/:number/:line`] - Corrige una línea
--   **PUT** - [`/api/warehouse/Units/:type/:series/:number/:line`] - Cambia el número de unidades que se enviarán de una línea
+-   **PUT** - [`/api/warehouse/order`] - Corrige un pedido ✅
+-   **PUT** - [`/api/warehouse/line`] - Corrige una línea ✅
+-   **PUT** - [`/api/warehouse/Units`] - Cambia el número de unidades que se enviarán de una línea ✅
 
 -   **PUT** - [`/api/warehouse/check/:type/:series/:number`] - Marca un pedido para enviar. P->A
 -   **PUT** - [`/api/warehouse/check/:type/:series/:number/:line`] - Marca una línea para enviar P->A

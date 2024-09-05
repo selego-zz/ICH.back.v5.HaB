@@ -50,21 +50,13 @@ router.get(
     getOrderController,
 );
 
-//PUT [`/api/warehouse/:type/:series/:number`] - Corrige un pedido
+//PUT [`/api/warehouse/order`] - Corrige un pedido
+router.put(`/warehouse/order`, authWorkerController, updateOrderController);
+//PUT [`/api/warehouse/line`] - Corrige una línea
+router.put(`/warehouse/line`, authWorkerController, updateLineController);
+//PUT [`/api/warehouse/Units`] - Cambia el número de unidades que se enviarán de una línea
 router.put(
-    `/warehouse/:type/:series/:number`,
-    authWorkerController,
-    updateOrderController,
-);
-//PUT [`/api/warehouse/:type/:series/:number/:line`] - Corrige una línea
-router.put(
-    `/warehouse/:type/:series/:number/:line`,
-    authWorkerController,
-    updateLineController,
-);
-//PUT [`/api/warehouse/Units/:type/:series/:number/:line`] - Cambia el número de unidades que se enviarán de una línea
-router.put(
-    `/warehouse/Units/:type/:series/:number/:line`,
+    `/warehouse/Units`,
     authWorkerController,
     updateServedUnitsController,
 );

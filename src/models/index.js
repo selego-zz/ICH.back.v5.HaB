@@ -14,6 +14,9 @@ import {
     getHeaderModel,
     getHeadersLinesModel,
     getOrderIdByNumberModel,
+    getLineIdByNumberModel,
+    updateHeaderModel,
+    updateLineModel,
 } from './warehouse/index.js';
 
 export {
@@ -31,4 +34,7 @@ export {
     getHeaderModel,
     getHeadersLinesModel,
     getOrderIdByNumberModel,
+    getLineIdByNumberModel,
+    updateHeaderModel,
+    updateLineModel,
 };
