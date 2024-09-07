@@ -2,7 +2,7 @@ import Joi from '@hapi/joi';
 import JoiPhoneNumber from 'joi-phone-number';
 import { invoiceLineSchema } from './index.js';
 
-/**
+/*
  *     CREATE TABLE IF NOT EXISTS invoice_headers(
  *         type ENUM ('p', 'a', 'f') DEFAULT 'p',
  *         series CHAR(3) NOT NULL,

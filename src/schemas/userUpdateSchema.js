@@ -1,6 +1,6 @@
 import Joi from '@hapi/joi';
 import joiErrorMessages from './joiErrorMessages.js';
-/**
+/*
  *     CREATE TABLE IF NOT EXISTS users(
  *         username VARCHAR(30) NOT NULL,
  *         password VARCHAR(100) NOT NULL,

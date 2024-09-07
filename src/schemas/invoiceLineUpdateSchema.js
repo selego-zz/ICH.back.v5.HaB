@@ -1,6 +1,6 @@
 import Joi from '@hapi/joi';
 
-/**
+/*
  *     CREATE TABLE IF NOT EXISTS invoice_lines(
  *         line TINYINT UNSIGNED NOT NULL,
  *         type ENUM ('p', 'a', 'f') DEFAULT 'p',
