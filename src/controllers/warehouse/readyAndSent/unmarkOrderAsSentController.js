@@ -1,7 +1,7 @@
 const unmarkOrderAsSentController = (req, res, next) => {
     try {
         res.send({
-            status: 'ok',
+            status: 'Ok',
             message: 'TODO: unmarkOrderAsSentController',
         });
     } catch (err) {

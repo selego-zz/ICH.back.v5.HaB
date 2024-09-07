@@ -2,7 +2,7 @@ const getUserController = (req, res, next) => {
     try {
         //los datos están en req.user
         res.send({
-            status: 'ok',
+            status: 'Ok',
             data: req.user,
         });
     } catch (err) {

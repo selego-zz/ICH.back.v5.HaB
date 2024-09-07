@@ -5,7 +5,7 @@ const deleteSelfController = async (req, res, next) => {
     try {
         await deleteUserModel(req.user.id);
         res.send({
-            status: 'ok',
+            status: 'Ok',
             message: 'Usuario eliminado',
         });
     } catch (err) {

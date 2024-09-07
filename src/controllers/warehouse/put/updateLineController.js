@@ -9,7 +9,7 @@ const updateLineController = async (req, res, next) => {
         body.push(req.body);
         await updateLinesService(body);
         res.send({
-            status: 'ok',
+            status: 'Ok',
             message: 'líneas actualizadas',
         });
     } catch (err) {

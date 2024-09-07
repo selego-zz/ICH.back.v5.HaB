@@ -6,7 +6,7 @@ const getAllUsersController = async (req, res, next) => {
         const data = await getAllUsersModel();
 
         res.send({
-            status: 'ok',
+            status: 'Ok',
             data,
         });
     } catch (err) {

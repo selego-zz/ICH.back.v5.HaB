@@ -10,7 +10,7 @@ const updateServedUnitsController = async (req, res, next) => {
         await updateLinesService(body);
 
         res.send({
-            status: 'ok',
+            status: 'Ok',
             message: 'Cantidad a enviar actualizada',
         });
     } catch (err) {

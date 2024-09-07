@@ -17,7 +17,7 @@ const updateUserController = async (req, res, next) => {
         await updateUserModel(iduser, username, password, email, code, role);
 
         res.send({
-            status: 'ok',
+            status: 'Ok',
             message: 'datos actualizados',
         });
     } catch (err) {

@@ -1,7 +1,7 @@
 const deleteAllOrdersController = (req, res, next) => {
     try {
         res.send({
-            status: 'ok',
+            status: 'Ok',
             message: 'TODO: deleteAllOrdersController',
         });
     } catch (err) {

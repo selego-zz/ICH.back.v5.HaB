@@ -4,6 +4,20 @@ import { validateSchema, generateError } from '../../utils/index.js';
 import { userSchema } from '../../schemas/index.js';
 import { getUserByUsernameModel, insertUserModel } from '../../models/index.js';
 
+/**
+ * Función controladora que añade un usuario en la base de datos
+ * @param {object} req - Objeto request
+ * @param {object} req.body - datos del usuario
+ * @param {string} req.body.username - Nombre del usuario
+ * @param {string} req.body.password - Password del usuario en texto plano
+ * @param {string} req.body.email - Correo electrónico del usuario
+ * @param {string} [req.body.code] - Código del cliente/comercial/empleado (opcional)
+ * @param {string} [req.body.role] - El rol del usuario (opcional). Valores posibles: 'administrador', 'empleado', 'cliente', 'comercial'. Valor por defecto: 'cliente'.
+ * @param {Object} res - El objeto de respuesta.
+ * @param {string} res.status - Estado de la petición. Valores posibles: 'ok', 'Error'
+ * @param {Object} res - El objeto de respuesta.
+ * @param {*} next
+ */
 const addUserController = async (req, res, next) => {
     try {
         //verificamos los datos
@@ -22,7 +36,7 @@ const addUserController = async (req, res, next) => {
         await insertUserModel(username, password, email, code, role);
 
         res.send({
-            status: 'ok',
+            status: 'Ok',
             message: 'TODO: addUserController',
         });
     } catch (err) {

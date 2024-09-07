@@ -9,7 +9,7 @@ const updateOrderController = async (req, res, next) => {
         await updateOrderService(body);
 
         res.send({
-            status: 'ok',
+            status: 'Ok',
             message: 'Pedido Actualizado',
         });
     } catch (err) {

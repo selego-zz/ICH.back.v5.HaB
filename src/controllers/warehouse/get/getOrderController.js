@@ -6,7 +6,7 @@ const getOrderController = async (req, res, next) => {
         const data = await getOrderByNumber(type, series, number);
 
         res.send({
-            status: 'ok',
+            status: 'Ok',
             message: 'consulta realizada',
             data,
         });

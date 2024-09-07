@@ -13,7 +13,7 @@ const addLinesController = async (req, res, next) => {
         await addLinesService(type, series, number, lines);
 
         res.status(201).send({
-            status: 'ok',
+            status: 'Ok',
             message: 'Linas insertadas',
         });
     } catch (err) {

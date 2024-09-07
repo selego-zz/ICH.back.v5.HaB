@@ -1,7 +1,7 @@
 const unmarkOrderAsReadyController = (req, res, next) => {
     try {
         res.send({
-            status: 'ok',
+            status: 'Ok',
             message: 'TODO: unmarkOrderAsReadyController',
         });
     } catch (err) {

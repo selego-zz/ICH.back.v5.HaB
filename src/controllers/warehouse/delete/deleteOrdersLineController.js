@@ -1,7 +1,7 @@
 const deleteOrderLineController = (req, res, next) => {
     try {
         res.send({
-            status: 'ok',
+            status: 'Ok',
             message: 'TODO: deleteOrderLineController',
         });
     } catch (err) {

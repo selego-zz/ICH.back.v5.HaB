@@ -15,7 +15,7 @@ const addAllOrdersController = async (req, res, next) => {
             generateError('No se ha insertado ningún pedido', 500);
 
         res.status(201).send({
-            status: 'ok',
+            status: 'Ok',
             data: { headerId },
         });
     } catch (err) {

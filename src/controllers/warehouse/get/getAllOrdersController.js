@@ -4,7 +4,7 @@ const getAllOrdersController = async (req, res, next) => {
         const { type } = req.params;
         const data = await getAllOrdersService(type);
         res.send({
-            status: 'ok',
+            status: 'Ok',
             message: 'consulta realizada',
             data,
         });
