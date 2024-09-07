@@ -9,9 +9,9 @@ const DROP_TABLES =
 const USER_TABLE_SQL = `
     CREATE TABLE IF NOT EXISTS users(
         id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-        username VARCHAR(30) UNIQUE NOT NULL,
+        username VARCHAR(30) UNIQUE,
         password VARCHAR(100) NOT NULL,
-        email VARCHAR(100),
+        email VARCHAR(100) UNIQUE NOT NULL
         code VARCHAR(10),
         role ENUM ('administrador', 'empleado', 'cliente', 'comercial') DEFAULT 'cliente',
         createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,

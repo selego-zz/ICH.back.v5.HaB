@@ -6,9 +6,21 @@ import jwt from 'jsonwebtoken';
 
 import { validateSchema, generateError } from '../../utils/index.js';
 import { userSchema } from '../../schemas/index.js';
-import { getUserByUsernameModel } from '../../models/index.js';
+import { getUserByEmailModel } from '../../models/index.js';
 
-//OJO: TOKEN_EXPIRATION está en .env
+/**
+ * Función controladora que comprueba los datos de inicio de sesión proporcionados, y de ser correctos devuelve un token de autenticación con el que se podrá identificar al usuario en las diferentes operaciones
+ * @param {Object} req - Objeto request
+ * @param {Object} req.body - Datos del usuario
+ * @param {string} req.body.password - Password del usuario en texto plano
+ * @param {string} req.body.email - Correo electrónico del usuario
+ * @param {Object} res - El objeto de respuesta.
+ * @param {string} res.status - Estado de la petición. Valores posibles: 'Ok', 'Error'
+ * @param {string} [res.message] - Mensaje explicativo de respuesta o de error
+ * @param {Object} [res.data] - Json con el token de autentificación del usuario
+ * @param {Function} next - La función de middleware siguiente.
+ * @description Llama al modelo `getUserByEmailModel` para tomar los datos del usuario, valida la contraseña, y genera un jsonwebtoken, de duración process.env.TOKEN_EXPIRATION.
+ */
 const loginController = async (req, res, next) => {
     try {
         const user = req.body;
@@ -17,7 +29,7 @@ const loginController = async (req, res, next) => {
         await validateSchema(userSchema, user);
 
         //si ha pasado la validación, tenemos como mínimo un usuario y una contraseña
-        const dbUser = await getUserByUsernameModel(user.username);
+        const dbUser = await getUserByEmailModel(user.username);
 
         let validPass;
         console.log(dbUser);

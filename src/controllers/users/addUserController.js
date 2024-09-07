@@ -6,17 +6,19 @@ import { getUserByUsernameModel, insertUserModel } from '../../models/index.js';
 
 /**
  * Función controladora que añade un usuario en la base de datos
- * @param {object} req - Objeto request
- * @param {object} req.body - datos del usuario
+ * @middleware authWorkerController - Middleware para comprobar permisos de inserción.
+ * @param {Object} req - Objeto request
+ * @param {Object} req.body - Datos del usuario
  * @param {string} req.body.username - Nombre del usuario
  * @param {string} req.body.password - Password del usuario en texto plano
  * @param {string} req.body.email - Correo electrónico del usuario
  * @param {string} [req.body.code] - Código del cliente/comercial/empleado (opcional)
  * @param {string} [req.body.role] - El rol del usuario (opcional). Valores posibles: 'administrador', 'empleado', 'cliente', 'comercial'. Valor por defecto: 'cliente'.
  * @param {Object} res - El objeto de respuesta.
- * @param {string} res.status - Estado de la petición. Valores posibles: 'ok', 'Error'
- * @param {Object} res - El objeto de respuesta.
- * @param {*} next
+ * @param {string} res.status - Estado de la petición. Valores posibles: 'Ok', 'Error'
+ * @param {string} res.message - Mensaje explicativo de respuesta o de error
+ * @param {Function} next - La función de middleware siguiente.
+ * @description Llama al modelo `insertUserModel` para insertar los datos del usuario en la base de datos.
  */
 const addUserController = async (req, res, next) => {
     try {
@@ -37,7 +39,7 @@ const addUserController = async (req, res, next) => {
 
         res.send({
             status: 'Ok',
-            message: 'TODO: addUserController',
+            message: 'Usuario insertado en la base de datos',
         });
     } catch (err) {
         next(err);

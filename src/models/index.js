@@ -5,6 +5,7 @@ import {
     deleteUserModel,
     updateUserModel,
     getUserByIdModel,
+    getUserByEmailModel,
 } from './users/index.js';
 
 import {
@@ -27,6 +28,7 @@ export {
     deleteUserModel,
     updateUserModel,
     getUserByIdModel,
+    getUserByEmailModel,
     //warehouse Models
     addHeaderModel,
     addLineModel,

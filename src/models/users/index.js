@@ -4,6 +4,7 @@ import getAllUsersModel from './getAllUsersModel.js';
 import deleteUserModel from './deleteUserModel.js';
 import updateUserModel from './updateUserModel.js';
 import getUserByIdModel from './getUserByIdModel.js';
+import getUserByEmailModel from './getUserByEmailModel.js';
 
 export {
     insertUserModel,
@@ -12,4 +13,5 @@ export {
     deleteUserModel,
     updateUserModel,
     getUserByIdModel,
+    getUserByEmailModel,
 };

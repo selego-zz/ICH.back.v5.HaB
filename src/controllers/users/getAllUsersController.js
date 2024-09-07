@@ -1,6 +1,17 @@
 //importamos dependencias
 import { getAllUsersModel } from '../../models/index.js';
 
+/**
+ * Función controladora que devuelve toda la información de todos los usuarios
+ * @middleware authWorkerController - Middleware para comprobar permisos de inserción.
+ * @param {Object} req - Objeto request
+ * @param {Object} res - El objeto de respuesta.
+ * @param {string} res.status - Estado de la petición. Valores posibles: 'Ok', 'Error'
+ * @param {string} [res.message] - Mensaje explicativo de respuesta o de error
+ * @param {Object[]} [res.data] - array de json con toda la información de la tabla usuarios
+ * @param {Function} next - La función de middleware siguiente.
+ * @description Llama al modelo `getAllUsersModel` para leer toda la información de los usuarios.
+ */
 const getAllUsersController = async (req, res, next) => {
     try {
         const data = await getAllUsersModel();

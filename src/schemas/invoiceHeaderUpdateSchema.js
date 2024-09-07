@@ -1,6 +1,6 @@
 import Joi from '@hapi/joi';
 import JoiPhoneNumber from 'joi-phone-number';
-import { invoiceLineUpdateSchema } from './index.js';
+import invoiceLineUpdateSchema from './invoiceLineUpdateSchema.js';
 
 /*
  *     CREATE TABLE IF NOT EXISTS invoice_headers(
@@ -39,6 +39,7 @@ import { invoiceLineUpdateSchema } from './index.js';
  */
 
 const telJoi = Joi.extend(JoiPhoneNumber);
+
 const invoiceHeaderUpdateSchema = Joi.object().keys({
     type: Joi.string().valid('p', 'a', 'f').required(),
     series: Joi.string().max(3).required(),
