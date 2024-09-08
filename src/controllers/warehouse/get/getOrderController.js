@@ -1,5 +1,5 @@
 import { getOrderByNumber } from '../../../services/index.js';
-import { generateError } from '../../../utils/generateError.js';
+import { generateError } from '../../../utils/index.js';
 
 /**
  * Función controladora que devuelve toda la información de un pedido
