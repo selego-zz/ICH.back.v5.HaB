@@ -1,11 +1,10 @@
 import getPool from '../../db/getPool.js';
 
 /**
- * updates a line in the database
- * @param {json} line - line's data to update into the database
- * @returns line's id
+ * Modelo para que actualiza una línea de un pedido en la base de datos
+ * @param {Object} line - Json con los datos de la línea a acctualizar
+ * @description actualiza los datos de la linea suministrada en la base de datos.
  */
-
 const updateLineModel = async (line) => {
     const pool = await getPool();
 

@@ -1,9 +1,10 @@
 import { getPool } from '../../db/index.js';
 
 /**
- * finds the lines of the specified header
- * @param {number} headerId - the id of the headers whose lines you are seeking
- * @returns the lines belonging to the specified header
+ * Modelo para solicitar la información de las líneas de un pedido
+ * @param {number} headerId - Id de la cabecera cuyas líneas queremos consultar
+ * @description - Devuelve las líneas asociadas a la cabecera especificada.
+ * @returns - Devuelve un array de json con toda la información de las líneas asociadas a la cabecera especificada.
  */
 const getHeadersLinesModel = async (headerId) => {
     const pool = await getPool();

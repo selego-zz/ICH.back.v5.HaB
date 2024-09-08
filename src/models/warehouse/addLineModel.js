@@ -1,10 +1,11 @@
 import getPool from '../../db/getPool.js';
 
 /**
- * Inserts a line in database
- * @param {number} orderId - id of the order this line belongs to
- * @param {json} line - line's data to insert into the database
- * @returns line's id
+ * Modelo para que añadir una línea asociada a una cabecera de un pedido en la base de datos
+ * @param {number} orderId - Id de la cabecera a la que está asociada la línea que vamos a insertar
+ * @param {Object} line - Datos en formato Json de la línea del pedido
+ * @description Insertar los datos de la línea suministrada en la base de datos.
+ * @returns - Devuelve el Id de la línea insertada
  */
 const addLineModel = async (orderId, line) => {
     //ha pasado por Joi, así que sabemos que tiene todos los valores obligatorios como mínimo

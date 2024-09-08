@@ -1,9 +1,10 @@
 import { getPool } from '../../db/index.js';
 
 /**
- * Gets the headers with the specified id
- * @param {number} id - id of the order you want
- * @returns json with the specified header data
+ * Modelo para solicitar la información de la cabeceras de un pedido
+ * @param {number} id - Id de la cabecera a devolver
+ * @description - Devuelve las cabeceras del pedido indicado.
+ * @returns - Devuelve un json con toda la información de la cabecera del pedidos que cumpla la condicion
  */
 const getHeaderModel = async (id) => {
     const pool = await getPool();

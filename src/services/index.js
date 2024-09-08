@@ -14,6 +14,7 @@ import {
     getAllOrdersService,
     // lines put
     updateLinesService,
+    updateOrInsertLinesService,
 } from './ordersService.js';
 
 export {
@@ -32,4 +33,5 @@ export {
     getAllOrdersService,
     // lines put
     updateLinesService,
+    updateOrInsertLinesService,
 };

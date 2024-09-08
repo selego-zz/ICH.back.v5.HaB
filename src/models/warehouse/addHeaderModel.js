@@ -1,9 +1,10 @@
 import getPool from '../../db/getPool.js';
 
 /**
- * Insert specified header in the database
- * @param {JSON} header - header's data to insert into the database
- * @returns inserted header id
+ * Modelo para que añadir la cabecera de un pedido a la base de datos
+ * @param {Object} header - Datos de la cabecera del pedido
+ * @description Insertar los datos de la cabecera suministrada en la base de datos.
+ * @returns - Devuelve el Id de la cabecera insertada
  */
 const addHeaderModel = async (header) => {
     //ha pasado por Joi, así que sabemos que tiene todos los valores obligatorios como mínimo

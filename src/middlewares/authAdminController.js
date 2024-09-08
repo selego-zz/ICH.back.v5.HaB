@@ -5,9 +5,16 @@ import generateError from '../utils/generateError.js';
 // tomamos la clave para desencriptar el token
 const { SECRET } = process.env;
 
-//funcion controladora que desencripta el token
-//// si no hay tokem lanza un error
-//// si hay token lo introduce en req.user
+/**
+ * Middleware para autenticar al usuario.
+ * @param {Object} req - El objeto de solicitud.
+ * @param {Object} req.headers - Los encabezados de la solicitud.
+ * @param {string} req.headers.authorization - El token de autenticación.
+ * @param {Object} res - El objeto de respuesta.
+ * @param {Function} next - La función de middleware siguiente.
+ * @description Verifica el token de autenticación y permite el acceso si es válido y tiene rol de 'administrador'.
+ * @env {string} SECRET - La clave secreta para verificar el token de autenticación.
+ */
 const authAdminController = (req, res, next) => {
     try {
         //tomamos el token de la cabecera

@@ -16,10 +16,11 @@ import { getUserByEmailModel } from '../../models/index.js';
  * @param {string} req.body.email - Correo electrónico del usuario
  * @param {Object} res - El objeto de respuesta.
  * @param {string} res.status - Estado de la petición. Valores posibles: 'Ok', 'Error'
- * @param {string} [res.message] - Mensaje explicativo de respuesta o de error
- * @param {Object} [res.data] - Json con el token de autentificación del usuario
+ * @param {string} [res.message] - Mensaje explicativo de respuesta o de error (Opcional)
+ * @param {Object} [res.data] - Json con el token de autentificación del usuario (Opcional)
  * @param {Function} next - La función de middleware siguiente.
- * @description Llama al modelo `getUserByEmailModel` para tomar los datos del usuario, valida la contraseña, y genera un jsonwebtoken, de duración process.env.TOKEN_EXPIRATION.
+ * @description Llama al modelo `getUserByEmailModel` para tomar los datos del usuario, valida la contraseña, y genera un jsonwebtoken.
+ * @env {string} TOKEN_EXPIRATION - duración del token antes de expirar.
  */
 const loginController = async (req, res, next) => {
     try {

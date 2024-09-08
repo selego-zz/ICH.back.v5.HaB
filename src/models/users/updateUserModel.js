@@ -2,6 +2,17 @@ import { getPool } from '../../db/index.js';
 import bcrypt from 'bcrypt';
 
 /**
+ * Modelo para modificar los datos de un usuario en la base de datos
+ * @param {number} id - Id del usuario en la base de datos
+ * @param {string} [username] - Nombre de usuario. (Opcional).
+ * @param {string} [password] - Contraseña del usuario en texto plano. (Opcional).
+ * @param {string} [email] - Correo electrónico del usuario. (Opcional).
+ * @param {string} [code] - Código de cliente, o código de agente, caso de que el rol sea uno de ellos. (Opcional)
+ * @param {string} [role] - El rol del usuario (opcional). Valores posibles: 'administrador', 'empleado', 'cliente', 'comercial'.
+ * @description - Actualiza en la base de datos la información del usuario con los datos especificados
+ */
+
+/**
  * updates the data of an user
  * @param {number} id - the id of the user you want to update
  * @param {string} username - username of the user

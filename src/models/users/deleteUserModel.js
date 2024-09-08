@@ -2,8 +2,9 @@
 import { getPool } from '../../db/index.js';
 
 /**
- * delete the specified user
- * @param {numer} id - the id of the user you want to delete
+ * Modelo para para borrar un usuario de la base de datos.
+ * @param {number} id - Id del usuario a borrar.
+ * @description - Borra el usuario especificado por id de la base de datos
  */
 const deleteUserModel = async (id) => {
     const pool = await getPool();

@@ -2,11 +2,11 @@
 import { getPool } from '../../db/index.js';
 
 /**
- * Finds the info of a user based on his username
- * @param {string} username - the username of the user you are wanting
- * @returns a json with the user info
+ * Modelo para solicitar la información de un usuario de la base de datos
+ * @param {string} username - Nombre del usuario cuya información se necesita
+ * @description - Busca en la base de datos la información del usuario con el nombre de usuario especificado, y la devuelve como json
+ * @returns - Devuelve un json con la información del usuario
  */
-
 const getUserByUsernameModel = async (username) => {
     try {
         // establecemos conexion a la base de datos

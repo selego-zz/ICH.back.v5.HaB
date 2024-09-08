@@ -71,7 +71,14 @@ const INVOICE_LINES_TABLE_SQL = `
     )
         `;
 
-const main = async () => {
+/**
+ * Función que inicializa la base de datos, crea las tablas necesarias, e introduce un usuario administrador
+ * @description Con ayuda de la función getPool, inicializa la base de datos, crea las tablas, e introduce un usuario administrador.
+ * @env {string} ADMIN_USER_USERNAME - Nombre del usuario administrador de la base de datos.
+ * @env {string} ADMIN_USER_PASSWORD - Password del usuario administrador de la base de datos.
+ * @env {string} ADMIN_USER_EMAIL - Email del usuario administrador de la base de datos.
+ */
+const initDb = async () => {
     try {
         const pool = await getPool();
 
@@ -97,7 +104,8 @@ const main = async () => {
         await insertUserModel(
             process.env.ADMIN_USER_USERNAME,
             process.env.ADMIN_USER_PASSWORD,
-            process.env.ADMIN_USER_PASSWORD,
+            process.env.ADMIN_USER_EMAIL,
+            null,
             'administrador',
         );
         console.log('Administrador creado');
@@ -109,4 +117,4 @@ const main = async () => {
     }
 };
 
-main();
+initDb();

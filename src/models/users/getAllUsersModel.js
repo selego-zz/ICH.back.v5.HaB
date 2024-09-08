@@ -2,8 +2,9 @@
 import { getPool } from '../../db/index.js';
 
 /**
- * Finds all users
- * @returns a json with all users info
+ * Modelo para solicitar la información de todos los usuarios
+ * @description - Devuelve toda la información te la tabla usuarios
+ * @returns - Devuelve un array de json con toda la información de la tabla usuarios
  */
 const getAllUsersModel = async () => {
     //iniciamos la base de datos

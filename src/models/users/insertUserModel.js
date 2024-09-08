@@ -4,24 +4,19 @@ import { getPool } from '../../db/index.js';
 import { generateError } from '../../utils/index.js';
 
 /**
- * insert an user into the database
- * @param {string} username - username of the user
- * @param {string} password - password in plain text of the user
- * @param {string} email - email of the user
- * @param {string} code - code of the user if aplies
- * @param {string} role - role of the user, default client
- * @returns inserted user id
+ * Modelo para insertar un usuario en la base de datos
+ * @param {string} username - Nombre de usuario
+ * @param {string} password - Contraseña del usuario en texto plano
+ * @param {string} email - Correo electrónico del usuario
+ * @param {string} [code] - Código de cliente, o código de agente, caso de que el rol sea uno de ellos. (Opcional)
+ * @param {string} [role] - El rol del usuario (opcional). Valores posibles: 'administrador', 'empleado', 'cliente', 'comercial'. Valor por defecto: 'cliente'.
+ * @description - Inserta en la base de datos la información del usuario con los datos especificados
+ * @returns - Devuelve el id del usuario introducido en la base de datos
  */
 const insertUserModel = async (username, password, email, code, role) => {
     // tomamos el pool de la base de datos
     const pool = await getPool();
 
-    /*
-     *     INSERT INTO users
-     *         (username, password, email, role)
-     *         VALUES
-     *         (?, ?, 'administrador')
-     */
     //comprobamos que no exista ni el usuario, ni el email (caso de que suministren email)
     let [resultado] = await pool.query(
         'SELECT id FROM users WHERE username = ?',

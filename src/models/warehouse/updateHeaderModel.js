@@ -1,10 +1,10 @@
 import getPool from '../../db/getPool.js';
 
 /**
- * updates a header in the database
- * @param {json} header - header's data to insert into the database
+ * Modelo para que actualiza la cabecera de un pedido en la base de datos
+ * @param {Object} header - Json con los datos de la cabecera del pedido
+ * @description actualiza los datos de la cabecera suministrada en la base de datos.
  */
-
 const updateHeaderModel = async (header) => {
     const pool = await getPool();
 
