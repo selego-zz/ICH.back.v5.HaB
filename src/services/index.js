@@ -4,10 +4,11 @@ import {
     addAllOrdersService,
     //cabecera get
     getOrderService,
-    getOrderByNumber,
+    getOrderByNumberService,
     // cabecera put
     updateHeaderService,
     updateOrderService,
+    updateHeadersTypeService,
     // lines get
     addLinesService,
     addLineService,
@@ -15,6 +16,7 @@ import {
     // lines put
     updateLinesService,
     updateOrInsertLinesService,
+    updateLinesTypeService,
 } from './ordersService.js';
 
 export {
@@ -23,10 +25,11 @@ export {
     addAllOrdersService,
     //cabecera get
     getOrderService,
-    getOrderByNumber,
+    getOrderByNumberService,
     // cabecera put
     updateHeaderService,
     updateOrderService,
+    updateHeadersTypeService,
     // lines get
     addLinesService,
     addLineService,
@@ -34,4 +37,5 @@ export {
     // lines put
     updateLinesService,
     updateOrInsertLinesService,
+    updateLinesTypeService,
 };

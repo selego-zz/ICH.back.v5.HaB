@@ -13,16 +13,10 @@ import {
     updateLineController,
     updateOrderController,
     updateServedUnitsController,
+    updateOrderTypeController,
+    updateLineTypeController,
 } from './put/index.js';
-import {
-    markLineAsReadyController,
-    markOrderAsReadyController,
-    markOrderAsSentController,
-    sendTransportOrderController,
-    unmarkLineAsReadyController,
-    unmarkOrderAsReadyController,
-    unmarkOrderAsSentController,
-} from './readyAndSent/index.js';
+import { sendTransportOrderController } from './readyAndSent/index.js';
 
 export {
     deleteAllOrdersController,
@@ -35,12 +29,8 @@ export {
     addAllOrdersController,
     updateLineController,
     updateOrderController,
+    updateOrderTypeController,
+    updateLineTypeController,
     updateServedUnitsController,
-    markLineAsReadyController,
-    markOrderAsReadyController,
-    markOrderAsSentController,
     sendTransportOrderController,
-    unmarkLineAsReadyController,
-    unmarkOrderAsReadyController,
-    unmarkOrderAsSentController,
 };

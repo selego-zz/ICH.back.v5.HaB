@@ -10,15 +10,11 @@ import {
     addOrderController,
     addAllOrdersController,
     updateLineController,
+    updateLineTypeController,
+    updateOrderTypeController,
     updateOrderController,
     updateServedUnitsController,
-    markLineAsReadyController,
-    markOrderAsReadyController,
-    markOrderAsSentController,
     sendTransportOrderController,
-    unmarkLineAsReadyController,
-    unmarkOrderAsReadyController,
-    unmarkOrderAsSentController,
 } from '../controllers/warehouse/index.js';
 
 import {
@@ -61,44 +57,17 @@ router.put(
     updateServedUnitsController,
 );
 
-//PUT [`/api/warehouse/check/:type/:series/:number`] - Marca un pedido para enviar. P->A
+//-   **PUT** - [`/api/warehouse/changeType/:type/:series/:number`] - Cambia el tipo de un pedido. P, A, F
 router.put(
-    `/warehouse/check/:type/:series/:number`,
+    `/api/warehouse/changeType/:type/:series/:number`,
     authWorkerController,
-    markOrderAsReadyController,
+    updateOrderTypeController,
 );
-//PUT [`/api/warehouse/check/:type/:series/:number/:line`] - Marca una línea para enviar P->A
+//-   **PUT** - [`/api/warehouse/changeType/:type/:series/:number/:line`] - Cambia el tipo de una línea. P, A, F
 router.put(
-    `/warehouse/check/:type/:series/:number/:line`,
+    `/api/warehouse/changeType/:type/:series/:number/:line`,
     authWorkerController,
-    markLineAsReadyController,
-);
-
-//PUT [`/api/warehouse/uncheck/:type/:series/:number`] - Desmarca un pedido para enviar. A->P
-router.put(
-    `/warehouse/uncheck/:type/:series/:number`,
-    authWorkerController,
-    unmarkOrderAsReadyController,
-);
-//PUT [`/api/warehouse/uncheck/:type/:series/:number/:line`] - Desmarca una línea para enviar A-P
-router.put(
-    `/warehouse/uncheck/:type/:series/:number/:line`,
-    authWorkerController,
-    unmarkLineAsReadyController,
-);
-
-//PUT [`/api/warehouse/send/:type/:series/:number`] - Marca un pedido como enviado. A->F
-router.put(
-    `/warehouse/send/:type/:series/:number`,
-    authWorkerController,
-    markOrderAsSentController,
-);
-
-//PUT [`/api/warehouse/unsend/:type/:series/:number`] - Desmarca un pedido como enviado. F->A
-router.put(
-    `/warehouse/unsend/:type/:series/:number`,
-    authWorkerController,
-    unmarkOrderAsSentController,
+    updateLineTypeController,
 );
 
 //PUT [`/api/warehouse/shippingemail`] - envía un correo electrónico a la empresa de transporte

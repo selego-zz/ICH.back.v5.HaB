@@ -105,6 +105,16 @@ O cambiar los permisos de los usuarios
 | createdAt     | DATETIME         | Fecha y hora de creación del usuario    |
 | modifiedAt    | DATETIME         | Fecha y hora de última modificación     |
 
+### shipping_company
+
+| Campo   | Tipo         | Descripción                        |
+| ------- | ------------ | ---------------------------------- |
+| id      | INT UNSIGNED | Identificador único de la linea    |
+| name    | VARCHAR(50)  | Nombre de la empresa de transporte |
+| phone   | VARCHAR(15)  | Teléf de la empresa de transporte  |
+| email   | VARCHAR(50)  | Mail de la empresa de transporte   |
+| default | BOOLEAN      | Empresa de transporte habitual     |
+
 ## Endpoints del usuario
 
 ✅
@@ -130,18 +140,23 @@ O cambiar los permisos de los usuarios
 -   **PUT** - [`/api/warehouse/line`] - Corrige una línea ✅
 -   **PUT** - [`/api/warehouse/Units`] - Cambia el número de unidades que se enviarán de una línea ✅
 
--   **PUT** - [`/api/warehouse/check/:type/:series/:number`] - Marca un pedido para enviar. P->A
--   **PUT** - [`/api/warehouse/check/:type/:series/:number/:line`] - Marca una línea para enviar P->A
-
--   **PUT** - [`/api/warehouse/uncheck/:type/:series/:number`] - Desmarca un pedido para enviar. A->P
--   **PUT** - [`/api/warehouse/uncheck/:type/:series/:number/:line`] - Desmarca una línea para enviar A-P
-
--   **PUT** - [`/api/warehouse/send/:type/:series/:number`] - Marca un pedido como enviado. A->F
-
--   **PUT** - [`/api/warehouse/unsend/:type/:series/:number`] - Desmarca un pedido como enviado. F->A
+-   **PUT** - [`/api/warehouse/changeType/:type/:series/:number`] - Cambia el tipo de un pedido. P, A, F ✅
+-   **PUT** - [`/api/warehouse/changeType/:type/:series/:number/:line`] - Cambia el tipo de una línea. P, A, F ✅
 
 -   **PUT** - [`/api/warehouse/shippingemail`] - envía un correo electrónico a la empresa de transporte
 
 -   **DELETE** - [`/api/warehouse`] -Elimina el listado completo de pedidos
 -   **DELETE** - [`/api/warehouse/:type/:series/:number`] - Elimina un pedido
 -   **DELETE** - [`/api/warehouse/:type/:series/:number/:line`] - Elimina una linea
+
+## Endpoints de empresa de transporte
+
+-   **POST** - [`/api/shipping`] - Inserta una empresa de transporte
+
+-   **GET** - [`/api/shipping`] - Retorna el listado completo de empresas de transporte
+-   **GET** - [`/api/shipping/:id`] - Retorna los datos de una empresa de transporte
+
+-   **PUT** - [`/api/shipping`] - Actualiza los datos de una empresa de transporte
+-   **PUT** - [`/api/setdefault/:id`] - Establece una empresa de transporte como la de uso habitual
+
+-   **DELETE** - [`/api/shipping/:id`] -Elimina los datos de una empresa de transporte

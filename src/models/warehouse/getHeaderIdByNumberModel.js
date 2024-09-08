@@ -4,7 +4,7 @@ import getPool from '../../db/getPool.js';
  * Modelo para buscar la id de una cabecera en base a su tipo, serie y número
  * @param {string} type - Tipo de la cabecera cuyo id buscamos. Valores posibles: 'p', 'a', 'f'
  * @param {string} serie - Serie de la cabecera cuyo id buscamos
- * @param {number} number - Número de la cabecera cuyo id buscamos
+ * @param {string} number - Número de la cabecera cuyo id buscamos
  * @description - Busca la id de la cabeceras cuyos datos coincidan con los suministrados
  * @returns - Devuelve la id de la cabeceras cuyos datos coincidan con los suministrados
  */

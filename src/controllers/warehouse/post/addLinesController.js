@@ -11,7 +11,7 @@ import { generateError } from '../../../utils/index.js';
  * @param {Object} req.params - Parametros de la ruta
  * @param {string} req.params.type - Tipo del pedido en el que insertar las líneas
  * @param {string} req.params.serie - Serie del pedido en el que insertar las líneas
- * @param {number} req.params.number - Número del pedido en el que insertar las líneas
+ * @param {string} req.params.number - Número del pedido en el que insertar las líneas
  * @param {Object[]} req.body - Array de Json con toda la información de las líneas a insertar
  * @param {Object} res - El objeto de respuesta.
  * @param {string} res.status - Estado de la petición. Valores posibles: 'Ok', 'Error'

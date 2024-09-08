@@ -3,7 +3,7 @@ import getPool from '../../db/getPool.js';
 /**
  * finds a header's id based upon specified arguments
  * @param {number}  header_id - Id de la cabecera asociada a la línea cuyo id se busca.
- * @param {number} number - Número de línea de la línea cuyo id se busca.
+ * @param {string} number - Número de línea de la línea cuyo id se busca.
  * @description - Busca la id de la línea cuyos datos coincidan con los suministrados
  * @returns - Devuelve la id de la línea cuyos datos coincidan con los suministrados
  */

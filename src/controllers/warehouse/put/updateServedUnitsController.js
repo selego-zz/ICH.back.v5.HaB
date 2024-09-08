@@ -7,9 +7,9 @@ import { servedUnitsUpdateSchema } from '../../../schemas/index.js';
  * @middleware authWorkerController - Middleware para comprobar permisos de inserción.
  * @param {Object} req - Objeto request
  * @param {Object} req.body - Json con la información a actualizar
- * @param {char} req.body.type - Tipo del pedido a actualizar
+ * @param {string} req.body.type - Tipo del pedido a actualizar
  * @param {string} req.body.series - Serie del pedido a actualizar
- * @param {number} req.body.number - Número del pedido a actualizar
+ * @param {string} req.body.number - Número del pedido a actualizar
  * @param {number} req.body.line - Número de línea de la línea del pedido a actualizar
  * @param {number} req.body.served_units - Nueva cantidad de producto servida
  * @param {Object} res - El objeto de respuesta.

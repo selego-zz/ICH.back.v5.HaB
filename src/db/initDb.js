@@ -71,6 +71,18 @@ const INVOICE_LINES_TABLE_SQL = `
     )
         `;
 
+const SHIPPING_COMPANY_TABLE_SQL = `
+    CREATE TABLE IF NOT EXISTS shipping_company(
+        id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+        name VARCHAR(50) NOT NULL,
+        phone VARCHAR(15) NOT NULL,
+        mail VARCHAR(50) NOT NULL,
+        defaultSelection BOOLEAN DEFAULT FALSE,
+        createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+        modifiedAt DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+        `;
+
 /**
  * Función que inicializa la base de datos, crea las tablas necesarias, e introduce un usuario administrador
  * @description Con ayuda de la función getPool, inicializa la base de datos, crea las tablas, e introduce un usuario administrador.
@@ -97,6 +109,8 @@ const initDb = async () => {
         await pool.query(INVOICE_HEADERS_TABLE_SQL);
         console.log('Creando tabla de líneas de facturación...');
         await pool.query(INVOICE_LINES_TABLE_SQL);
+        console.log('Creando tabla de empresa de transporte...');
+        await pool.query(SHIPPING_COMPANY_TABLE_SQL);
         console.log('Tablas creadas');
 
         //creamos el primer usuario administrador

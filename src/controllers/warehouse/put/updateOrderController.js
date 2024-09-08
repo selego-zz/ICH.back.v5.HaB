@@ -7,9 +7,9 @@ import { invoiceHeaderUpdateSchema } from '../../../schemas/index.js';
  * @middleware authWorkerController - Middleware para comprobar permisos de inserción.
  * @param {Object} req - Objeto request
  * @param {Object} req.body - Json con la información a actualizar
- * @param {char} req.body.type - Tipo del pedido a actualizar
+ * @param {string} req.body.type - Tipo del pedido a actualizar
  * @param {string} req.body.series - Serie del pedido a actualizar
- * @param {number} req.body.number - Número del pedido a actualizar
+ * @param {string} req.body.number - Número del pedido a actualizar
  * @param {Object} res - El objeto de respuesta.
  * @param {string} res.status - Estado de la petición. Valores posibles: 'Ok', 'Error'
  * @param {string} res.message - Mensaje explicativo de respuesta o de error (Opcional)

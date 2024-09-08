@@ -1,4 +1,4 @@
-import generateError from '../utils/generateError.js';
+import { generateError, sendMail } from '../utils/index.js';
 
 import {
     // importamos escritores
@@ -15,6 +15,9 @@ import {
     //importamos actualizadores
     updateLineModel,
     updateHeaderModel,
+
+    //empresa de transporte
+    getShippingMail,
 } from '../models/index.js';
 
 /*******************************************************************\
@@ -141,13 +144,13 @@ const getOrderService = async (orderId) => {
  * Servicio que devuelve el pedidos con los tipo, serie y número suministrados
  * @param {string} type - Tipo del pedido a devolver.
  * @param {string} serie - Serie del pedido a devolver.
- * @param {number} number - Número del pedido a devolver.
+ * @param {string} number - Número del pedido a devolver.
  * @param {string} role - Rol de quien realiza la solicitud. Valores posibles: 'administrador', 'empleado', 'cliente', 'comercial'.
  * @param {number} [id] - Id de quien realiza la solicitud, solo necesario en caso de cliente o agente. (Opiconal)
  * @description - Devuelve toda la información del pedido con los tipo serie y número suministrados. En caso de que el rol sea cliente, solo devolverá la información si el pedido pertenece al cliente con el id suministrado. En caso de que el rol sea agente, solo devolverá la información si el pedido pertenece al agente con el id suministrado
  * @returns - Devuelve un Json con la información del pedido que se ajuste a los requisitos
  */
-const getOrderByNumber = async (type, serie, number, role, id) => {
+const getOrderByNumberService = async (type, serie, number, role, id) => {
     if (!role) generateError('Permisos insuficientes', 400);
 
     const orderId = await getHeaderIdByNumberModel(type, serie, number);
@@ -179,7 +182,11 @@ const getOrderByNumber = async (type, serie, number, role, id) => {
  * @description - se asegura de actualizar solo los datos de cabecera mediante el servicio 'getHeaderData'. Actualiza mediante el modelo 'updateHeaderModel' todos los datos de la cabecera que se suministren
  */
 const updateHeaderService = async (order) => {
-    const orderId = getOrderByNumber(order.type, order.serie, order.number);
+    const orderId = getOrderByNumberService(
+        order.type,
+        order.serie,
+        order.number,
+    );
     if (orderId === undefined && order.id === undefined)
         generateError('Pedido no encontrado', 404);
     if (order.id && order.id != orderId)
@@ -193,12 +200,34 @@ const updateHeaderService = async (order) => {
 };
 
 /**
+ * Servicio que actualiza el tipo de un pedido dado su tipo, serie y numero
+ * @param {string} type - Tipo del pedido cuyo tipo queremos actualizar.
+ * @param {string} serie - Serie del pedido cuyo tipo queremos actualizar.
+ * @param {string} number - Número del pedido cuyo tipo queremos actualizar.
+ * @param {string} newType - Nuevo tipo del pedido cuyo tipo queremos actualizar.
+ * @description - Actualiza mediante 'updateHeaderModel' el tipo del pedido al nuevo pedido
+ */
+const updateHeadersTypeService = async (type, serie, number, newType) => {
+    const id = getOrderByNumberService(type, serie, number);
+    if (id === undefined) generateError('Pedido no encontrado', 404);
+    const header = {
+        id,
+        type: newType,
+    };
+    await updateHeaderModel(header);
+};
+
+/**
  * Servicio que actualiza los datos de de un pedido
  * @param {Object} order - Json con los datos del pedido que se quiere modificar.
  * @description - actualiza todos los datos del pedido suministrado. hace uso del servicio  'updateHeaderModel' para actualizar la cabecera, y updateOrInsertLinesService para actualizar las líneas o grabar las nuevas, Si en el pedido original hay líneas que no se suministran en este, no las borra, solo añade o cambia
  */
 const updateOrderService = async (order) => {
-    const orderId = getOrderByNumber(order.type, order.serie, order.number);
+    const orderId = getOrderByNumberService(
+        order.type,
+        order.serie,
+        order.number,
+    );
     if (orderId === undefined && order.id === undefined)
         throw new Error('Pedido no encontrado');
     if (order.id && order.id != orderId)
@@ -230,7 +259,7 @@ const updateOrderService = async (order) => {
  * Servicio que añade líneas a un pedido especificado
  * @param {string} type - Tipo del pedido donde insertar las líneas.
  * @param {string} serie - Serie del pedido donde insertar las líneas.
- * @param {number} number - Número del pedido donde insertar las líneas.
+ * @param {string} number - Número del pedido donde insertar las líneas.
  * @param {Object[]} lines - Array de JSON con la informaicón de las líneas a ingresar en la base de datos
  * @description - Añade mediante el modelo 'addLineModel' las líneas a la cabecera indicada por el tipo, serie y número, indicado. Hace uso del modelo 'getHeaderIdByNumberModel' para obtener el id de la cabecera para asociar a ella las líneas
  */
@@ -258,7 +287,7 @@ const addLineService = async (headerId, line) => {
  * Servicio que añade una línea a un pedido especificado
  * @param {string} type - Tipo del pedido donde insertar la línea.
  * @param {string} serie - Serie del pedido donde insertar la línea.
- * @param {number} number - Número del pedido donde insertar la línea.
+ * @param {string} number - Número del pedido donde insertar la línea.
  * @param {Object} lines - JSON con la informaicón de las líneas a ingresar en la base de datos
  * @description - Añade mediante el serrvicio 'addLineService' la línea a la cabecera con los datos indicado.
  */
@@ -334,6 +363,24 @@ const updateOrInsertLinesService = async (lines) => {
     }
 };
 
+/**
+ * Servicio que actualiza el tipo de una línea dado su tipo, serie y numero
+ * @param {string} type - Tipo de la linea cuyo tipo queremos actualizar.
+ * @param {string} serie - Serie de la linea cuyo tipo queremos actualizar.
+ * @param {string} number - Número de la lineacuyo tipo queremos actualizar.
+ * @param {string} newType - Nuevo tipo de la linea cuyo tipo queremos actualizar.
+ * @description - Actualiza mediante 'updateLineModel' el tipo de la línea al indicado
+ */
+const updateLinesTypeService = async (type, serie, number, newType) => {
+    const id = getOrderByNumberService(type, serie, number);
+    if (id === undefined) generateError('Pedido no encontrado', 404);
+    const line = {
+        id,
+        type: newType,
+    };
+    await updateLineModel(line);
+};
+
 /*******************************************************************\
 *********************** LINEAS - PUT *******************************
 \*******************************************************************/
@@ -346,7 +393,7 @@ const updateOrInsertLinesService = async (lines) => {
  * Servicio que devuelve el id de una línea en base a su tipo, serie y número
  * @param {string} type - Tipo del pedido cuyo id se busca.
  * @param {string} serie - Serie del pedido cuyo id se busca.
- * @param {number} number - Número del pedido cuyo id se busca.
+ * @param {string} number - Número del pedido cuyo id se busca.
  * @param {number} line - Número de línea de la línea cuyo id se busca.
  * @description - Devuelve el id de la línea con los datos indicados.
  * @return - Devuelve el id de la línea con los datos indicados.
@@ -357,7 +404,86 @@ const getLineIdByNumberService = async (type, serie, number, line) => {
 };
 
 /*******************************************************************\
-*********************** LINEAS - GET *******************************
+*********************** LINEAS - GET ********************************
+\*******************************************************************/
+
+/*******************************************************************\
+*********************** LINEAS - UTILS ******************************
+\*******************************************************************/
+
+/**
+ * Servicio que envía un correo electrónico a la empresa de transporte con la infomación de recogida
+ * @description - Toma la información de los pedidos listos en espera de enviar (type = 'a'), y construye un correo electronico con la informaación de los mismos, que posteriormente envía al transporte
+ * @return - Devuelve el id de la línea con los datos indicados.
+ */
+const sendTransportOrderService = async () => {
+    //seleccionamos los pedidos que haya para enviar, si no hay, no se envía mail
+    const orders = await getAllOrdersService('a', 'empleado');
+    if (orders.length < 1)
+        generateError('No se han encontrado pedidos listos para enviar', 404);
+    // seleccionar el corrego electrónico de la empresa de transporte principal
+    const email = await getShippingMail();
+    const subject = `solicitud de recogida para ${process.env.SHIPPING_INFO_FISCAL_NAME} en fecha ${new Date().toDateString()}`;
+    //const body =
+    // vamos a construir una tabla, que contendrá las siguientes columnas:
+    //// nº Albarán, Nombre Fiscal, Nombre de envío, teléfono, Dirección, Código Postal, Población, Pais, nº de Bultos, Información ADR
+    //// la provincia no se suministra, por que es redundante con el código postal, y en los programas de facturación no suele incluirse
+
+    let body = `
+<h1>Orden de recogida para ${process.env.SHIPPING_INFO_FISCAL_NAME} en fecha ${new Date().toDateString()}</h1>
+<p>Por favor, deseariamos que procedan a la recogida de la mercancía detallada a continuación en nuestros almacenes situados en ${process.env.SHIPPING_INFO_WAREHOSE_DIR}</p>
+<table>
+<tr>
+<th>Albarán</th>
+<th>Nombre Fiscal</th>
+<th>Denominación</th>
+<th>Teléfono</th>
+<th>Dirección</th>
+<th>C. Postal</th>
+<th>Población</th>
+<th>País</th>
+<th>Bultos</th>
+</tr>
+</table>
+`;
+    for (const order of orders) {
+        body += makeSendingInfo(order);
+    }
+    body += `</table> <p></p><p>Atentamente, ${process.env.SHIPPING_INFO_FISCAL_NAME} </p>`;
+    sendMail(email, subject, body);
+};
+
+//no especifico JSDoc para esta función por que no quiero que aparezca en documentación
+//de todas maneras no es muy complicado lo que hace: toma los datos de una línea, y le añade <td> y </td> para meterlas en casillas
+const makeSendingInfo = (
+    series,
+    number,
+    fiscal_name,
+    shipping_name,
+    shipping_phone,
+    shipping_address,
+    shipping_postal_code,
+    shipping_city,
+    shipping_country,
+    packages,
+) => {
+    return `
+<tr>
+    <td>${series}/${number}</td>
+    <td>${series}</td>
+    <td>${fiscal_name}</td>
+    <td>${shipping_name}</td>
+    <td>${shipping_phone}</td>
+    <td>${shipping_address}</td>
+    <td>${shipping_postal_code}</td>
+    <td>${shipping_city}</td>
+    <td>${shipping_country}</td>
+    <td>${packages}</td>
+</tr>
+    `;
+};
+/*******************************************************************\
+*********************** LINEAS - UTILS ******************************
 \*******************************************************************/
 
 export {
@@ -366,10 +492,11 @@ export {
     addAllOrdersService,
     //cabecera get
     getOrderService,
-    getOrderByNumber,
+    getOrderByNumberService,
     // cabecera put
     updateHeaderService,
     updateOrderService,
+    updateHeadersTypeService,
     // lines get
     addLinesService,
     addLineService,
@@ -378,6 +505,10 @@ export {
     // lines put
     updateLinesService,
     updateOrInsertLinesService,
+    updateLinesTypeService,
     // lines get
     getLineIdByNumberService,
+
+    //utils
+    sendTransportOrderService,
 };

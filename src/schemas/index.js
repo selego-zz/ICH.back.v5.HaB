@@ -7,6 +7,8 @@ import allLinesSchema from './allLinesSchema.js';
 import invoiceHeaderUpdateSchema from './invoiceHeaderUpdateSchema.js';
 import invoiceLineUpdateSchema from './invoiceLineUpdateSchema.js';
 import servedUnitsUpdateSchema from './servedUnitsUpdateSchema.js';
+import orderTypeSchema from './orderTypeSchema.js';
+import lineTypeSchema from './lineTypeSchema.js';
 
 export {
     userSchema,
@@ -18,4 +20,6 @@ export {
     ordersSchema,
     allLinesSchema,
     servedUnitsUpdateSchema,
+    orderTypeSchema,
+    lineTypeSchema,
 };
