@@ -1,5 +1,5 @@
 import { deleteOrdersLineByNumerService } from '../../../services/index.js';
-import generateError from '../../../utils/index.js';
+import { generateError } from '../../../utils/index.js';
 /**
  * Función controladora que elimina una línea de la base de datos
  * @middleware authUserController - Middleware para comprobar permisos de lectura.

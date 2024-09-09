@@ -1,5 +1,5 @@
 import { deleteOrderService } from '../../../services/index.js';
-import generateError from '../../../utils/index.js';
+import { generateError } from '../../../utils/index.js';
 /**
  * Función controladora que elimina un pedido de la base de datos
  * @middleware authUserController - Middleware para comprobar permisos de lectura.
