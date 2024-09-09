@@ -9,6 +9,8 @@ import invoiceLineUpdateSchema from './invoiceLineUpdateSchema.js';
 import servedUnitsUpdateSchema from './servedUnitsUpdateSchema.js';
 import orderTypeSchema from './orderTypeSchema.js';
 import lineTypeSchema from './lineTypeSchema.js';
+import shippingCompanySchema from './shippingCompanySchema.js';
+import shippingCompanyUpdateSchema from './shippingCompanyUpdateSchema.js';
 
 export {
     userSchema,
@@ -22,4 +24,6 @@ export {
     servedUnitsUpdateSchema,
     orderTypeSchema,
     lineTypeSchema,
+    shippingCompanySchema,
+    shippingCompanyUpdateSchema,
 };

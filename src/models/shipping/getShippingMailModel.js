@@ -5,7 +5,7 @@ import { getPool } from '../../db/index.js';
  * @description - Devuelve el correo electrónico de la empresa de transporte seleccionada como epresa por defecto
  * @returns - Devuelve un string con  el correo electrónico de la empresa de transporte seleccionada como epresa por defecto
  */
-const getShippingMail = async () => {
+const getShippingMailModel = async () => {
     const pool = await getPool();
 
     const [res] = await pool.query(
@@ -15,4 +15,4 @@ const getShippingMail = async () => {
     return res[0].mail;
 };
 
-export default getShippingMail;
+export default getShippingMailModel;

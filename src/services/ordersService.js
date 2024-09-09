@@ -24,7 +24,7 @@ import {
     deleteLineModel,
 
     //empresa de transporte
-    getShippingMail,
+    getShippingMailModel,
 } from '../models/index.js';
 
 /*******************************************************************\
@@ -499,7 +499,7 @@ const sendTransportOrderService = async () => {
     if (orders.length < 1)
         generateError('No se han encontrado pedidos listos para enviar', 404);
     // seleccionar el corrego electrónico de la empresa de transporte principal
-    const email = await getShippingMail();
+    const email = await getShippingMailModel();
     if (!email) generateError('No se ha encontrado email de transporte', 404);
     const subject = `solicitud de recogida para ${process.env.SHIPPING_INFO_FISCAL_NAME} en fecha ${new Date().toDateString()}`;
     //const body =

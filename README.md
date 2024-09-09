@@ -143,11 +143,11 @@ O cambiar los permisos de los usuarios
 -   **PUT** - [`/api/warehouse/changeType/:type/:series/:number`] - Cambia el tipo de un pedido. P, A, F ✅
 -   **PUT** - [`/api/warehouse/changeType/:type/:series/:number/:line`] - Cambia el tipo de una línea. P, A, F ✅
 
--   **PUT** - [`/api/warehouse/shippingemail`] - envía un correo electrónico a la empresa de transporte
+-   **PUT** - [`/api/warehouse/shippingemail`] - envía un correo electrónico a la empresa de transporte ✅
 
--   **DELETE** - [`/api/warehouse`] -Elimina el listado completo de pedidos
--   **DELETE** - [`/api/warehouse/:type/:series/:number`] - Elimina un pedido
--   **DELETE** - [`/api/warehouse/:type/:series/:number/:line`] - Elimina una linea
+-   **DELETE** - [`/api/warehouse`] -Elimina el listado completo de pedidos ✅
+-   **DELETE** - [`/api/warehouse/:type/:series/:number`] - Elimina un pedido ✅
+-   **DELETE** - [`/api/warehouse/:type/:series/:number/:line`] - Elimina una linea ✅
 
 ## Endpoints de empresa de transporte
 
@@ -157,6 +157,6 @@ O cambiar los permisos de los usuarios
 -   **GET** - [`/api/shipping/:id`] - Retorna los datos de una empresa de transporte
 
 -   **PUT** - [`/api/shipping`] - Actualiza los datos de una empresa de transporte
--   **PUT** - [`/api/setdefault/:id`] - Establece una empresa de transporte como la de uso habitual
+-   **PUT** - [`/api/shipping/setdefault/:id`] - Establece una empresa de transporte como la de uso habitual
 
 -   **DELETE** - [`/api/shipping/:id`] -Elimina los datos de una empresa de transporte

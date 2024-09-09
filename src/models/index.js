@@ -28,7 +28,18 @@ import {
     updateLineModel,
 } from './warehouse/index.js';
 
-import { getShippingMail } from './shipping/index.js';
+import {
+    addShippingModel,
+    deleteShippingByIdModel,
+    getShippingByIdModel,
+    getShippingByNameModel,
+    getShippingCompaniesModel,
+    getShippingIdByNameModel,
+    getShippingMailModel,
+    removeDefaultOptionModel,
+    setDefaultOptionModel,
+    updateShippingModel,
+} from './shipping/index.js';
 export {
     // user Models
     insertUserModel,
@@ -57,5 +68,14 @@ export {
     updateHeaderModel,
     updateLineModel,
     //shipping
-    getShippingMail,
+    addShippingModel,
+    deleteShippingByIdModel,
+    getShippingByIdModel,
+    getShippingByNameModel,
+    getShippingCompaniesModel,
+    getShippingIdByNameModel,
+    getShippingMailModel,
+    removeDefaultOptionModel,
+    setDefaultOptionModel,
+    updateShippingModel,
 };

@@ -8,7 +8,8 @@ import { getPool } from '../../db/index.js';
  */
 const deleteUserModel = async (id) => {
     const pool = await getPool();
-    await pool.query('DELETE FROM USERS WHERE ID = ?', [id]);
+    const [res] = await pool.query('DELETE FROM USERS WHERE ID = ?', [id]);
+    return res.affectedRows;
 };
 
 export default deleteUserModel;

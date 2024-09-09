@@ -37,7 +37,7 @@ const addUserController = async (req, res, next) => {
         //username y password no son undefinded, por que se ha validado, los otros son opcionales
         await insertUserModel(username, password, email, code, role);
 
-        res.send({
+        res.status(201).send({
             status: 'Ok',
             message: 'Usuario insertado en la base de datos',
         });

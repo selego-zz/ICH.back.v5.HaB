@@ -10,7 +10,11 @@ import cors from 'cors';
 const { PORT } = process.env;
 
 //importamos las rutas
-import { userRouter, warehoseRouter } from './src/routes/index.js';
+import {
+    userRouter,
+    warehoseRouter,
+    shippingRouter,
+} from './src/routes/index.js';
 
 //creamos el servidor
 const app = express();
@@ -27,6 +31,7 @@ app.use(express.json());
 //middleware para indicar las rutas
 app.use('/api', userRouter);
 app.use('/api', warehoseRouter);
+app.use('/api', shippingRouter);
 
 //middleware de manejo de errores
 // eslint-disable-next-line no-unused-vars
