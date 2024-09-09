@@ -17,6 +17,8 @@ import {
     updateLinesService,
     updateOrInsertLinesService,
     updateLinesTypeService,
+    //utils
+    sendTransportOrderService,
 } from './ordersService.js';
 
 export {
@@ -38,4 +40,6 @@ export {
     updateLinesService,
     updateOrInsertLinesService,
     updateLinesTypeService,
+    //utils
+    sendTransportOrderService,
 };

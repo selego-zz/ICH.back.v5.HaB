@@ -1,4 +1,4 @@
-import { generateError, sendMail } from '../utils/index.js';
+import { generateError, sendHtmlMail } from '../utils/index.js';
 
 import {
     // importamos escritores
@@ -423,6 +423,7 @@ const sendTransportOrderService = async () => {
         generateError('No se han encontrado pedidos listos para enviar', 404);
     // seleccionar el corrego electrónico de la empresa de transporte principal
     const email = await getShippingMail();
+    if (!email) generateError('No se ha encontrado email de transporte', 404);
     const subject = `solicitud de recogida para ${process.env.SHIPPING_INFO_FISCAL_NAME} en fecha ${new Date().toDateString()}`;
     //const body =
     // vamos a construir una tabla, que contendrá las siguientes columnas:
@@ -432,7 +433,7 @@ const sendTransportOrderService = async () => {
     let body = `
 <h1>Orden de recogida para ${process.env.SHIPPING_INFO_FISCAL_NAME} en fecha ${new Date().toDateString()}</h1>
 <p>Por favor, deseariamos que procedan a la recogida de la mercancía detallada a continuación en nuestros almacenes situados en ${process.env.SHIPPING_INFO_WAREHOSE_DIR}</p>
-<table>
+<table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;">
 <tr>
 <th>Albarán</th>
 <th>Nombre Fiscal</th>
@@ -443,45 +444,33 @@ const sendTransportOrderService = async () => {
 <th>Población</th>
 <th>País</th>
 <th>Bultos</th>
+<th>ADR</th>
 </tr>
-</table>
 `;
     for (const order of orders) {
-        body += makeSendingInfo(order);
-    }
-    body += `</table> <p></p><p>Atentamente, ${process.env.SHIPPING_INFO_FISCAL_NAME} </p>`;
-    sendMail(email, subject, body);
-};
-
-//no especifico JSDoc para esta función por que no quiero que aparezca en documentación
-//de todas maneras no es muy complicado lo que hace: toma los datos de una línea, y le añade <td> y </td> para meterlas en casillas
-const makeSendingInfo = (
-    series,
-    number,
-    fiscal_name,
-    shipping_name,
-    shipping_phone,
-    shipping_address,
-    shipping_postal_code,
-    shipping_city,
-    shipping_country,
-    packages,
-) => {
-    return `
+        body += `
 <tr>
-    <td>${series}/${number}</td>
-    <td>${series}</td>
-    <td>${fiscal_name}</td>
-    <td>${shipping_name}</td>
-    <td>${shipping_phone}</td>
-    <td>${shipping_address}</td>
-    <td>${shipping_postal_code}</td>
-    <td>${shipping_city}</td>
-    <td>${shipping_country}</td>
-    <td>${packages}</td>
+    <td>${order.series}/${order.number}</td>
+    <td>${order.fiscal_name}</td>
+    <td>${order.shipping_name}</td>
+    <td>${order.shipping_phone}</td>
+    <td>${order.shipping_address}</td>
+    <td>${order.shipping_postal_code}</td>
+    <td>${order.shipping_city}</td>
+    <td>${order.shipping_country}</td>
+    <td>${order.packages}</td>
+    <td>`;
+        for (const line of order.lines) {
+            body += line.adr_text ? '<p>' + line.adr_text + '</p>' : '';
+        }
+        body += `</td>
 </tr>
     `;
+    }
+    body += `</table> <p></p><p>Atentamente, ${process.env.SHIPPING_INFO_FISCAL_NAME} </p>`;
+    return await sendHtmlMail(email, subject, body);
 };
+
 /*******************************************************************\
 *********************** LINEAS - UTILS ******************************
 \*******************************************************************/

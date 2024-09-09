@@ -9,10 +9,10 @@ const getShippingMail = async () => {
     const pool = await getPool();
 
     const [res] = await pool.query(
-        'SELECT email FROM shipping_company WHERE defaultSelection = true',
+        'SELECT mail FROM shipping_company WHERE defaultSelection = true',
     );
 
-    return res[0].email;
+    return res[0].mail;
 };
 
 export default getShippingMail;

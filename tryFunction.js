@@ -2,7 +2,9 @@
 import 'dotenv/config';
 
 // importamos la función que queremos testear
-import { getHeadersLinesModel } from './src/models/warehouse/index.js';
+import { sendTransportOrderService } from './src/services/index.js';
+//import sendMail from './src/utils/sendMailUtil.js';
 
-console.log(await getHeadersLinesModel('p', 'ich', 2024001));
+console.log(await sendTransportOrderService());
+//console.log(await sendMail('selego@gmail.com', 'hoola', 'hola'));
 process.exit(0);

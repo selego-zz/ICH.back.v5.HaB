@@ -22,6 +22,7 @@ import {
     updateLineModel,
 } from './warehouse/index.js';
 
+import { getShippingMail } from './shipping/index.js';
 export {
     // user Models
     insertUserModel,
@@ -43,4 +44,6 @@ export {
     getLineIdByNumberModel,
     updateHeaderModel,
     updateLineModel,
+    //shipping
+    getShippingMail,
 };
