@@ -11,6 +11,11 @@ import {
 import {
     addHeaderModel,
     addLineModel,
+    deleteAllHeadersModel,
+    deleteAllLinesModel,
+    deleteHeaderModel,
+    deleteHeadersLinesModel,
+    deleteLineModel,
     getAllHeadersModel,
     getHeaderModel,
     getHeaderIdByNumberModel,
@@ -18,6 +23,7 @@ import {
     getAllHeadersByAgentModel,
     getAllHeadersByClientModel,
     getLineIdByNumberModel,
+    getLineIdModel,
     updateHeaderModel,
     updateLineModel,
 } from './warehouse/index.js';
@@ -35,6 +41,11 @@ export {
     //warehouse Models
     addHeaderModel,
     addLineModel,
+    deleteAllHeadersModel,
+    deleteAllLinesModel,
+    deleteHeaderModel,
+    deleteHeadersLinesModel,
+    deleteLineModel,
     getAllHeadersModel,
     getAllHeadersByAgentModel,
     getAllHeadersByClientModel,
@@ -42,6 +53,7 @@ export {
     getHeaderIdByNumberModel,
     getHeadersLinesModel,
     getLineIdByNumberModel,
+    getLineIdModel,
     updateHeaderModel,
     updateLineModel,
     //shipping

@@ -12,9 +12,16 @@ import {
     getAllHeadersByClientModel,
     getHeaderIdByNumberModel,
     getLineIdByNumberModel,
+    getLineIdModel,
     //importamos actualizadores
     updateLineModel,
     updateHeaderModel,
+    //importamos eliminadores
+    deleteAllHeadersModel,
+    deleteAllLinesModel,
+    deleteHeaderModel,
+    deleteHeadersLinesModel,
+    deleteLineModel,
 
     //empresa de transporte
     getShippingMail,
@@ -252,6 +259,38 @@ const updateOrderService = async (order) => {
 \*******************************************************************/
 
 /*******************************************************************\
+********************** CABECERA - DELETE ****************************
+\*******************************************************************/
+
+/**
+ * Servicio que elimna un pedido en base a su tipo, serie y número
+ * @param {string} type - Tipo del pedido a eliminar.
+ * @param {string} serie - Serie del pedido a eliminar.
+ * @param {string} number - Número del pedido a eliminar.
+ * @description - Elimna el pedido con los datos indicados, Antes de eliminar la cabecera, hace uso de deleteOrdersLineByIdService para eliminar cada línea del pedido.
+ */
+const deleteOrderService = async (type, serie, number) => {
+    const id = await getHeaderIdByNumberModel(type, serie, number);
+    if (!id) generateError('Pedido no encontrado', 404);
+
+    await deleteHeadersLinesModel(id);
+    await deleteHeaderModel(id);
+};
+
+/**
+ * Servicio que elimna todos los pedidos de la base de datos
+ * @description - Elimna todas las líneas y todas las cabeceras de la base de datos
+ */
+const deleteAllOrdersService = async () => {
+    await deleteAllLinesModel();
+    await deleteAllHeadersModel();
+};
+
+/*******************************************************************\
+********************** CABECERA - DELETE ****************************
+\*******************************************************************/
+
+/*******************************************************************\
 *********************** LINEAS - POST *******************************
 \*******************************************************************/
 
@@ -408,6 +447,44 @@ const getLineIdByNumberService = async (type, serie, number, line) => {
 \*******************************************************************/
 
 /*******************************************************************\
+*********************** LINEAS - DELETE *****************************
+\*******************************************************************/
+
+/**
+ * Servicio que elimna una línea en base a su tipo, serie y número
+ * @param {string} type - Tipo del pedido cuya línea vamos a eliminar.
+ * @param {string} serie - Serie del pedido cuya línea vamos a eliminar.
+ * @param {string} number - Número del pedido cuya línea vamos a eliminar.
+ * @param {number} line - Número de línea de la línea que vamos a eliminar.
+ * @description - Elimna la línea con los datos indicados.
+ */
+const deleteOrdersLineByNumerService = async (type, serie, number, line) => {
+    const header_id = await getHeaderIdByNumberModel(type, serie, number);
+    return await deleteOrdersLineByIdService(header_id, line);
+};
+
+/**
+ * Servicio que elimna una línea en base al id de su cabecera
+ * @param {number} headerId - Id de la cabecera cuya línea vamos a eliminar.
+ * @param {number} line - Número de línea de la línea que vamos a eliminar.
+ * @description - Elimna la línea con los datos indicados.
+ */
+const deleteOrdersLineByIdService = async (headerId, line) => {
+    await deleteLineModel(await getLineIdModel(headerId, line));
+};
+
+/**
+ * Servicio que elimna todas las líneas de la base de datos
+ * @description - Elimna todas las líneas de la base de datos
+ */
+const deleteAllLinesService = async () => {
+    await deleteAllLinesModel();
+};
+/*******************************************************************\
+*********************** LINEAS - DELETE *****************************
+\*******************************************************************/
+
+/*******************************************************************\
 *********************** LINEAS - UTILS ******************************
 \*******************************************************************/
 
@@ -486,6 +563,9 @@ export {
     updateHeaderService,
     updateOrderService,
     updateHeadersTypeService,
+    // cabecera delete
+    deleteOrderService,
+    deleteAllOrdersService,
     // lines get
     addLinesService,
     addLineService,
@@ -498,6 +578,10 @@ export {
     // lines get
     getLineIdByNumberService,
 
+    // lines delete
+    deleteOrdersLineByNumerService,
+    deleteOrdersLineByIdService,
+    deleteAllLinesService,
     //utils
     sendTransportOrderService,
 };
