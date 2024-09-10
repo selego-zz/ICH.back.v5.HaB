@@ -25,6 +25,7 @@ const authUserController = (req, res, next) => {
 
         try {
             //desencriptamos el token
+
             const tokenInfo = jwt.verify(authorization, SECRET);
             //si hemos lllegado aquí, el token es correcto
             //lo metemos en req para que esté accesible para los demás

@@ -30,7 +30,7 @@ const loginController = async (req, res, next) => {
         await validateSchema(userSchema, user);
 
         //si ha pasado la validación, tenemos como mínimo un usuario y una contraseña
-        const dbUser = await getUserByEmailModel(user.username);
+        const dbUser = await getUserByEmailModel(user.email);
 
         let validPass;
         console.log(dbUser);
