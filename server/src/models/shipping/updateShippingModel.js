@@ -17,7 +17,6 @@ const updateShippingModel = async (id, name, phone, email) => {
         'UPDATE shipping_company SET name = ?, phone = ?, mail = ? WHERE id = ?',
         [name, phone, email, id],
     );
-    console.log(res);
 
     return res.affectedRows; //@@@ esto seguro que está mal, y está en más de un sitio
 };

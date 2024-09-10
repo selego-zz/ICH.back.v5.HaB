@@ -11,7 +11,9 @@ const getAllUsersModel = async () => {
     const pool = await getPool();
 
     //tomamos todos los datos de los clientes
-    const [clientes] = await pool.query('select * from users');
+    const [clientes] = await pool.query(
+        'select id, username, email, role from users',
+    );
     return clientes;
 };
 

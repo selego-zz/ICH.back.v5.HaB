@@ -23,7 +23,7 @@ const transport = nodemailer.createTransport({
  * @description - Envía un correo electrónico a la dirección suministrada en email, con el asunto indicado en subject, y el texto incluido en body
  */
 const sendHtmlMail = async (email, subject, body) => {
-    console.log(`
+    /*     console.log(`
         SMTP_HOST: ${SMTP_HOST}
         SMTP_PORT: ${SMTP_PORT}
         SMTP_USER: ${SMTP_USER}
@@ -32,6 +32,7 @@ const sendHtmlMail = async (email, subject, body) => {
         subject: ${subject}
         body: ${body}
         `);
+ */
     try {
         const info = await transport.sendMail({
             from: SMTP_USER,
