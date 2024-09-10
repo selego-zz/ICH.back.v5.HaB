@@ -151,12 +151,12 @@ O cambiar los permisos de los usuarios
 
 ## Endpoints de empresa de transporte
 
--   **POST** - [`/api/shipping`] - Inserta una empresa de transporte
+-   **POST** - [`/api/shipping`] - Inserta una empresa de transporte ✅
 
--   **GET** - [`/api/shipping`] - Retorna el listado completo de empresas de transporte
--   **GET** - [`/api/shipping/:id`] - Retorna los datos de una empresa de transporte
+-   **GET** - [`/api/shipping`] - Retorna el listado completo de empresas de transporte ✅
+-   **GET** - [`/api/shipping/:id`] - Retorna los datos de una empresa de transporte ✅
 
--   **PUT** - [`/api/shipping`] - Actualiza los datos de una empresa de transporte
--   **PUT** - [`/api/shipping/setdefault/:id`] - Establece una empresa de transporte como la de uso habitual
+-   **PUT** - [`/api/shipping`] - Actualiza los datos de una empresa de transporte ✅
+-   **PUT** - [`/api/shipping/setdefault/:id`] - Establece una empresa de transporte como la de uso habitual ✅
 
--   **DELETE** - [`/api/shipping/:id`] -Elimina los datos de una empresa de transporte
+-   **DELETE** - [`/api/shipping/:id`] -Elimina los datos de una empresa de transporte ✅
