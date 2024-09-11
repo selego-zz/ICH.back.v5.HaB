@@ -1,10 +1,9 @@
 // importamos los hooks
 import { useContext, useState } from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
-import useUser from '../hooks/useUser';
 
 //importamos el token desde el contexto
-import { AuthContext } from '../contexts/AuthContext';
+import { AuthContext } from '../../contexts/AuthContext';
 
 // importamos toast
 import toast from 'react-hot-toast';
@@ -14,10 +13,8 @@ const { VITE_API_URL } = import.meta.env;
 
 const LoginPage = () => {
     // tomamos el usuario, pero solo lo vamos a usar para decidir que mostramos en la página (si estamos logueados, no debemos poder loguearnos nuevamoente)
-    const { user } = useUser();
-
     //tomamos authLogin de contexto, para poner el token si la solicitud fue exitosa
-    const { authLogin } = useContext(AuthContext);
+    const { authLogin, authUser } = useContext(AuthContext);
 
     //variables para tomar los datos de email y password
     const [email, setEmail] = useState('');
@@ -62,8 +59,9 @@ const LoginPage = () => {
             setLoginLoading(false);
         }
     };
+
     //si el usuario ya está logueado, vamos a la página principal
-    if (user) return <Navigate to="/" />;
+    if (authUser) return <Navigate to="/user" />;
 
     return (
         <main>
