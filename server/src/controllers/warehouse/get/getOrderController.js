@@ -10,7 +10,7 @@ import { generateError } from '../../../utils/index.js';
  * @param {string} req.params.serie - Serie del pedido a devolver
  * @param {string} req.params.number - Número del pedido a devolver
  * @param {Object} res - El objeto de respuesta.
- * @param {string} res.status - Estado de la petición. Valores posibles: 'Ok', 'Error'
+ * @param {string} res.status - Estado de la petición. Valores posibles: 'ok', 'error'
  * @param {string} [res.message] - Mensaje explicativo de respuesta o de error (Opcional)
  * @param {Object} [res.data] - json con toda la información del pedido (Opcional)
  * @param {Function} next - La función de middleware siguiente.
@@ -31,7 +31,7 @@ const getOrderController = async (req, res, next) => {
         );
 
         res.send({
-            status: 'Ok',
+            status: 'ok',
             data,
         });
     } catch (err) {

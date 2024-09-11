@@ -15,7 +15,7 @@ import { getUserByEmailModel } from '../../models/index.js';
  * @param {string} req.body.password - Password del usuario en texto plano
  * @param {string} req.body.email - Correo electrónico del usuario
  * @param {Object} res - El objeto de respuesta.
- * @param {string} res.status - Estado de la petición. Valores posibles: 'Ok', 'Error'
+ * @param {string} res.status - Estado de la petición. Valores posibles: 'ok', 'error'
  * @param {string} [res.message] - Mensaje explicativo de respuesta o de error (Opcional)
  * @param {Object} [res.data] - Json con el token de autentificación del usuario (Opcional)
  * @param {Function} next - La función de middleware siguiente.
@@ -52,7 +52,7 @@ const loginController = async (req, res, next) => {
         });
 
         res.send({
-            status: 'Ok',
+            status: 'ok',
             data: token,
         });
     } catch (err) {

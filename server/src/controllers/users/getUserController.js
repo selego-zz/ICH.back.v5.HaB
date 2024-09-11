@@ -5,7 +5,7 @@ import { getUserByIdModel } from '../../models/index.js';
  * @middleware authUserController - Middleware para autenticar al usuario.
  * @param {Object} req - Objeto request
  * @param {Object} res - El objeto de respuesta.
- * @param {string} res.status - Estado de la petición. Valores posibles: 'Ok', 'Error'
+ * @param {string} res.status - Estado de la petición. Valores posibles: 'ok', 'error'
  * @param {string} [res.message] - Mensaje explicativo de respuesta o de error (Opcional)
  * @param {Object} [res.data] - Json con toda la información de la tabla usuarios referente al usuario actual (Opcional)
  * @param {Function} next - La función de middleware siguiente.
@@ -15,7 +15,7 @@ const getUserController = async (req, res, next) => {
     try {
         const data = await getUserByIdModel(req.user.id);
         res.send({
-            status: 'Ok',
+            status: 'ok',
             data,
         });
     } catch (err) {

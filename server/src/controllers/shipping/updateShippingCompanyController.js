@@ -18,7 +18,7 @@ import {
  * @param {string} req.body.email - Correo electrónico de la empresa de transporte.
  * @param {boolean} req.body.defaultSelection - Establece si es la empresa de transporte que se selecciona para los envíos.
  * @param {Object} res - El objeto de respuesta.
- * @param {string} res.status - Estado de la petición. Valores posibles: 'Ok', 'Error'
+ * @param {string} res.status - Estado de la petición. Valores posibles: 'ok', 'error'
  * @param {string} res.message - Mensaje explicativo de respuesta o de error
  * @param {Function} next - La función de middleware siguiente.
  * @description Inserta la empresa de transporte en la base de datos directamente mediante el uso de los modelos. Si defaultSelection está establecido como true, pone en false la que estuviera en true anteriormente
@@ -39,7 +39,7 @@ const updateShippingCompanyController = async (req, res, next) => {
         await updateShippingModel(name, phone, email);
 
         res.status(201).send({
-            status: 'Ok',
+            status: 'ok',
             message: 'Usuario insertado en la base de datos',
         });
     } catch (err) {

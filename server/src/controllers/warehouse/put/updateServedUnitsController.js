@@ -13,7 +13,7 @@ import { servedUnitsUpdateSchema } from '../../../schemas/index.js';
  * @param {number} req.body.line - Número de línea de la línea del pedido a actualizar
  * @param {number} req.body.served_units - Nueva cantidad de producto servida
  * @param {Object} res - El objeto de respuesta.
- * @param {string} res.status - Estado de la petición. Valores posibles: 'Ok', 'Error'
+ * @param {string} res.status - Estado de la petición. Valores posibles: 'ok', 'error'
  * @param {string} res.message - Mensaje explicativo de respuesta o de error (Opcional)
  * @param {Function} next - La función de middleware siguiente.
  * @description Llama al servicio `updateLinesService` para actualizar la cantidad de producto servida/a enviar de la línea cuyo tipo, serie, numero y línea coincidan con los suministrados.
@@ -26,7 +26,7 @@ const updateServedUnitsController = async (req, res, next) => {
         await updateLinesService(body);
 
         res.send({
-            status: 'Ok',
+            status: 'ok',
             message: 'Cantidad a enviar actualizada',
         });
     } catch (err) {

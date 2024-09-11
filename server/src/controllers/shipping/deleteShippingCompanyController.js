@@ -9,7 +9,7 @@ import generateError from '../../utils/generateError.js';
  * @param {Object} req.params - Parametros de la ruta
  * @param {string} req.params.id - Id de la empresa de trasnporte a eliminar
  * @param {Object} res - El objeto de respuesta.
- * @param {string} res.status - Estado de la petición. Valores posibles: 'Ok', 'Error'
+ * @param {string} res.status - Estado de la petición. Valores posibles: 'ok', 'error'
  * @param {string} res.message - Mensaje explicativo de respuesta o de error
  * @param {Function} next - La función de middleware siguiente.
  * @description - Elimina la información de la empresa de transporte con el id suministrado
@@ -24,7 +24,7 @@ const deleteShippingCompanyController = async (req, res, next) => {
         if (!data) message = 'Empresa de transporte no encontrada';
         else message = 'Empresa de transporte eliminada';
         res.send({
-            status: 'Ok',
+            status: 'ok',
             message,
         });
     } catch (err) {

@@ -16,7 +16,7 @@ import { updateUserModel } from '../../models/index.js';
  * @param {string} [req.body.code] - Código del cliente/comercial/empleado (opcional)
  * @param {string} [req.body.role] - El rol del usuario (opcional). Valores posibles: 'administrador', 'empleado', 'cliente', 'comercial'. Valor por defecto: 'cliente'.
  * @param {Object} res - El objeto de respuesta.
- * @param {string} res.status - Estado de la petición. Valores posibles: 'Ok', 'Error'
+ * @param {string} res.status - Estado de la petición. Valores posibles: 'ok', 'error'
  * @param {string} res.message - Mensaje explicativo de respuesta o de error
  * @param {Function} next - La función de middleware siguiente.
  * @description En caso de que req.params.iduser corresponda con los datos del token de autenticación, o este tenga rol de administrador Llama al modelo `updateUserModel` para actualizar los datos del usuario en la base de datos.
@@ -35,7 +35,7 @@ const updateUserController = async (req, res, next) => {
         await updateUserModel(iduser, username, password, email, code, role);
 
         res.send({
-            status: 'Ok',
+            status: 'ok',
             message: 'datos actualizados',
         });
     } catch (err) {

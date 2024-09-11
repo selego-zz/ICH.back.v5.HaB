@@ -9,7 +9,7 @@ import { generateError } from '../../../utils/index.js';
  * @param {string} req.params.serie - Serie del pedido a eliminar
  * @param {string} req.params.number - Número del pedido a eliminar
  * @param {Object} res - El objeto de respuesta.
- * @param {string} res.status - Estado de la petición. Valores posibles: 'Ok', 'Error'
+ * @param {string} res.status - Estado de la petición. Valores posibles: 'ok', 'error'
  * @param {string} [res.message] - Mensaje explicativo de respuesta o de error (Opcional)
  * @param {Function} next - La función de middleware siguiente.
  * @description El controlador llama al servicio `deleteOrderService` para eliminar un pedido de la base de datos
@@ -22,7 +22,7 @@ const deleteOrderController = async (req, res, next) => {
         await deleteOrderService(type, series, number);
 
         res.send({
-            status: 'Ok',
+            status: 'ok',
             message: 'Pedido Eliminado',
         });
     } catch (err) {

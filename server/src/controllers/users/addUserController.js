@@ -15,7 +15,7 @@ import { getUserByUsernameModel, insertUserModel } from '../../models/index.js';
  * @param {string} [req.body.code] - Código del cliente/comercial/empleado (opcional)
  * @param {string} [req.body.role] - El rol del usuario (opcional). Valores posibles: 'administrador', 'empleado', 'cliente', 'comercial'. Valor por defecto: 'cliente'.
  * @param {Object} res - El objeto de respuesta.
- * @param {string} res.status - Estado de la petición. Valores posibles: 'Ok', 'Error'
+ * @param {string} res.status - Estado de la petición. Valores posibles: 'ok', 'error'
  * @param {string} res.message - Mensaje explicativo de respuesta o de error
  * @param {Function} next - La función de middleware siguiente.
  * @description Llama al modelo `insertUserModel` para insertar los datos del usuario en la base de datos.
@@ -38,7 +38,7 @@ const addUserController = async (req, res, next) => {
         await insertUserModel(username, password, email, code, role);
 
         res.status(201).send({
-            status: 'Ok',
+            status: 'ok',
             message: 'Usuario insertado en la base de datos',
         });
     } catch (err) {

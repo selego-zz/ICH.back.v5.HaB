@@ -39,7 +39,7 @@ app.use((err, req, res, next) => {
     console.error(err);
 
     res.status(err.httpStatus || 500).send({
-        status: 'Error',
+        status: 'error',
         message: err.message,
     });
 });
@@ -49,7 +49,7 @@ app.use((req, res, next) => {
     console.log('ruta no encontrada');
 
     res.status(404).send({
-        status: 'Error',
+        status: 'error',
         message: 'Ruta no encontrada',
     });
 });
