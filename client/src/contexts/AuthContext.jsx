@@ -82,10 +82,7 @@ const AuthProvider = ({ children }) => {
         //si existe token, hacemos fetch, sino, vaciamos usuario, y dejamos de cargar
         if (authToken) fetchUser();
         else {
-            //ponemos a null al usuario
-            setAuthUser(null);
-            //dejamos de indicar quee estamos esperando el fetch: loading = false
-            setAuthUserLoading(false);
+            authLogout();
         }
     }, [authToken]);
 

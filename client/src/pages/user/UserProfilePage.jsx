@@ -2,6 +2,9 @@
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 
+// importamos componentes
+import { useNavigate } from 'react-router-dom';
+
 // importamos función para adornar mensajes
 import toast from 'react-hot-toast';
 
@@ -9,8 +12,10 @@ import toast from 'react-hot-toast';
 const { VITE_API_URL, VITE_PASS_ELIMINAR_USUARIO } = import.meta.env;
 const UserProfilePage = () => {
     // Variable de contexto que contiene los datos del usuario
-    const { authUser, setAuthUser, authToken, authLogout } =
+    const { authUser, setAuthUser, authToken, authLogout, authUserLoading } =
         useContext(AuthContext);
+
+    const navigate = useNavigate();
 
     // Variable de entorno para saber si queremos actualizar los datos del usuario
     const [actualizar, setActualizar] = useState(false);
@@ -103,6 +108,11 @@ const UserProfilePage = () => {
         }
     };
 
+    ////////////////////////////////////////////////////////////////
+    //////////////// A partir de aquí el return/////////////////////
+    ////////////////////////////////////////////////////////////////
+    if (authUserLoading) return <h2>Loading...</h2>;
+    if (!authUser) navigate('/');
     return (
         <main>
             <h2>Perfil</h2>

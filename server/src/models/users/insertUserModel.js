@@ -28,6 +28,7 @@ const insertUserModel = async (username, password, email, code, role) => {
 
     const args = [username, await bcrypt.hash(password, 10)];
     let SQL = `INSERT INTO users (username, password`;
+    let MIDSQL = `) VALUES (?, ?`;
 
     if (email) {
         [resultado] = await pool.query('SELECT id FROM users WHERE email = ?', [
@@ -39,25 +40,25 @@ const insertUserModel = async (username, password, email, code, role) => {
                 409,
             );
         SQL += `, email`;
+        MIDSQL += `, ?`;
         args.push(email);
     }
 
     if (role) {
         SQL += `, role`;
+        MIDSQL += `, ?`;
         args.push(role);
     }
 
     if (code) {
         SQL += `, code`;
+        MIDSQL += `, ?`;
         args.push(code);
     }
 
-    SQL += `) VALUES (?, ?`;
-    if (args.length > 2) SQL += `, ?`;
-    if (args.length > 3) SQL += `, ?`;
-    SQL += `)`;
+    MIDSQL += `)`;
 
-    [resultado] = await pool.query(SQL, args);
+    [resultado] = await pool.query(SQL + MIDSQL, args);
 
     return resultado.insertId;
 };

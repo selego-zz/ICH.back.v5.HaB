@@ -1,3 +1,8 @@
+@@@
+
+Ojo: en todas las páginas deberíamos poner if (!user) navigate para comprobar que está logueado. Esto fallará cuando está recargando... Para ello sería necesario usar el authUSerLoading
+if (authUSerLoading) return <></>;
+
 Api routes:
 
 ## Endpoints del usuario

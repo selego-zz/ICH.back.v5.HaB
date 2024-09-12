@@ -36,7 +36,7 @@ const Header = () => {
                                         </NavLink>
                                     </li>
                                     <li>
-                                        <NavLink to="/removeUser">
+                                        <NavLink to="/DeleteUser">
                                             Eliminar usuario
                                         </NavLink>
                                     </li>
