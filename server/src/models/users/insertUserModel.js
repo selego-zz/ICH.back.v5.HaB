@@ -1,7 +1,7 @@
 //importamos las dependencias
 import bcrypt from 'bcrypt';
 import { getPool } from '../../db/index.js';
-import { generateError } from '../../utils/index.js';
+import { generateErrorUtil } from '../../utils/index.js';
 
 /**
  * Modelo para insertar un usuario en la base de datos
@@ -24,7 +24,10 @@ const insertUserModel = async (username, password, email, code, role) => {
     );
 
     if (resultado.length)
-        generateError('Ya existe un usuario con ese nombre de usuario', 409);
+        generateErrorUtil(
+            'Ya existe un usuario con ese nombre de usuario',
+            409,
+        );
 
     const args = [username, await bcrypt.hash(password, 10)];
     let SQL = `INSERT INTO users (username, password`;
@@ -35,7 +38,7 @@ const insertUserModel = async (username, password, email, code, role) => {
             email,
         ]);
         if (resultado.length)
-            generateError(
+            generateErrorUtil(
                 'Ya existe un usuario con ese correo electrónico',
                 409,
             );

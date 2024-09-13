@@ -1,6 +1,6 @@
 //importamos las dependencias
 import { getShippingByIdModel } from '../../models/index.js';
-import generateError from '../../utils/generateError.js';
+import generateErrorUtil from '../../utils/generateErrorUtil.js';
 
 /**
  * Función controladora que devuelve la información de la empresa de transporte con el id suministrado
@@ -18,11 +18,11 @@ import generateError from '../../utils/generateError.js';
 const getShippingCompanyController = async (req, res, next) => {
     try {
         const { id } = req.params;
-        if (!id) generateError('Faltan datos', 400);
+        if (!id) generateErrorUtil('Faltan datos', 400);
 
         const data = getShippingByIdModel(id);
         if (!data)
-            generateError(
+            generateErrorUtil(
                 'no se ha encontrado la empresa de transporte con el id suministrado',
                 404,
             );

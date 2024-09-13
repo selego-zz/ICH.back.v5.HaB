@@ -1,5 +1,5 @@
 import { deleteOrdersLineByNumerService } from '../../../services/index.js';
-import { generateError } from '../../../utils/index.js';
+import { generateErrorUtil } from '../../../utils/index.js';
 /**
  * Función controladora que elimina una línea de la base de datos
  * @middleware authUserController - Middleware para comprobar permisos de lectura.
@@ -19,7 +19,7 @@ const deleteOrderLineController = async (req, res, next) => {
     try {
         const { type, series, number, line } = req.params;
         if (!type || !series || !number || !line)
-            generateError('Faltan datos', 400);
+            generateErrorUtil('Faltan datos', 400);
 
         await deleteOrdersLineByNumerService(type, series, number, line);
 

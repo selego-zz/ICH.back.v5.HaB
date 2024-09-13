@@ -2,7 +2,7 @@
 import { validateSchema } from '../../../utils/index.js';
 import { allLinesSchema } from '../../../schemas/index.js';
 import { addLinesService } from '../../../services/index.js';
-import { generateError } from '../../../utils/index.js';
+import { generateErrorUtil } from '../../../utils/index.js';
 
 /**
  * Función controladora que añade un grupo de líneas al pedido indicado en la base de datoss
@@ -26,7 +26,7 @@ const addLinesController = async (req, res, next) => {
         const lines = req.body;
         const { type, series, number } = req.params;
         if (!type || !series || !number || !lines)
-            generateError('Faltan datos', 400);
+            generateErrorUtil('Faltan datos', 400);
 
         await addLinesService(type, series, number, lines);
 

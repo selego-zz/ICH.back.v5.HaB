@@ -1,5 +1,5 @@
 import { getOrderByNumberService } from '../../../services/index.js';
-import { generateError } from '../../../utils/index.js';
+import { generateErrorUtil } from '../../../utils/index.js';
 
 /**
  * Función controladora que devuelve toda la información de un pedido
@@ -19,7 +19,7 @@ import { generateError } from '../../../utils/index.js';
 const getOrderController = async (req, res, next) => {
     try {
         const { type, series, number } = req.params;
-        if (!type || !series || !number) generateError('Faltan datos', 400);
+        if (!type || !series || !number) generateErrorUtil('Faltan datos', 400);
         const { role, id } = req.user;
 
         const data = await getOrderByNumberService(

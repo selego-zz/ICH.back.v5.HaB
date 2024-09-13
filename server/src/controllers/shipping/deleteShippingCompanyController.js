@@ -1,6 +1,6 @@
 //importamos las dependencias
 import { deleteShippingByIdModel } from '../../models/index.js';
-import generateError from '../../utils/generateError.js';
+import generateErrorUtil from '../../utils/generateErrorUtil.js';
 
 /**
  * Función controladora que elimina la información de la empresa de transporte con el id suministrado
@@ -17,7 +17,7 @@ import generateError from '../../utils/generateError.js';
 const deleteShippingCompanyController = async (req, res, next) => {
     try {
         const { id } = req.params;
-        if (!id) generateError('Faltan datos', 400);
+        if (!id) generateErrorUtil('Faltan datos', 400);
 
         const data = await deleteShippingByIdModel(id);
         let message;

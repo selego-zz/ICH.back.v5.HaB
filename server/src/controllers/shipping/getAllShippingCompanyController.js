@@ -1,6 +1,6 @@
 //importamos las dependencias
 import { getShippingCompaniesModel } from '../../models/index.js';
-import generateError from '../../utils/generateError.js';
+import generateErrorUtil from '../../utils/generateErrorUtil.js';
 
 /**
  * Función controladora que devuelve la información de todas las empresas de transporte
@@ -18,7 +18,7 @@ const getAllShippingCompanyController = async (req, res, next) => {
     try {
         const data = getShippingCompaniesModel();
         if (!data || data.length < 1)
-            generateError('no se encontraron empresas de transporte', 404);
+            generateErrorUtil('no se encontraron empresas de transporte', 404);
 
         res.send({
             status: 'ok',

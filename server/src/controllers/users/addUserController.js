@@ -1,6 +1,6 @@
 //importamos las dependencias
 
-import { validateSchema, generateError } from '../../utils/index.js';
+import { validateSchema, generateErrorUtil } from '../../utils/index.js';
 import { userSchema } from '../../schemas/index.js';
 import { getUserByEmailModel, insertUserModel } from '../../models/index.js';
 
@@ -42,7 +42,7 @@ const addUserController = async (req, res, next) => {
         let data = await getUserByEmailModel(email);
 
         if (data)
-            generateError('El usuario ya existe en la base de datos', 409);
+            generateErrorUtil('El usuario ya existe en la base de datos', 409);
 
         //username y password no son undefinded, por que se ha validado, los otros son opcionales
         await insertUserModel(username, password, email, code, role);

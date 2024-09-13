@@ -1,5 +1,5 @@
 import { deleteOrderService } from '../../../services/index.js';
-import { generateError } from '../../../utils/index.js';
+import { generateErrorUtil } from '../../../utils/index.js';
 /**
  * Función controladora que elimina un pedido de la base de datos
  * @middleware authUserController - Middleware para comprobar permisos de lectura.
@@ -17,7 +17,7 @@ import { generateError } from '../../../utils/index.js';
 const deleteOrderController = async (req, res, next) => {
     try {
         const { type, series, number } = req.params;
-        if (!type || !series || !number) generateError('Faltan datos', 400);
+        if (!type || !series || !number) generateErrorUtil('Faltan datos', 400);
 
         await deleteOrderService(type, series, number);
 

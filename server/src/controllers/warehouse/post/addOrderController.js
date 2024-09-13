@@ -2,7 +2,7 @@
 import { validateSchema } from '../../../utils/index.js';
 import { invoiceHeaderSchema } from '../../../schemas/index.js';
 import { addOrderService } from '../../../services/index.js';
-import { generateError } from '../../../utils/index.js';
+import { generateErrorUtil } from '../../../utils/index.js';
 
 /**
  * Función controladora que añade un pedido a la base de datoss
@@ -23,7 +23,8 @@ const addOrderController = async (req, res, next) => {
 
         const headerId = await addOrderService(orders);
 
-        if (!headerId) generateError('No se ha insertado ningún pedido', 500);
+        if (!headerId)
+            generateErrorUtil('No se ha insertado ningún pedido', 500);
 
         res.status(201).send({
             status: 'ok',

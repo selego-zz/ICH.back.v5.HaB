@@ -1,6 +1,6 @@
 //importamos las dependencias
 
-import { validateSchema, generateError } from '../../utils/index.js';
+import { validateSchema, generateErrorUtil } from '../../utils/index.js';
 import { shippingCompanyUpdateSchema } from '../../schemas/index.js';
 
 import {
@@ -33,7 +33,7 @@ const updateShippingCompanyController = async (req, res, next) => {
 
         //si ya existe, devolvemos un error
         if (getShippingByNameModel(name)?.id !== id)
-            generateError('Ya existe otra empresa con ese nombre', 409);
+            generateErrorUtil('Ya existe otra empresa con ese nombre', 409);
 
         //insertamos la empresa de transporte en la base de datos
         await updateShippingModel(name, phone, email);

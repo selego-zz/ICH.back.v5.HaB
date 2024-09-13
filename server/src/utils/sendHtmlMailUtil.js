@@ -1,5 +1,5 @@
 import nodemailer from 'nodemailer';
-import generateError from './generateError.js';
+import generateErrorUtil from './generateErrorUtil.js';
 
 //importamos las variable de entorno para el envío de correos electrónicos
 
@@ -44,7 +44,7 @@ const sendHtmlMail = async (email, subject, body) => {
     } catch (err) {
         console.log(err);
 
-        generateError('error al enviar el mail', 500);
+        generateErrorUtil('error al enviar el mail', 500);
     }
 };
 

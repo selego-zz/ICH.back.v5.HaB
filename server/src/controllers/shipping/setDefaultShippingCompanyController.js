@@ -3,7 +3,7 @@ import {
     removeDefaultOptionModel,
     setDefaultOptionModel,
 } from '../../models/index.js';
-import generateError from '../../utils/generateError.js';
+import generateErrorUtil from '../../utils/generateErrorUtil.js';
 /**
  * Función controladora que establece una empresa de transporte como empresa por defecto para envíos
  * @middleware authWorkerController - Middleware para comprobar permisos de inserción.
@@ -19,7 +19,7 @@ import generateError from '../../utils/generateError.js';
 const setDefaultShippingCompanyController = async (req, res, next) => {
     try {
         const { id } = req.params;
-        if (!id) generateError('Faltan datos', 400);
+        if (!id) generateErrorUtil('Faltan datos', 400);
 
         await removeDefaultOptionModel();
 

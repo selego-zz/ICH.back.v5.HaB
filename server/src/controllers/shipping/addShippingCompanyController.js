@@ -1,6 +1,6 @@
 //importamos las dependencias
 
-import { validateSchema, generateError } from '../../utils/index.js';
+import { validateSchema, generateErrorUtil } from '../../utils/index.js';
 import { shippingCompanySchema } from '../../schemas/index.js';
 
 import {
@@ -34,7 +34,7 @@ const addShippingCompanyController = async (req, res, next) => {
 
         //si ya existe, devolvemos un error
         if (getShippingByNameModel(name)?.lenth)
-            generateError('Empresa de transporte ya existente', 409);
+            generateErrorUtil('Empresa de transporte ya existente', 409);
 
         //si se solicita que sea la empresa de transporte por defecto, ponemos a false el campo en la que lo era antes
         if (defaultSelection) await removeDefaultOptionModel();
