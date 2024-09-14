@@ -1,6 +1,6 @@
 {
     "type": "module",
-    "name": "ich_v05_hab",
+    "name": "ichv05hab",
     "version": "1.0.0",
     "description": "Se trata de una API de destinada a gestión de pedidos para la parte\r de un almacén de una empresa, su utilidad es que los empleados puedan\r ver los pedidos pendientes, con diferentes estados:",
     "main": "index.js",
@@ -27,7 +27,6 @@
         "dotenv": "^16.4.5",
         "express": "^4.20.0",
         "express-fileupload": "^1.5.1",
-        "ich_v05_hab": "file:",
         "joi-phone-number": "^5.1.1",
         "jsonwebtoken": "^9.0.2",
         "morgan": "^1.10.0",
