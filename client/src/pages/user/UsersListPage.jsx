@@ -19,12 +19,10 @@ const UsersListPage = () => {
     const { authUser } = useContext(AuthContext);
     const navigate = useNavigate();
 
-    if (!authUser) return <h2>Loading...</h2>;
-
-    if (authUser.role !== 'administrador' && authUser.role === 'empleado')
-        navigate('/');
-
     if (usersLoading) return <h2>Loading...</h2>;
+    else if (!authUser) navigate('/'); //evito que se pueda dar el caso de no tener un usuario, pero por que se esté cargando
+    if (authUser?.role !== 'administrador' && authUser?.role === 'empleado')
+        navigate('/');
 
     return (
         <main>

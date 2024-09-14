@@ -43,11 +43,7 @@ const updateUserModel = async (
     if (role)
         await pool.query('UPDATE users SET role = ? where id = ?', [role, id]);
 
-    if (avatar)
-        await pool.query('UPDATE users SET avatar = ? where id = ?', [
-            avatar,
-            id,
-        ]);
+    await pool.query('UPDATE users SET avatar = ? where id = ?', [avatar, id]);
 };
 
 export default updateUserModel;

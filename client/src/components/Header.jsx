@@ -8,6 +8,8 @@ import { NavLink } from 'react-router-dom';
 // importamos estilo
 import '../index.css';
 
+const { VITE_API_URL, VITE_DEFAULT_PROFILE_PIC } = import.meta.env;
+
 const Header = () => {
     const { authLogout, authUser } = useContext(AuthContext);
 
@@ -16,7 +18,20 @@ const Header = () => {
             <h1>
                 <NavLink to="/">Pedidos pendientes</NavLink>
             </h1>
-            {authUser && <p>@{authUser.username}</p>}
+            {authUser && (
+                <article>
+                    <p>@{authUser.username}</p>
+                    <img
+                        src={
+                            authUser?.avatar
+                                ? `${VITE_API_URL}/${authUser?.avatar}`
+                                : VITE_DEFAULT_PROFILE_PIC
+                        }
+                        alt="Avatar del usuario"
+                        width="50px"
+                    />
+                </article>
+            )}
 
             {/* botones de navegación */}
             <nav>

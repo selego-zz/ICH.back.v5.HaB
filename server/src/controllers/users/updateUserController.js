@@ -31,6 +31,17 @@ import { removePhotoUtil } from '../../utils/index.js';
  */
 const updateUserController = async (req, res, next) => {
     try {
+        console.log('headers');
+        console.log(req.headers['content-type']);
+
+        console.log('files');
+        console.log(req.files);
+
+        console.log('body');
+        console.log(req.body);
+
+        console.log(req.body.avatar);
+
         const user = req.user;
         const iduser = req.params.iduser;
 
@@ -48,7 +59,7 @@ const updateUserController = async (req, res, next) => {
         if (avatarFile) {
             const { oldAvatar } = getUserByIdModel(iduser);
             if (oldAvatar) await removePhotoUtil(oldAvatar);
-            avatar = savePhotoUtil(avatarFile, 150);
+            avatar = await savePhotoUtil(avatarFile, 150);
         }
 
         await updateUserModel(
@@ -61,7 +72,8 @@ const updateUserController = async (req, res, next) => {
             avatar,
         );
 
-        const data = getUserByIdModel(iduser);
+        const data = await getUserByIdModel(iduser);
+
         res.send({
             status: 'ok',
             message: 'datos actualizados',

@@ -1,3 +1,41 @@
+/**
+ * Funciones y Variables exportadas:
+ *
+ * 1. AuthContext: Contexto de autenticación para guardar, recuperar y eliminar el token y los datos del usuario.
+ *    - @type {React.Context}
+ *
+ * 2. AuthProvider: Proveedor de autenticación que maneja el estado del token y envuelve la aplicación.
+ *    - @param {Object} props - Las propiedades del componente.
+ *    - @param {React.ReactNode} props.children - Los componentes hijos que serán envueltos por el proveedor.
+ *    - @returns {JSX.Element} AuthContext.Provider - Exporta las props authToken, authLogin, authLogout.
+ *
+ * 3. authUser: Variable que representa al usuario
+ *    - @returns {Object} user - Variable de estado que representa al usuario.
+ *    - @returns {number} user.id - Id del usuario.
+ *    - @returns {string} user.username - Nombre de usuario del usuario.
+ *    - @returns {string} user.email - Email del usuario.
+ *    - @returns {string} user.role - Rol del usuario.
+ *    - @returns {Function} setUser - Función para cambiar la variable de estado que representa al usuario.
+ *    - @returns {boolean} userLoading - Variable para controlar si el usuario se encuentra en proceso de carga desde el servidor.
+ *
+ * 3.1 authUserLoading: Variable para controlar cuando el usuario no tiene un valor válido. Si es verdadero, el valor de authUser no es fiable
+ *
+ * 3.2 fetchUser: Función que obtiene los datos del usuario desde el servidor. Establece los nuevos datos como authUser
+ *    - @description - Realiza una petición al servidor para validar el token de autenticación.
+ *    - @async
+ *    - @returns {void}
+ *
+ * 4 authToken: variable que manejará el token en el state
+ *
+ * 4.1 authLogin: Función que guarda el token.
+ *    - @description - Guarda el token de autenticación en el State, y en el local Storage
+ *    - @param {string} token - El token de autenticación.
+ *
+ * 4.2 authLogout Función que elimina el token.
+ *    - @description - Elimina el token de autenticación en el State, y en el local Storage
+ *
+ */
+
 //importamos las prop-types
 import PropTypes from 'prop-types';
 
@@ -43,7 +81,7 @@ const AuthProvider = ({ children }) => {
     const [authUser, setAuthUser] = useState(null);
 
     //variable para saber si estamos cargando el usuario
-    const [authUserLoading, setAuthUserLoading] = useState(true);
+    const [authUserLoading, setAuthUserLoading] = useState(false);
 
     //Queremos que de forma automática, cada vez que cambie el token (o al iniciar, si existe) se cargue toda la información del usuario. Como lo necesitamos cada vez que cambie el token, usamo useEffect
     useEffect(() => {
@@ -87,6 +125,120 @@ const AuthProvider = ({ children }) => {
     }, [authToken]);
 
     /**
+     * Función que obtiene los datos del usuario.
+     * @description - Realiza una petición al servidor, para que valide el token de autenticación. En caso de que la validación sea positiva, guarda en la variable de estado user los datos de usuario que devuelve el servidor
+     * @async
+     */
+    const updateUser = async (user, avatar) => {
+        try {
+            setAuthUserLoading(true);
+            console.log(avatar);
+            // Creamos un objeto FormData.
+            const formData = new FormData();
+
+            // Adjuntamos el avatar como propiedad del objeto anterior.
+            formData.append('avatar', avatar);
+
+            // Obtenemos una respuesta del servidor.
+            const res = await fetch(
+                `${VITE_API_URL}/api/users/${authUser.id}`,
+                {
+                    method: 'put',
+                    headers: {
+                        Authorization: authToken,
+                    },
+                    body: formData,
+                }
+            );
+
+            /*             // Creamos un objeto FormData.
+            const formData = new FormData();
+
+            if (avatar) {
+                // Adjuntamos el avatar como propiedad del objeto anterior.
+                formData.append('avatar', avatar);
+                formData.append('id', user.id);
+                formData.append('password', user.password);
+                formData.append('username', user.username);
+                formData.append('email', user.email);
+            }
+            const headers = {
+                Authorization: authToken,
+            };
+
+            if (!avatar) {
+                headers['Content-Type'] = 'application/json';
+            }
+            const sentBody = avatar ? formData : JSON.stringify(user);
+            console.log(headers);
+
+            const res = await fetch(
+                `${VITE_API_URL}/api/users/${authUser.id}`,
+                {
+                    method: 'put',
+                    headers,
+                    body: sentBody,
+                }
+            );
+ */
+            // obtenemos la respuesta
+            const body = await res.json();
+            console.log(body);
+
+            if (body.status === 'error') throw new Error(body.message);
+            // en este punto sabemos que no ha habido un error
+
+            setAuthUser({ ...authUser, ...user });
+            toast.success(body.message, { id: 'userProfile' });
+
+            setAuthUser(body.data);
+        } catch (err) {
+            //si el token es inválido, lo eliminamos
+            if (err.message === 'token inválido') authLogout;
+
+            //si hay un error eliminamos el usuario
+            setAuthUser(null);
+            toast.error(err.message, { id: 'userProfile' });
+        } finally {
+            setAuthUserLoading(false);
+        }
+    };
+
+    /**
+     * Función que obtiene un nuevo token en base al email y password.
+     * @description - Realiza una petición al servidor, para que valide el token de autenticación. En caso de que la validación sea positiva, guarda en la variable de estado user los datos de usuario que devuelve el servidor
+     * @async
+     */
+    const fetchNewToken = async (email, password) => {
+        try {
+            setAuthUserLoading(true);
+
+            //pedimos la información al servidor
+            const res = await fetch(`${VITE_API_URL}/api/users/login`, {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email,
+                    password,
+                }),
+            });
+
+            const body = await res.json();
+
+            if (body.status.toLowerCase() === 'error')
+                throw new Error(body.message);
+
+            authLogin(body.data);
+        } catch (err) {
+            toast.error(err.message, { id: 'login' });
+        } finally {
+            setAuthUserLoading(false);
+        }
+    };
+
+    /**
      * Función que guarda el token.
      * @description - Guarda el token de autenticación en el State, y en el local Storage
      * @param {string} token - El token de autenticación.
@@ -116,10 +268,10 @@ const AuthProvider = ({ children }) => {
                 authToken,
                 authLogin,
                 authLogout,
+                fetchNewToken,
                 authUser,
-                setAuthUser,
+                updateUser,
                 authUserLoading,
-                setAuthUserLoading,
             }}
         >
             {children}

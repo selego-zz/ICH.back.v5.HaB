@@ -1,5 +1,6 @@
 import Joi from '@hapi/joi';
 import joiErrorMessages from './joiErrorMessages.js';
+
 /*
  *     CREATE TABLE IF NOT EXISTS users(
  *         username VARCHAR(30) NOT NULL,
@@ -13,6 +14,7 @@ import joiErrorMessages from './joiErrorMessages.js';
  */
 
 const userUpdateSchema = Joi.object().keys({
+    id: Joi.number().messages(joiErrorMessages),
     username: Joi.string().max(30).optional().messages(joiErrorMessages),
     password: Joi.string().max(100).optional().messages(joiErrorMessages),
     email: Joi.string().email().max(100).optional().messages(joiErrorMessages),
@@ -22,6 +24,7 @@ const userUpdateSchema = Joi.object().keys({
         .valid('administrador', 'empleado', 'cliente', 'comercial')
         .default('cliente')
         .messages(joiErrorMessages),
+    avatar: Joi.any(),
 });
 
 export default userUpdateSchema;
