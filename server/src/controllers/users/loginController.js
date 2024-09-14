@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt';
 // para gemerar el web token
 import jwt from 'jsonwebtoken';
 
-import { validateSchema, generateError } from '../../utils/index.js';
+import { validateSchema, generateErrorUtil } from '../../utils/index.js';
 import { userSchema } from '../../schemas/index.js';
 import { getUserByEmailModel } from '../../models/index.js';
 
@@ -12,10 +12,10 @@ import { getUserByEmailModel } from '../../models/index.js';
  * Función controladora que comprueba los datos de inicio de sesión proporcionados, y de ser correctos devuelve un token de autenticación con el que se podrá identificar al usuario en las diferentes operaciones
  * @param {Object} req - Objeto request
  * @param {Object} req.body - Datos del usuario
- * @param {string} req.body.password - Password del usuario en texto plano
  * @param {string} req.body.email - Correo electrónico del usuario
+ * @param {string} req.body.password - Password del usuario en texto plano
  * @param {Object} res - El objeto de respuesta.
- * @param {string} res.status - Estado de la petición. Valores posibles: 'Ok', 'Error'
+ * @param {string} res.status - Estado de la petición. Valores posibles: 'ok', 'error'
  * @param {string} [res.message] - Mensaje explicativo de respuesta o de error (Opcional)
  * @param {Object} [res.data] - Json con el token de autentificación del usuario (Opcional)
  * @param {Function} next - La función de middleware siguiente.
@@ -38,7 +38,8 @@ const loginController = async (req, res, next) => {
         if (dbUser)
             validPass = await bcrypt.compare(user.password, dbUser.password);
 
-        if (!validPass) generateError('Usuario o contraseña incorrectos', 401);
+        if (!validPass)
+            generateErrorUtil('Usuario o contraseña incorrectos', 401);
 
         //en este punto el usuario está logueado, con datos válidos.
         //creamos el token
@@ -52,7 +53,7 @@ const loginController = async (req, res, next) => {
         });
 
         res.send({
-            status: 'Ok',
+            status: 'ok',
             data: token,
         });
     } catch (err) {

@@ -1,6 +1,6 @@
 //importamos las dependencias
 import jwt from 'jsonwebtoken';
-import generateError from '../utils/generateError.js';
+import generateErrorUtil from '../utils/generateErrorUtil.js';
 
 // tomamos la clave para desencriptar el token
 const { SECRET } = process.env;
@@ -21,7 +21,7 @@ const authAdminController = (req, res, next) => {
         const { authorization } = req.headers;
         //si no nos manda el token, lanzamos un error
         if (!authorization)
-            generateError('Ha de iniciar sesión para continuar', 401);
+            generateErrorUtil('Ha de iniciar sesión para continuar', 401);
 
         try {
             //desencriptamos el token
@@ -29,7 +29,7 @@ const authAdminController = (req, res, next) => {
             //si hemos lllegado aquí, el token es correcto
             //lo metemos en req para que esté accesible para los demás
             if (tokenInfo.role !== 'administrador')
-                generateError(
+                generateErrorUtil(
                     'No tiene permisos necesarios para realizar esa acción',
                     403,
                 );
@@ -37,7 +37,7 @@ const authAdminController = (req, res, next) => {
             next();
         } catch (err) {
             console.error(err);
-            generateError(
+            generateErrorUtil(
                 'No tiene permisos necesarios para realizar esa acción',
                 401,
             );

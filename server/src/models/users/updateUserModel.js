@@ -9,19 +9,18 @@ import bcrypt from 'bcrypt';
  * @param {string} [email] - Correo electrónico del usuario. (Opcional).
  * @param {string} [code] - Código de cliente, o código de agente, caso de que el rol sea uno de ellos. (Opcional)
  * @param {string} [role] - El rol del usuario (opcional). Valores posibles: 'administrador', 'empleado', 'cliente', 'comercial'.
+ * @param {string} [avatar] - Nombre del archivo con el avatar del usuario en la carpeta uploads. (Opcional).
  * @description - Actualiza en la base de datos la información del usuario con los datos especificados
  */
-
-/**
- * updates the data of an user
- * @param {number} id - the id of the user you want to update
- * @param {string} username - username of the user
- * @param {string} password - password in plain text of the user
- * @param {string} email - email of the user
- * @param {string} code - code of the user if aplies
- * @param {string} role - role of the user, default client
- */
-const updateUserModel = async (id, username, password, email, code, role) => {
+const updateUserModel = async (
+    id,
+    username,
+    password,
+    email,
+    code,
+    role,
+    avatar,
+) => {
     const pool = await getPool();
 
     if (username)
@@ -43,6 +42,8 @@ const updateUserModel = async (id, username, password, email, code, role) => {
         await pool.query('UPDATE users SET code = ? where id = ?', [code, id]);
     if (role)
         await pool.query('UPDATE users SET role = ? where id = ?', [role, id]);
+
+    await pool.query('UPDATE users SET avatar = ? where id = ?', [avatar, id]);
 };
 
 export default updateUserModel;

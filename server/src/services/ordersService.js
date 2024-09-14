@@ -1,4 +1,4 @@
-import { generateError, sendHtmlMail } from '../utils/index.js';
+import { generateErrorUtil, sendHtmlMail } from '../utils/index.js';
 
 import {
     // importamos escritores
@@ -118,11 +118,11 @@ const getAllOrdersService = async (type, role, id) => {
             orders = await getAllHeadersModel(type);
             break;
         case 'cliente':
-            if (!id) generateError('Faltan campos', 400);
+            if (!id) generateErrorUtil('Faltan campos', 400);
             orders = await getAllHeadersByClientModel(type, id);
             break;
         case 'comercial':
-            if (!id) generateError('Faltan campos', 400);
+            if (!id) generateErrorUtil('Faltan campos', 400);
             orders = await getAllHeadersByAgentModel(type, id);
             break;
     }
@@ -158,17 +158,17 @@ const getOrderService = async (orderId) => {
  * @returns - Devuelve un Json con la información del pedido que se ajuste a los requisitos
  */
 const getOrderByNumberService = async (type, serie, number, role, id) => {
-    if (!role) generateError('Permisos insuficientes', 400);
+    if (!role) generateErrorUtil('Permisos insuficientes', 400);
 
     const orderId = await getHeaderIdByNumberModel(type, serie, number);
-    if (!orderId) generateError('Pedido no encontrado', 404);
+    if (!orderId) generateErrorUtil('Pedido no encontrado', 404);
     const order = await getHeaderModel(orderId);
-    if (!orderId) generateError('Error accediendo a los datos', 500);
+    if (!orderId) generateErrorUtil('Error accediendo a los datos', 500);
 
     if (role === 'cliente' && order.client_id !== id)
-        generateError('Permisos insuficientes', 400);
+        generateErrorUtil('Permisos insuficientes', 400);
     if (role === 'agente' && order.agent_id !== id)
-        generateError('Permisos insuficientes', 400);
+        generateErrorUtil('Permisos insuficientes', 400);
 
     order.lines = await getHeadersLinesModel(orderId);
 
@@ -195,9 +195,9 @@ const updateHeaderService = async (order) => {
         order.number,
     );
     if (orderId === undefined && order.id === undefined)
-        generateError('Pedido no encontrado', 404);
+        generateErrorUtil('Pedido no encontrado', 404);
     if (order.id && order.id != orderId)
-        generateError(
+        generateErrorUtil(
             'Tipo, Serie, y Número no coinciden con los suministrados',
             400,
         );
@@ -216,7 +216,7 @@ const updateHeaderService = async (order) => {
  */
 const updateHeadersTypeService = async (type, serie, number, newType) => {
     const id = getOrderByNumberService(type, serie, number);
-    if (id === undefined) generateError('Pedido no encontrado', 404);
+    if (id === undefined) generateErrorUtil('Pedido no encontrado', 404);
     const header = {
         id,
         type: newType,
@@ -271,7 +271,7 @@ const updateOrderService = async (order) => {
  */
 const deleteOrderService = async (type, serie, number) => {
     const id = await getHeaderIdByNumberModel(type, serie, number);
-    if (!id) generateError('Pedido no encontrado', 404);
+    if (!id) generateErrorUtil('Pedido no encontrado', 404);
 
     await deleteHeadersLinesModel(id);
     await deleteHeaderModel(id);
@@ -304,7 +304,7 @@ const deleteAllOrdersService = async () => {
  */
 const addLinesService = async (type, serie, number, lines) => {
     const orderId = await getHeaderIdByNumberModel(type, serie, number);
-    if (!orderId) generateError('Pedido no encontrado', 404);
+    if (!orderId) generateErrorUtil('Pedido no encontrado', 404);
     for (const line of lines) {
         await addLineModel(orderId, line);
     }
@@ -332,7 +332,7 @@ const addLineService = async (headerId, line) => {
  */
 const addLineByNumberService = async (type, serie, number, line) => {
     const headerId = await getHeadersLinesModel(type, serie, number);
-    if (!headerId) generateError('Pedido no encontrado', 404);
+    if (!headerId) generateErrorUtil('Pedido no encontrado', 404);
     await addLineService(headerId, line);
 };
 
@@ -412,7 +412,7 @@ const updateOrInsertLinesService = async (lines) => {
  */
 const updateLinesTypeService = async (type, serie, number, newType) => {
     const id = getOrderByNumberService(type, serie, number);
-    if (id === undefined) generateError('Pedido no encontrado', 404);
+    if (id === undefined) generateErrorUtil('Pedido no encontrado', 404);
     const line = {
         id,
         type: newType,
@@ -497,10 +497,14 @@ const sendTransportOrderService = async () => {
     //seleccionamos los pedidos que haya para enviar, si no hay, no se envía mail
     const orders = await getAllOrdersService('a', 'empleado');
     if (orders.length < 1)
-        generateError('No se han encontrado pedidos listos para enviar', 404);
+        generateErrorUtil(
+            'No se han encontrado pedidos listos para enviar',
+            404,
+        );
     // seleccionar el corrego electrónico de la empresa de transporte principal
     const email = await getShippingMailModel();
-    if (!email) generateError('No se ha encontrado email de transporte', 404);
+    if (!email)
+        generateErrorUtil('No se ha encontrado email de transporte', 404);
     const subject = `solicitud de recogida para ${process.env.SHIPPING_INFO_FISCAL_NAME} en fecha ${new Date().toDateString()}`;
     //const body =
     // vamos a construir una tabla, que contendrá las siguientes columnas:

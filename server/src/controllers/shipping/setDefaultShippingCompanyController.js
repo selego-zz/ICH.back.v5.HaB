@@ -3,7 +3,7 @@ import {
     removeDefaultOptionModel,
     setDefaultOptionModel,
 } from '../../models/index.js';
-import generateError from '../../utils/generateError.js';
+import generateErrorUtil from '../../utils/generateErrorUtil.js';
 /**
  * Función controladora que establece una empresa de transporte como empresa por defecto para envíos
  * @middleware authWorkerController - Middleware para comprobar permisos de inserción.
@@ -11,7 +11,7 @@ import generateError from '../../utils/generateError.js';
  * @param {Object} req.params - Parametros de la ruta
  * @param {string} req.params.id - Id de la empresa de trasnporte a poner como principal
  * @param {Object} res - El objeto de respuesta.
- * @param {string} res.status - Estado de la petición. Valores posibles: 'Ok', 'Error'
+ * @param {string} res.status - Estado de la petición. Valores posibles: 'ok', 'error'
  * @param {string} res.message - Mensaje explicativo de respuesta o de error
  * @param {Function} next - La función de middleware siguiente.
  * @description - Sustituye la empresa de transporte que estaba establecida como principal por la solicitada
@@ -19,7 +19,7 @@ import generateError from '../../utils/generateError.js';
 const setDefaultShippingCompanyController = async (req, res, next) => {
     try {
         const { id } = req.params;
-        if (!id) generateError('Faltan datos', 400);
+        if (!id) generateErrorUtil('Faltan datos', 400);
 
         await removeDefaultOptionModel();
 
@@ -27,7 +27,7 @@ const setDefaultShippingCompanyController = async (req, res, next) => {
         await setDefaultOptionModel(id);
 
         res.status(201).send({
-            status: 'Ok',
+            status: 'ok',
             message: 'Usuario insertado en la base de datos',
         });
     } catch (err) {

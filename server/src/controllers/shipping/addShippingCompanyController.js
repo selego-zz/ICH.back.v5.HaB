@@ -1,6 +1,6 @@
 //importamos las dependencias
 
-import { validateSchema, generateError } from '../../utils/index.js';
+import { validateSchema, generateErrorUtil } from '../../utils/index.js';
 import { shippingCompanySchema } from '../../schemas/index.js';
 
 import {
@@ -19,7 +19,7 @@ import {
  * @param {string} req.body.email - Correo electrónico de la empresa de transporte.
  * @param {boolean} req.body.defaultSelection - Establece si es la empresa de transporte que se selecciona para los envíos.
  * @param {Object} res - El objeto de respuesta.
- * @param {string} res.status - Estado de la petición. Valores posibles: 'Ok', 'Error'
+ * @param {string} res.status - Estado de la petición. Valores posibles: 'ok', 'error'
  * @param {string} res.message - Mensaje explicativo de respuesta o de error
  * @param {Function} next - La función de middleware siguiente.
  * @description Inserta la empresa de transporte en la base de datos directamente mediante el uso de los modelos. Si defaultSelection está establecido como true, pone en false la que estuviera en true anteriormente
@@ -34,7 +34,7 @@ const addShippingCompanyController = async (req, res, next) => {
 
         //si ya existe, devolvemos un error
         if (getShippingByNameModel(name)?.lenth)
-            generateError('Empresa de transporte ya existente', 409);
+            generateErrorUtil('Empresa de transporte ya existente', 409);
 
         //si se solicita que sea la empresa de transporte por defecto, ponemos a false el campo en la que lo era antes
         if (defaultSelection) await removeDefaultOptionModel();
@@ -43,7 +43,7 @@ const addShippingCompanyController = async (req, res, next) => {
         await addShippingModel(name, phone, email, defaultSelection);
 
         res.status(201).send({
-            status: 'Ok',
+            status: 'ok',
             message: 'Usuario insertado en la base de datos',
         });
     } catch (err) {

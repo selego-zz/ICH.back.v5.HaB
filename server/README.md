@@ -51,6 +51,7 @@ O cambiar los permisos de los usuarios
 | email      | VARCHAR(100) | Mail para enviar el albarán                  |
 | code       | VARCHAR(10)  | Codigo identificativo del usuario            |
 | role       | ENUM         | Rol("admin", "empleado", comercial, cliente) |
+| avatar     | VARCHAR(100) | URL del avatar del usuario                   |
 | createdAt  | DATETIME     | Fecha y hora de creación del usuario         |
 | modifiedAt | DATETIME     | Fecha y hora de la última modificación       |
 

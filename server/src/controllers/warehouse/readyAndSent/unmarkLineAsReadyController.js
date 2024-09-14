@@ -1,7 +1,7 @@
 const unmarkLineAsReadyController = (req, res, next) => {
     try {
         res.send({
-            status: 'Ok',
+            status: 'ok',
             message: 'TODO: unmarkLineAsReadyController',
         });
     } catch (err) {

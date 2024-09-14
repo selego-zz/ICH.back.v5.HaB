@@ -11,10 +11,9 @@ const getUserByEmailModel = async (email) => {
     try {
         // establecemos conexion a la base de datos
         const pool = await getPool();
-        const [user] = await pool.query(
-            'SELECT id, password, email, role FROM users WHERE email = ?',
-            [email],
-        );
+        const [user] = await pool.query('SELECT * FROM users WHERE email = ?', [
+            email,
+        ]);
 
         return user[0];
     } catch (err) {

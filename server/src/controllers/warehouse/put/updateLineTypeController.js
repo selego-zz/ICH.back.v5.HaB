@@ -12,7 +12,7 @@ import { lineTypeSchema } from '../../../schemas/index.js';
  * @param {string} req.body.number - Número de la línea a actualizar
  * @param {string} req.body.newType - Nuevo tipo de la línea a actualizar. Valores posibles: 'p', 'a', 'f'.
  * @param {Object} res - El objeto de respuesta.
- * @param {string} res.status - Estado de la petición. Valores posibles: 'Ok', 'Error'
+ * @param {string} res.status - Estado de la petición. Valores posibles: 'ok', 'error'
  * @param {string} res.message - Mensaje explicativo de respuesta o de error (Opcional)
  * @param {Function} next - La función de middleware siguiente.
  * @description Llama al servicio `updateLineTypeService` para actualizar el tipo de la línea cuyo tipo, serie y numero coincidan con los suministrados.
@@ -29,7 +29,7 @@ const updateLineTypeController = async (req, res, next) => {
         );
 
         res.send({
-            status: 'Ok',
+            status: 'ok',
             message: 'Pedido Actualizado',
         });
     } catch (err) {

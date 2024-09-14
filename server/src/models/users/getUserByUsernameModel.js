@@ -12,7 +12,7 @@ const getUserByUsernameModel = async (username) => {
         // establecemos conexion a la base de datos
         const pool = await getPool();
         const [user] = await pool.query(
-            'SELECT id, password, email, role FROM users WHERE username = ?',
+            'SELECT 9 FROM users WHERE username = ?',
             [username],
         );
 

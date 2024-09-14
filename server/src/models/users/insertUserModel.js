@@ -1,7 +1,7 @@
 //importamos las dependencias
 import bcrypt from 'bcrypt';
 import { getPool } from '../../db/index.js';
-import { generateError } from '../../utils/index.js';
+import { generateErrorUtil } from '../../utils/index.js';
 
 /**
  * Modelo para insertar un usuario en la base de datos
@@ -24,40 +24,44 @@ const insertUserModel = async (username, password, email, code, role) => {
     );
 
     if (resultado.length)
-        generateError('Ya existe un usuario con ese nombre de usuario', 409);
+        generateErrorUtil(
+            'Ya existe un usuario con ese nombre de usuario',
+            409,
+        );
 
     const args = [username, await bcrypt.hash(password, 10)];
     let SQL = `INSERT INTO users (username, password`;
+    let MIDSQL = `) VALUES (?, ?`;
 
     if (email) {
         [resultado] = await pool.query('SELECT id FROM users WHERE email = ?', [
             email,
         ]);
         if (resultado.length)
-            generateError(
+            generateErrorUtil(
                 'Ya existe un usuario con ese correo electrónico',
                 409,
             );
         SQL += `, email`;
+        MIDSQL += `, ?`;
         args.push(email);
     }
 
     if (role) {
         SQL += `, role`;
+        MIDSQL += `, ?`;
         args.push(role);
     }
 
     if (code) {
         SQL += `, code`;
+        MIDSQL += `, ?`;
         args.push(code);
     }
 
-    SQL += `) VALUES (?, ?`;
-    if (args.length > 2) SQL += `, ?`;
-    if (args.length > 3) SQL += `, ?`;
-    SQL += `)`;
+    MIDSQL += `)`;
 
-    [resultado] = await pool.query(SQL, args);
+    [resultado] = await pool.query(SQL + MIDSQL, args);
 
     return resultado.insertId;
 };

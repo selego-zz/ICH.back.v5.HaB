@@ -3,11 +3,12 @@ import 'dotenv/config';
 
 //importamos dependencias
 import express from 'express';
+import fileUpload from 'express-fileupload';
 import morgan from 'morgan';
 import cors from 'cors';
 
 //importamos las variables globales
-const { PORT } = process.env;
+const { PORT, UPLOADS_DIR } = process.env;
 
 //importamos las rutas
 import {
@@ -28,6 +29,13 @@ app.use(morgan('dev'));
 //middleware para leer bodys en formato JSON
 app.use(express.json());
 
+// Middleware que permite leer un body en formato "form-data" (para archivos).
+app.use(fileUpload());
+
+// Middleware que indica a Express cuál es el directorio de ficheros estáticos.
+// Esto es para que el front end pueda cargar las fotos de uploads
+app.use(express.static(UPLOADS_DIR));
+
 //middleware para indicar las rutas
 app.use('/api', userRouter);
 app.use('/api', warehoseRouter);
@@ -39,7 +47,7 @@ app.use((err, req, res, next) => {
     console.error(err);
 
     res.status(err.httpStatus || 500).send({
-        status: 'Error',
+        status: 'error',
         message: err.message,
     });
 });
@@ -49,7 +57,7 @@ app.use((req, res, next) => {
     console.log('ruta no encontrada');
 
     res.status(404).send({
-        status: 'Error',
+        status: 'error',
         message: 'Ruta no encontrada',
     });
 });

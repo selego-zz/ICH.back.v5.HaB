@@ -11,10 +11,9 @@ const getUserByIdModel = async (id) => {
     try {
         // establecemos conexion a la base de datos
         const pool = await getPool();
-        const [user] = await pool.query(
-            'SELECT id, username, email, role FROM users WHERE id = ?',
-            [id],
-        );
+        const [user] = await pool.query('SELECT * FROM users WHERE id = ?', [
+            id,
+        ]);
 
         return user[0];
     } catch (err) {

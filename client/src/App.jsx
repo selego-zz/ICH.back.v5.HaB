@@ -11,8 +11,11 @@ import Header from './components/header';
 
 // importamos páginas
 import HomePage from './pages/HomePage';
-import LoginPage from './pages/LoginPage';
 import NotFoundPage from './pages/NotFoundPage';
+// páginas de usuarios
+import LoginPage from './pages/user/LoginPage';
+import UserProfilePage from './pages/user/UserProfilePage';
+import UsersListPage from './pages/user/UsersListPage';
 
 // importamos estilo
 import './index.css';
@@ -31,7 +34,15 @@ function App() {
             <Header />
             <Routes>
                 <Route path="/" element={<HomePage />} />
+
+                {/* Páginas de usuario */}
+                <Route path="/addUser" element={<UsersListPage />} />
+                <Route path="/allUsers" element={<UsersListPage />} />
                 <Route path="/login" element={<LoginPage />} />
+                <Route path="/DeleteUser" element={<UsersListPage />} />
+                <Route path="/user" element={<UserProfilePage />} />
+
+                {/* Not Found */}
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
             <Footer />
