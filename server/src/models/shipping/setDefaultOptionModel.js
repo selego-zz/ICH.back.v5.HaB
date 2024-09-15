@@ -9,7 +9,7 @@ const setDefaultOptionModel = async (id) => {
     const pool = await getPool();
 
     const [res] = await pool.query(
-        'UPDATE shipping_company SET defaultSelection = true WHERE id = ?',
+        'UPDATE shipping_company SET updatedAt = NOW(), defaultSelection = true WHERE id = ?',
         [id],
     );
     return res[0].affectedRows;
