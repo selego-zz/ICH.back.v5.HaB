@@ -11,7 +11,6 @@ import {
     getAllHeadersByAgentModel,
     getAllHeadersByClientModel,
     getHeaderIdByNumberModel,
-    getLineIdByNumberModel,
     getLineIdModel,
     //importamos actualizadores
     updateLineModel,
@@ -439,7 +438,7 @@ const updateLinesTypeService = async (type, serie, number, newType) => {
  */
 const getLineIdByNumberService = async (type, serie, number, line) => {
     const header_id = await getHeaderIdByNumberModel(type, serie, number);
-    return await getLineIdByNumberModel(header_id, line);
+    return await getLineIdModel(header_id, line);
 };
 
 /*******************************************************************\

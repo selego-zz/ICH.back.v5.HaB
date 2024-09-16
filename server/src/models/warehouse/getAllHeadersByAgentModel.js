@@ -1,5 +1,7 @@
 import { getPool } from '../../db/index.js';
 
+import { SQL_GET_ALL_HEADERS } from './_commonSQL.js';
+
 /**
  * Modelo para solicitar la información de las cabeceras de los pedidos
  * @param {string} [type] - Tipo de la cabecera. (Opcional). Valores posibles: 'p', 'a', 'f'
@@ -12,13 +14,12 @@ const getAllHeadersByAgentModel = async (type, agent_id) => {
 
     const [res] = type
         ? await pool.query(
-              'SELECT * FROM invoice_headers WHERE type = ? and agent_id = ?',
+              SQL_GET_ALL_HEADERS + ' and type = ? and agent_id = ?',
               [type, agent_id],
           )
-        : await pool.query(
-              'SELECT * FROM invoice_headers WHERE and agent_id = ?',
-              [agent_id],
-          );
+        : await pool.query(SQL_GET_ALL_HEADERS + ' and agent_id = ?', [
+              agent_id,
+          ]);
 
     return res;
 };
