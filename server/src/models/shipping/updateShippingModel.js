@@ -14,7 +14,7 @@ const updateShippingModel = async (id, name, phone, email) => {
     const pool = await getPool();
 
     const [res] = await pool.query(
-        'UPDATE shipping_company SET name = ?, phone = ?, mail = ? WHERE id = ?',
+        'UPDATE shipping_company SET updatedAt = NOW(), name = ?, phone = ?, mail = ? WHERE id = ?',
         [name, phone, email, id],
     );
 

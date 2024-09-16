@@ -23,27 +23,40 @@ const updateUserModel = async (
 ) => {
     const pool = await getPool();
 
-    if (username)
-        await pool.query('UPDATE users SET username = ? where id = ?', [
-            username,
-            id,
-        ]);
-    if (password)
-        await pool.query('UPDATE users SET password = ? where id = ?', [
-            await bcrypt.hash(password, 10),
-            id,
-        ]);
-    if (email)
-        await pool.query('UPDATE users SET email = ? where id = ?', [
-            email,
-            id,
-        ]);
-    if (code)
-        await pool.query('UPDATE users SET code = ? where id = ?', [code, id]);
-    if (role)
-        await pool.query('UPDATE users SET role = ? where id = ?', [role, id]);
+    let sql = 'UPDATE users SET updatedAt = NOW()';
+    let args = [];
+    if (username) {
+        sql += ', username = ?';
+        args.push(username);
+    }
+    if (password) {
+        if (args.length > 0) sql;
+        sql += ', password = ?';
+        args.push(await bcrypt.hash(password, 10));
+    }
+    if (email) {
+        if (args.length > 0) sql;
+        sql += ', email = ?';
+        args.push(email);
+    }
+    if (code) {
+        if (args.length > 0) sql;
+        sql += ', code = ?';
+        args.push(code);
+    }
+    if (role) {
+        if (args.length > 0) sql;
+        sql += ', role = ?';
+        args.push(role);
+    }
+    if (avatar) {
+        if (args.length > 0) sql;
+        sql += ', avatar = ?';
+        args.push(avatar);
+    }
 
-    await pool.query('UPDATE users SET avatar = ? where id = ?', [avatar, id]);
+    args.push(id);
+    await pool.query(sql + ' where id = ?', args);
 };
 
 export default updateUserModel;

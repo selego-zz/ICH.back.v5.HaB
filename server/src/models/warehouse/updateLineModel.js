@@ -12,13 +12,17 @@ const updateLineModel = async (line) => {
     const lineId = line.id;
     delete line.id;
 
+    let sql = 'UPDATE invoice_lines SET updatedAt = NOW()';
+    let args = [];
+
     for (const [key, value] of Object.entries(line)) {
-        await pool.query('UPDATE invoice_lines SET ?? = ? WHERE id = ?', [
-            key,
-            value,
-            lineId,
-        ]);
+        sql += ', ?? = ?';
+        args.push(key);
+        args.push(value);
     }
+    args.push(lineId);
+    await pool.query(sql + ' WHERE id = ?', args);
+
     line.id = lineId;
 };
 

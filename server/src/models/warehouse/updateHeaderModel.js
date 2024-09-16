@@ -12,13 +12,17 @@ const updateHeaderModel = async (header) => {
     const headerId = header.id;
     delete header.id;
 
+    let sql = 'UPDATE invoice_headers SET updatedAt = NOW()';
+    let args = [];
+
     for (const [key, value] of Object.entries(header)) {
-        await pool.query('UPDATE invoice_headers SET ?? = ? WHERE id = ?', [
-            key,
-            value,
-            headerId,
-        ]);
+        sql += ', ?? = ?';
+        args.push(key);
+        args.push(value);
     }
+    args.push(headerId);
+    await pool.query(sql + ' WHERE id = ?', args);
+
     header.id = headerId;
 };
 

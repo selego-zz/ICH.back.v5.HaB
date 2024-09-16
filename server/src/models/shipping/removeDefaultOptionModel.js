@@ -8,7 +8,7 @@ const removeDefaultOptionModel = async () => {
     const pool = await getPool();
 
     const [res] = await pool.query(
-        'UPDATE shipping_company SET defaultSelection = false WHERE defaultSelection = true',
+        'UPDATE shipping_company SET updatedAt = NOW(), defaultSelection = false WHERE defaultSelection = true',
     );
     return res.affectedRows;
 };
