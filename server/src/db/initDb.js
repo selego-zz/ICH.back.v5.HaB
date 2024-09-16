@@ -59,7 +59,7 @@ const INVOICE_LINES_TABLE_SQL = `
         FOREIGN KEY (header_id) REFERENCES invoice_headers(id),
         line TINYINT UNSIGNED NOT NULL,
         CONSTRAINT UC_header_id_line UNIQUE (header_id, line),
-        type ENUM ('p', 'a', 'f') DEFAULT 'p',
+        completed BOOLEAN DEFAULT FALSE,
         reference VARCHAR(15) NOT NULL,
         name VARCHAR(30) NOT NULL,
         description VARCHAR(30) NOT NULL,

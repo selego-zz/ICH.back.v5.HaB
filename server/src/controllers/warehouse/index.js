@@ -14,7 +14,7 @@ import {
     updateOrderController,
     updateServedUnitsController,
     updateOrderTypeController,
-    updateLineTypeController,
+    updateLineCompletedController,
 } from './put/index.js';
 import { sendTransportOrderController } from './readyAndSent/index.js';
 
@@ -30,7 +30,7 @@ export {
     updateLineController,
     updateOrderController,
     updateOrderTypeController,
-    updateLineTypeController,
+    updateLineCompletedController,
     updateServedUnitsController,
     sendTransportOrderController,
 };

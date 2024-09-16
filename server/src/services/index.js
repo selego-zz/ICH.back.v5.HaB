@@ -20,7 +20,7 @@ import {
     // lines put
     updateLinesService,
     updateOrInsertLinesService,
-    updateLinesTypeService,
+    updateLineCompletedService,
     // lines get
     getLineIdByNumberService,
 
@@ -54,7 +54,7 @@ export {
     // lines put
     updateLinesService,
     updateOrInsertLinesService,
-    updateLinesTypeService,
+    updateLineCompletedService,
     // lines get
     getLineIdByNumberService,
 

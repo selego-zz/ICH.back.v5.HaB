@@ -1,6 +1,6 @@
-import { updateLinesTypeService } from '../../../services/ordersService.js';
+import { updateLineCompletedService } from '../../../services/ordersService.js';
 import { validateSchema } from '../../../utils/index.js';
-import { lineTypeSchema } from '../../../schemas/index.js';
+import { lineCompletedSchema } from '../../../schemas/index.js';
 
 /**
  * Función controladora que actualiza el tipo de una línea.
@@ -10,22 +10,22 @@ import { lineTypeSchema } from '../../../schemas/index.js';
  * @param {string} req.body.type - Tipo de la línea a actualizar
  * @param {string} req.body.series - Serie de la línea a actualizar
  * @param {string} req.body.number - Número de la línea a actualizar
- * @param {string} req.body.newType - Nuevo tipo de la línea a actualizar. Valores posibles: 'p', 'a', 'f'.
+ * @param {boolean} req.body.completed - Establece si la línea está completa o no.
  * @param {Object} res - El objeto de respuesta.
  * @param {string} res.status - Estado de la petición. Valores posibles: 'ok', 'error'
  * @param {string} res.message - Mensaje explicativo de respuesta o de error (Opcional)
  * @param {Function} next - La función de middleware siguiente.
- * @description Llama al servicio `updateLineTypeService` para actualizar el tipo de la línea cuyo tipo, serie y numero coincidan con los suministrados.
+ * @description Llama al servicio `updateLineCompletedService` para actualizar el tipo de la línea cuyo tipo, serie y numero coincidan con los suministrados.
  */
-const updateLineTypeController = async (req, res, next) => {
+const updateLineCompletedController = async (req, res, next) => {
     try {
-        await validateSchema(lineTypeSchema, req.body);
+        await validateSchema(lineCompletedSchema, req.body);
 
-        await updateLinesTypeService(
+        await updateLineCompletedService(
             req.body.type,
             req.body.series,
             req.body.number,
-            req.body.newType,
+            req.body.completed,
         );
 
         res.send({
@@ -37,4 +37,4 @@ const updateLineTypeController = async (req, res, next) => {
         next(err);
     }
 };
-export default updateLineTypeController;
+export default updateLineCompletedController;

@@ -10,7 +10,7 @@ import {
     addOrderController,
     addAllOrdersController,
     updateLineController,
-    updateLineTypeController,
+    updateLineCompletedController,
     updateOrderTypeController,
     updateOrderController,
     updateServedUnitsController,
@@ -64,11 +64,11 @@ router.put(
     authWorkerController,
     updateOrderTypeController,
 );
-//-   **PUT** - [`/api/warehouse/changeType/:type/:series/:number/:line`] - Cambia el tipo de una línea. P, A, F
+//-   **PUT** - [`/api/warehouse/changeCompleted/:type/:series/:number/:line`] - Cambia el estado 'completa' de una línea. P, A, F
 router.put(
-    `/api/warehouse/changeType/:type/:series/:number/:line`,
+    `/api/warehouse/changeCompleted/:type/:series/:number/:line`,
     authWorkerController,
-    updateLineTypeController,
+    updateLineCompletedController,
 );
 
 //PUT [`/api/warehouse/shippingemail`] - envía un correo electrónico a la empresa de transporte

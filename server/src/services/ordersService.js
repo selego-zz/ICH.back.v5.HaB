@@ -376,7 +376,7 @@ const updateLinesService = async (lines) => {
 const updateOrInsertLinesService = async (lines) => {
     for (const line of lines) {
         const lineId = getLineIdByNumberService(
-            line.type,
+            line.type, //ESTE ESTÁ BIEN, NO ES COMPLETED
             line.serie,
             line.number,
             line.line,
@@ -406,15 +406,15 @@ const updateOrInsertLinesService = async (lines) => {
  * @param {string} type - Tipo de la linea cuyo tipo queremos actualizar.
  * @param {string} serie - Serie de la linea cuyo tipo queremos actualizar.
  * @param {string} number - Número de la lineacuyo tipo queremos actualizar.
- * @param {string} newType - Nuevo tipo de la linea cuyo tipo queremos actualizar.
+ * @param {string} completed - Marca si la línea está completa.
  * @description - Actualiza mediante 'updateLineModel' el tipo de la línea al indicado
  */
-const updateLinesTypeService = async (type, serie, number, newType) => {
+const updateLineCompletedService = async (type, serie, number, completed) => {
     const id = getOrderByNumberService(type, serie, number);
     if (id === undefined) generateErrorUtil('Pedido no encontrado', 404);
     const line = {
         id,
-        type: newType,
+        completed,
     };
     await updateLineModel(line);
 };
@@ -577,7 +577,7 @@ export {
     // lines put
     updateLinesService,
     updateOrInsertLinesService,
-    updateLinesTypeService,
+    updateLineCompletedService,
     // lines get
     getLineIdByNumberService,
 

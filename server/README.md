@@ -95,7 +95,7 @@ O cambiar los permisos de los usuarios
 | id            | INT UNSIGNED     | Identificador único de la linea         |
 | header_id     | INT UNSIGNED     | id de la cabecera asociada              |
 | line          | TINYINT UNSIGNED | Número de linea del pedido              |
-| type          | ENUM             | Pendiente, Alistado, Facturado          |
+| completed     | BOOBLEAN         | Indica si la línea está finalizada      |
 | reference     | VARCHAR(15)      | Código del producto                     |
 | name          | VARCHAR(30)      | Nombre del producto                     |
 | description   | VARCHAR(30)      | Descripción del producto                |
@@ -142,7 +142,7 @@ O cambiar los permisos de los usuarios
 -   **PUT** - [`/api/warehouse/Units`] - Cambia el número de unidades que se enviarán de una línea ✅
 
 -   **PUT** - [`/api/warehouse/changeType/:type/:series/:number`] - Cambia el tipo de un pedido. P, A, F ✅
--   **PUT** - [`/api/warehouse/changeType/:type/:series/:number/:line`] - Cambia el tipo de una línea. P, A, F ✅
+-   **PUT** - [`/api/warehouse/changeCompleted/:type/:series/:number/:line`] - Cambia el estado 'completa' de una línea. P, A, F ✅
 
 -   **PUT** - [`/api/warehouse/shippingemail`] - envía un correo electrónico a la empresa de transporte ✅
 

@@ -8,7 +8,7 @@ import invoiceHeaderUpdateSchema from './invoiceHeaderUpdateSchema.js';
 import invoiceLineUpdateSchema from './invoiceLineUpdateSchema.js';
 import servedUnitsUpdateSchema from './servedUnitsUpdateSchema.js';
 import orderTypeSchema from './orderTypeSchema.js';
-import lineTypeSchema from './lineTypeSchema.js';
+import lineCompletedSchema from './lineCompletedSchema.js';
 import shippingCompanySchema from './shippingCompanySchema.js';
 import shippingCompanyUpdateSchema from './shippingCompanyUpdateSchema.js';
 
@@ -23,7 +23,7 @@ export {
     allLinesSchema,
     servedUnitsUpdateSchema,
     orderTypeSchema,
-    lineTypeSchema,
+    lineCompletedSchema,
     shippingCompanySchema,
     shippingCompanyUpdateSchema,
 };
