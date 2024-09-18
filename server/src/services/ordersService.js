@@ -188,7 +188,7 @@ const getOrderByNumberService = async (type, serie, number, role, id) => {
  * @description - se asegura de actualizar solo los datos de cabecera mediante el servicio 'getHeaderData'. Actualiza mediante el modelo 'updateHeaderModel' todos los datos de la cabecera que se suministren
  */
 const updateHeaderService = async (order) => {
-    const orderId = getOrderByNumberService(
+    const orderId = await getOrderByNumberService(
         order.type,
         order.serie,
         order.number,
@@ -201,7 +201,7 @@ const updateHeaderService = async (order) => {
             400,
         );
     order.id = orderId; // si existía es igual y no causa daño, sino, se añade
-    const header = getHeaderData(order, false);
+    const header = await getHeaderData(order, false);
     await updateHeaderModel(header);
 };
 
@@ -213,14 +213,21 @@ const updateHeaderService = async (order) => {
  * @param {string} newType - Nuevo tipo del pedido cuyo tipo queremos actualizar.
  * @description - Actualiza mediante 'updateHeaderModel' el tipo del pedido al nuevo pedido
  */
-const updateHeadersTypeService = async (type, serie, number, newType) => {
-    const id = getOrderByNumberService(type, serie, number);
+const updateHeadersTypeService = async (
+    type,
+    serie,
+    number,
+    role,
+    userId,
+    newType,
+) => {
+    const id = await getOrderByNumberService(type, serie, number, role, userId);
     if (id === undefined) generateErrorUtil('Pedido no encontrado', 404);
     const header = {
         id,
         type: newType,
     };
-    await updateHeaderModel(header);
+    return await updateHeaderModel(header);
 };
 
 /**
@@ -229,7 +236,7 @@ const updateHeadersTypeService = async (type, serie, number, newType) => {
  * @description - actualiza todos los datos del pedido suministrado. hace uso del servicio  'updateHeaderModel' para actualizar la cabecera, y updateOrInsertLinesService para actualizar las líneas o grabar las nuevas, Si en el pedido original hay líneas que no se suministran en este, no las borra, solo añade o cambia
  */
 const updateOrderService = async (order) => {
-    const orderId = getOrderByNumberService(
+    const orderId = await getOrderByNumberService(
         order.type,
         order.serie,
         order.number,
@@ -350,17 +357,18 @@ const addLineByNumberService = async (type, serie, number, line) => {
  */
 const updateLinesService = async (lines) => {
     for (const line of lines) {
-        const lineId = getLineIdByNumberService(
+        const lineId = await getLineIdByNumberService(
             line.type,
             line.serie,
             line.number,
             line.line,
         );
         if (lineId === undefined && line.id === undefined)
-            throw new Error('linea no encontrado');
+            generateErrorUtil('linea no encontrada', 404);
         if (line.id && line.id != lineId)
-            throw new Error(
+            generateErrorUtil(
                 'Tipo, Serie, y Número no coinciden con los suministrados',
+                409,
             );
         line.id = lineId; // si existía es igual y no causa daño, sino, se añade
 
@@ -375,7 +383,7 @@ const updateLinesService = async (lines) => {
  */
 const updateOrInsertLinesService = async (lines) => {
     for (const line of lines) {
-        const lineId = getLineIdByNumberService(
+        const lineId = await getLineIdByNumberService(
             line.type, //ESTE ESTÁ BIEN, NO ES COMPLETED
             line.serie,
             line.number,
@@ -388,7 +396,7 @@ const updateOrInsertLinesService = async (lines) => {
             delete line.serie;
             const number = line.number;
             delete line.number;
-            addLineByNumberService(type, serie, number, line);
+            await addLineByNumberService(type, serie, number, line);
         } else {
             if (line.id && line.id != lineId)
                 throw new Error(
