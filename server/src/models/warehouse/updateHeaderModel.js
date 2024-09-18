@@ -12,7 +12,7 @@ const updateHeaderModel = async (header) => {
     const headerId = header.id;
     delete header.id;
 
-    let sql = 'UPDATE invoice_headers SET updatedAt = NOW()';
+    let sql = 'UPDATE invoice_headers SET modifiedAt = NOW()';
     let args = [];
 
     for (const [key, value] of Object.entries(header)) {

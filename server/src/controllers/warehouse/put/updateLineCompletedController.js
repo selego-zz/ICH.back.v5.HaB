@@ -1,15 +1,15 @@
 import { updateLineCompletedService } from '../../../services/ordersService.js';
-import { validateSchema } from '../../../utils/index.js';
-import { lineCompletedSchema } from '../../../schemas/index.js';
 
 /**
  * Función controladora que actualiza el tipo de una línea.
  * @middleware authWorkerController - Middleware para comprobar permisos de inserción.
  * @param {Object} req - Objeto request
+ * @param {Object} req.params - Parámetros de ruta
+ * @param {string} req.params.type - Tipo de la línea a actualizar
+ * @param {string} req.params.series - Serie de la línea a actualizar
+ * @param {string} req.params.number - Número del pedido de la línea a actualizar
+ * @param {integer} req.params.line - Número de línea de la línea a actualizar
  * @param {Object} req.body - Json con la información a actualizar
- * @param {string} req.body.type - Tipo de la línea a actualizar
- * @param {string} req.body.series - Serie de la línea a actualizar
- * @param {string} req.body.number - Número de la línea a actualizar
  * @param {boolean} req.body.completed - Establece si la línea está completa o no.
  * @param {Object} res - El objeto de respuesta.
  * @param {string} res.status - Estado de la petición. Valores posibles: 'ok', 'error'
@@ -19,18 +19,28 @@ import { lineCompletedSchema } from '../../../schemas/index.js';
  */
 const updateLineCompletedController = async (req, res, next) => {
     try {
-        await validateSchema(lineCompletedSchema, req.body);
+        //No hace falta comprobar roles o ids, a este punto solo puede llegar un empleado o administrador, unicos roles que pueden cambiar este campo
+        console.log(req.body.completed);
 
-        await updateLineCompletedService(
-            req.body.type,
-            req.body.series,
-            req.body.number,
+        const affectedRows = await updateLineCompletedService(
+            req.params.type,
+            req.params.series,
+            req.params.number,
+            req.params.line,
             req.body.completed,
         );
+        let message = '';
+        if (affectedRows > 1) {
+            message = `Se han actualizado ${affectedRows} registros`;
+        } else if (affectedRows === 1) {
+            message = `Se ha actualizado 1 registro`;
+        } else {
+            message = 'No se han actualizado registros';
+        }
 
         res.send({
             status: 'ok',
-            message: 'Pedido Actualizado',
+            message,
         });
     } catch (err) {
         console.error(err);

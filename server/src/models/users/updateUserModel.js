@@ -23,7 +23,7 @@ const updateUserModel = async (
 ) => {
     const pool = await getPool();
 
-    let sql = 'UPDATE users SET updatedAt = NOW()';
+    let sql = 'UPDATE users SET modifiedAt = NOW()';
     let args = [];
     if (username) {
         sql += ', username = ?';

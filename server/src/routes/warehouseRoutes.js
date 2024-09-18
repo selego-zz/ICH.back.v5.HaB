@@ -60,13 +60,13 @@ router.put(
 
 //-   **PUT** - [`/api/warehouse/changeType/:type/:series/:number`] - Cambia el tipo de un pedido. P, A, F
 router.put(
-    `/api/warehouse/changeType/:type/:series/:number`,
+    `/warehouse/changeType/:type/:series/:number`,
     authWorkerController,
     updateOrderTypeController,
 );
-//-   **PUT** - [`/api/warehouse/changeCompleted/:type/:series/:number/:line`] - Cambia el estado 'completa' de una línea. P, A, F
+//-   **PUT** - [`/api/warehouse/changeCompleted/:type/:series/:number/:line`] - Cambia el estado 'completa' de una línea
 router.put(
-    `/api/warehouse/changeCompleted/:type/:series/:number/:line`,
+    `/warehouse/changeCompleted/:type/:series/:number/:line`,
     authWorkerController,
     updateLineCompletedController,
 );

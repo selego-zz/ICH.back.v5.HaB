@@ -41,7 +41,7 @@ const updateUserController = async (req, res, next) => {
         console.log(req.body);
 
         console.log(req.body.avatar);
-        */
+ */
         const user = req.user;
         const iduser = req.params.iduser;
 

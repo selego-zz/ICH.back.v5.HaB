@@ -409,14 +409,20 @@ const updateOrInsertLinesService = async (lines) => {
  * @param {string} completed - Marca si la línea está completa.
  * @description - Actualiza mediante 'updateLineModel' el tipo de la línea al indicado
  */
-const updateLineCompletedService = async (type, serie, number, completed) => {
-    const id = getOrderByNumberService(type, serie, number);
+const updateLineCompletedService = async (
+    type,
+    serie,
+    number,
+    lineNumber,
+    completed,
+) => {
+    const id = await getLineIdByNumberService(type, serie, number, lineNumber);
     if (id === undefined) generateErrorUtil('Pedido no encontrado', 404);
     const line = {
         id,
         completed,
     };
-    await updateLineModel(line);
+    return await updateLineModel(line);
 };
 
 /*******************************************************************\
@@ -438,6 +444,7 @@ const updateLineCompletedService = async (type, serie, number, completed) => {
  */
 const getLineIdByNumberService = async (type, serie, number, line) => {
     const header_id = await getHeaderIdByNumberModel(type, serie, number);
+    if (!header_id) generateErrorUtil('Pedido no encontrado', 404);
     return await getLineIdModel(header_id, line);
 };
 

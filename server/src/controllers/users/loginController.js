@@ -33,7 +33,6 @@ const loginController = async (req, res, next) => {
         const dbUser = await getUserByEmailModel(user.email);
 
         let validPass;
-        console.log(dbUser);
 
         if (dbUser)
             validPass = await bcrypt.compare(user.password, dbUser.password);

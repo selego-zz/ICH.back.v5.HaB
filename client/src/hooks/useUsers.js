@@ -30,7 +30,7 @@ const useUsers = () => {
 
     useEffect(() => {
         /**
-         * Función solicita a la API la la información de todos los usuarios.
+         * Función solicita a la API la información de todos los usuarios.
          * @description - Solicita a la API la información de todos los usuarios, y la almacena en la variable de estado users .
          */
         const getUsers = async () => {

@@ -14,6 +14,10 @@ const { SECRET } = process.env;
  * @param {Function} next - La función de middleware siguiente.
  * @description Verifica el token de autenticación y permite el acceso si es válido y tiene rol de 'administrador'.
  * @env {string} SECRET - La clave secreta para verificar el token de autenticación.
+ * @property {Object} req.user - Objeto añadido a req para que esté displonible en los endpoint.
+ * @property {string} req.user.id - El ID del usuario.
+ * @property {string} req.user.role - El rol del usuario.
+ * @property {string} req.user.email - El correo electrónico del usuario.
  */
 const authAdminController = (req, res, next) => {
     try {

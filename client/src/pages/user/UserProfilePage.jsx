@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 
 // importamos componentes
-import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 // importamos función para adornar mensajes
 import toast from 'react-hot-toast';
@@ -15,8 +15,6 @@ const UserProfilePage = () => {
     // Variable de contexto que contiene los datos del usuario
     const { authUser, updateUser, authLogout, authUserLoading } =
         useContext(AuthContext);
-
-    const navigate = useNavigate();
 
     // Variable de entorno para saber si queremos actualizar los datos del usuario
     const [actualizar, setActualizar] = useState(false);
@@ -69,7 +67,8 @@ const UserProfilePage = () => {
     //////////////// A partir de aquí el return/////////////////////
     ////////////////////////////////////////////////////////////////
     if (authUserLoading) return <h2>Loading...</h2>;
-    if (!authUser) navigate('/');
+    if (!authUser) return <Navigate to="/login" />;
+
     return (
         <main>
             <h2>Perfil</h2>
@@ -150,7 +149,7 @@ const UserProfilePage = () => {
                         id="Avatar"
                         accept="image/jpeg, image/png"
                         onChange={(e) => {
-                            setAvatar(e.target.files);
+                            setAvatar(e.target.files[0]);
                         }}
                     />
                     <button>Aceptar</button>

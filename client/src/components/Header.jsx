@@ -16,7 +16,7 @@ const Header = () => {
     return (
         <header>
             <h1>
-                <NavLink to="/">Pedidos pendientes</NavLink>
+                <NavLink to="/">ICH española</NavLink>
             </h1>
             {authUser && (
                 <article>
