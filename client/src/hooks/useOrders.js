@@ -54,7 +54,7 @@ const useOrders = () => {
             setOrdersLoading(true);
 
             try {
-                const res = await fetch(`${VITE_API_URL}/api/warehouse/p`, {
+                const res = await fetch(`${VITE_API_URL}/api/warehouse/`, {
                     headers: {
                         Authorization: authToken,
                     },
@@ -112,6 +112,43 @@ const useOrders = () => {
         fetchOrders();
     }, [authToken, orders]);
 
+    const updateOrderCompleted = async (orderId, newType, toastId) => {
+        setOrdersLoading(true);
+
+        try {
+            const order = orders.find((order) => order.id === orderId);
+
+            const res = await fetch(
+                `${VITE_API_URL}/api/warehouse/changeType/${order.type}/${order.series}/${order.number}`,
+                {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: authToken,
+                    },
+                    body: JSON.stringify({ newType: newType }),
+                }
+            );
+
+            const body = await res.json();
+
+            if (body.status === 'error') throw new Error(body.message);
+            setOrders(
+                orders.map((order) => {
+                    if (order.id !== orderId) return order;
+                    //hasta aquí ha devuelto todos los pedidos menos el de la línea modificada.
+                    order.type = newType;
+                    return order;
+                })
+            );
+
+            toast.success(body.message, { id: toastId });
+        } catch (err) {
+            toast.error(err.message, { id: toastId });
+        } finally {
+            setOrdersLoading(false);
+        }
+    };
     const updateLineCompleted = async (orderId, lineId, completed, toastId) => {
         setOrdersLoading(true);
 
@@ -156,7 +193,7 @@ const useOrders = () => {
         }
     };
 
-    return { orders, ordersLoading, updateLineCompleted };
+    return { orders, ordersLoading, updateOrderCompleted, updateLineCompleted };
 };
 
 export default useOrders;

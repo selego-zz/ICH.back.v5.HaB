@@ -150,6 +150,8 @@ O cambiar los permisos de los usuarios
 -   **DELETE** - [`/api/warehouse/:type/:series/:number`] - Elimina un pedido ✅
 -   **DELETE** - [`/api/warehouse/:type/:series/:number/:line`] - Elimina una linea ✅
 
+-   **POST** - [`/api/warehouse/updatedb`] - Copia la base de datos desde la raiz del pc, y actualiza la base de datos
+
 ## Endpoints de empresa de transporte
 
 -   **POST** - [`/api/shipping`] - Inserta una empresa de transporte ✅

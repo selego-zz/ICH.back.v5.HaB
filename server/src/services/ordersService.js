@@ -221,7 +221,15 @@ const updateHeadersTypeService = async (
     userId,
     newType,
 ) => {
-    const id = await getOrderByNumberService(type, serie, number, role, userId);
+    const [{ id }] = await getOrderByNumberService(
+        type,
+        serie,
+        number,
+        role,
+        userId,
+    );
+    console.log(id);
+
     if (id === undefined) generateErrorUtil('Pedido no encontrado', 404);
     const header = {
         id,

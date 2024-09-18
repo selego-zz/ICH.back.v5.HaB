@@ -55,10 +55,14 @@ div#root > main {
     border-bottom: 2px solid;
     border-right: 10px solid;
 }
-.client > ul {
+.orderData > ul {
     list-style: none;
     margin-left: 1rem;
     border-bottom: 1px solid lightcoral;
+}
+
+.albaranGenerado {
+    background-color: dimgray;
 }
 
 .completo {

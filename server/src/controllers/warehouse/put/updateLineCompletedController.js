@@ -20,7 +20,6 @@ import { updateLineCompletedService } from '../../../services/ordersService.js';
 const updateLineCompletedController = async (req, res, next) => {
     try {
         //No hace falta comprobar roles o ids, a este punto solo puede llegar un empleado o administrador, unicos roles que pueden cambiar este campo
-        console.log(req.body.completed);
 
         const affectedRows = await updateLineCompletedService(
             req.params.type,

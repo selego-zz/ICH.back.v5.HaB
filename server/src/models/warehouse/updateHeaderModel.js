@@ -7,7 +7,7 @@ import getPool from '../../db/getPool.js';
  */
 const updateHeaderModel = async (header) => {
     const pool = await getPool();
-
+    console.log(header);
     if (!header.id) return;
     const headerId = header.id;
     delete header.id;
@@ -21,9 +21,14 @@ const updateHeaderModel = async (header) => {
         args.push(value);
     }
     args.push(headerId);
-    await pool.query(sql + ' WHERE id = ?', args);
+    console.log(sql + ' WHERE id = ?');
+    console.log(args);
+
+    const [res] = await pool.query(sql + ' WHERE id = ?', args);
 
     header.id = headerId;
+
+    return res.affectedRows;
 };
 
 export default updateHeaderModel;
