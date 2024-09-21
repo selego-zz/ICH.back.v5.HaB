@@ -8,6 +8,8 @@ import {
     addLinesController,
     addOrderController,
     addAllOrdersController,
+    addOrUpdateAllOrdersController,
+    updateDBController,
 } from './post/index.js';
 import {
     updateLineController,
@@ -27,6 +29,8 @@ export {
     addLinesController,
     addOrderController,
     addAllOrdersController,
+    addOrUpdateAllOrdersController,
+    updateDBController,
     updateLineController,
     updateOrderController,
     updateOrderTypeController,

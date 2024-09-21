@@ -1,7 +1,10 @@
 import {
     //cabecera post
     addOrderService,
+    addOrUpdateOrderService,
     addAllOrdersService,
+    addOrUpdateAllOrdersService,
+    updateDBService,
     //cabecera get
     getOrderService,
     getOrderByNumberService,
@@ -34,8 +37,11 @@ import {
 
 export {
     //cabecera post
+    updateDBService,
     addOrderService,
+    addOrUpdateOrderService,
     addAllOrdersService,
+    addOrUpdateAllOrdersService,
     //cabecera get
     getOrderService,
     getOrderByNumberService,

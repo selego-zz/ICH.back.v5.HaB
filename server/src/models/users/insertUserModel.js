@@ -16,49 +16,44 @@ import { generateErrorUtil } from '../../utils/index.js';
 const insertUserModel = async (username, password, email, code, role) => {
     // tomamos el pool de la base de datos
     const pool = await getPool();
+    if (!email) email = username;
+    if (!password) password = '123456';
 
     //comprobamos que no exista ni el usuario, ni el email (caso de que suministren email)
     let [resultado] = await pool.query(
-        'SELECT id FROM users WHERE username = ?',
-        [username],
+        'SELECT id FROM users WHERE username = ? OR email = ?',
+        [username, email],
     );
 
-    if (resultado.length)
+    if (resultado?.length > 0)
         generateErrorUtil(
-            'Ya existe un usuario con ese nombre de usuario',
+            'Ya existe un usuario con ese nombre de usuario o email',
             409,
         );
 
-    const args = [username, await bcrypt.hash(password, 10)];
-    let SQL = `INSERT INTO users (username, password`;
-    let MIDSQL = `) VALUES (?, ?`;
+    let SQL = `INSERT INTO users (username, password, email`;
+    let MIDSQL = `) VALUES (?, ?, ?`;
+    const args = [];
+    args.push(username);
+    try {
+        const pas = await bcrypt.hash(password, 10);
 
-    if (email) {
-        [resultado] = await pool.query('SELECT id FROM users WHERE email = ?', [
-            email,
-        ]);
-        if (resultado.length)
-            generateErrorUtil(
-                'Ya existe un usuario con ese correo electrónico',
-                409,
-            );
-        SQL += `, email`;
-        MIDSQL += `, ?`;
-        args.push(email);
+        args.push(pas);
+    } catch (err) {
+        console.error(err);
     }
+    args.push(email);
 
     if (role) {
         SQL += `, role`;
         MIDSQL += `, ?`;
         args.push(role);
     }
-
     if (code) {
         SQL += `, code`;
         MIDSQL += `, ?`;
         args.push(code);
     }
-
     MIDSQL += `)`;
 
     [resultado] = await pool.query(SQL + MIDSQL, args);

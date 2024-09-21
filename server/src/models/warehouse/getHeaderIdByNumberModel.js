@@ -16,7 +16,7 @@ const getHeaderIdByNumberModel = async (type, series, number) => {
         'SELECT id FROM invoice_headers WHERE type = ? AND series = ? AND number = ?',
         [type, series, number],
     );
-
+    if (res.length < 1) return;
     return res[0]?.id;
 };
 export default getHeaderIdByNumberModel;

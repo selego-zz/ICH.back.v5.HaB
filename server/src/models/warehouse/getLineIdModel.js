@@ -17,6 +17,6 @@ const getLineIdModel = async (orderId, line) => {
         [orderId, line],
     );
 
-    return res[0].id;
+    return res[0]?.id;
 };
 export default getLineIdModel;

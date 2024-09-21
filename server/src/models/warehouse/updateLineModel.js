@@ -14,14 +14,22 @@ const updateLineModel = async (line) => {
 
     let sql = 'UPDATE invoice_lines SET modifiedAt = NOW()';
     let args = [];
+    console.log(sql);
+    console.log(args);
 
     for (const [key, value] of Object.entries(line)) {
         sql += ', ?? = ?';
         args.push(key);
         args.push(value);
+        console.log(sql);
+        console.log(args);
     }
     args.push(lineId);
+    console.log(sql + ' WHERE id = ?');
+    console.log(args);
     const [res] = await pool.query(sql + ' WHERE id = ?', args);
+    console.log('actualizada línea');
+    console.log(res);
 
     line.id = lineId;
     return res.affectedRows;

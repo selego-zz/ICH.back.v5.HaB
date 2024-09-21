@@ -9,7 +9,7 @@ const DROP_TABLES =
 const USER_TABLE_SQL = `
     CREATE TABLE IF NOT EXISTS users(
         id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-        username VARCHAR(30) UNIQUE,
+        username VARCHAR(50) UNIQUE,
         password VARCHAR(100) NOT NULL,
         email VARCHAR(100) UNIQUE NOT NULL
         code VARCHAR(10),
@@ -25,7 +25,7 @@ const INVOICE_HEADERS_TABLE_SQL = `
         series CHAR(3) NOT NULL,
         number CHAR(7) NOT NULL,
         CONSTRAINT UC_type_series_number UNIQUE (type, series, number),
-        client_number  VARCHAR(7),
+        client_number  VARCHAR(20),
         date DATE DEFAULT (CURRENT_DATE),
         delivery_date DATE DEFAULT (CURRENT_DATE),
         agent_id INT UNSIGNED   NOT NULL,

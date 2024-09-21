@@ -46,7 +46,7 @@ O cambiar los permisos de los usuarios
 | Campo      | Tipo         | Descripción                                  |
 | ---------- | ------------ | -------------------------------------------- |
 | id         | INT UNSIGNED | Identificador único del usuario              |
-| username   | VARCHAR(30)  | Nombre de usuario del usuario                |
+| username   | VARCHAR(50)  | Nombre de usuario del usuario                |
 | password   | VARCHAR(100) | Contraseña del usuario (hash)                |
 | email      | VARCHAR(100) | Mail para enviar el albarán                  |
 | code       | VARCHAR(10)  | Codigo identificativo del usuario            |
@@ -64,7 +64,7 @@ O cambiar los permisos de los usuarios
 |                      |                  | todas las líneas lo han hecho ya     |
 | series               | CHAR(3)          | Serie de Facturación                 |
 | number               | CHAR(7)          | Numero de pedido                     |
-| client_number        | VARCHAR(7)       | Numero que nos dá el cliente         |
+| client_number        | VARCHAR(20)      | Numero que nos dá el cliente         |
 | date                 | DATE             | Fecha de recepción del pedido        |
 | delivery_date        | DATE             | Para pedidos con retraso solicitado  |
 | client_id            | INT UNSIGNED     | Identificador único del cliente      |

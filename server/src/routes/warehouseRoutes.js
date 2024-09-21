@@ -8,7 +8,9 @@ import {
     getOrderController,
     addLinesController,
     addOrderController,
+    addOrUpdateAllOrdersController,
     addAllOrdersController,
+    updateDBController,
     updateLineController,
     updateLineCompletedController,
     updateOrderTypeController,
@@ -26,8 +28,17 @@ const router = express.Router();
 
 //creamos las rutas
 
+//POST [`/api/warehouse/updatedb`] - Copia la base de datos desde la raiz del pc, y actualiza la base de datos
+router.post(`/warehouse/updatedb`, authWorkerController, updateDBController);
+
 //POST [`/api/warehouse`] - Inserta un conjunto de pedidos completos
 router.post(`/warehouse/all`, authWorkerController, addAllOrdersController);
+//POST [`/api/warehouse`] - Inserta un conjunto de pedidos completos
+router.post(
+    `/warehouse/addorupdate`,
+    authWorkerController,
+    addOrUpdateAllOrdersController,
+);
 //POST [`/api/warehouse`] - Inserta un conjunto de pedidos completos
 router.post(`/warehouse`, authWorkerController, addOrderController);
 //POST [`/api/warehouse/:type/:series/:number`] - Añade un conjunto de líneas a un pedido

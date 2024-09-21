@@ -24,7 +24,10 @@ import {
 
     //empresa de transporte
     getShippingMailModel,
+    getUserByEmailModel,
+    insertUserModel,
 } from '../models/index.js';
+import getPool from '../db/getPool.js';
 
 /*******************************************************************\
 ************* FUNCTIONES DE UTILIDAD SOLO PARA ORDERS ***************
@@ -66,9 +69,26 @@ const getHeaderData = (order, forceShippingInfo) => {
 ********************** CABECERA - POST ******************************
 \*******************************************************************/
 
+const updateDBService = async (orders) => {
+    const pool = await getPool();
+
+    // pongo todas las fechas de los pedidos en la fecha 0 de la Época ECMAScript
+    // lo que siga con esa fecha tras la actualización ya no está en la base de datos, así que hay que borrarlo
+
+    await pool.query('UPDATE invoice_lines SET modifiedAt = "1970/01/01"');
+    await pool.query('UPDATE invoice_headers SET modifiedAt = "1970/01/01"');
+    await addOrUpdateAllOrdersService(orders);
+    await pool.query(
+        'DELETE FROM invoice_lines WHERE modifiedAt = "1970/01/01"',
+    );
+    await pool.query(
+        'DELETE FROM invoice_headers WHERE modifiedAt = "1970/01/01"',
+    );
+};
+
 /**
  * Servicio que recibe un array de pedidos, y lo graba en la base de datos
- * @param {Object[]} orders - Array de Json con toda la información de los pedidos a ingresar
+ * @param {Object[]} orders - Array de Json con toda la información de los pedidos a ingresar, incluye la información del cliente y la del agente
  * @description - Llama al servicio `addOrderService` por cada pedido del array suministrado para grabarlo en la base de datos.
  * @returns - Devuelve un Array de enteros con los id de cada cabecera introducida
  */
@@ -81,17 +101,133 @@ const addAllOrdersService = async (orders) => {
 };
 
 /**
+ * Servicio que recibe un array de pedidos, y lo graba en la base de datos o actualiza los pedidos que ya estuvieran.
+ * @param {Object[]} orders - Array de Json con toda la información de los pedidos a ingresar, incluye la información del cliente y la del agente
+ * @description - Llama al servicio `addOrderService` por cada pedido del array suministrado para grabarlo en la base de datos.
+ * @returns - Devuelve un Array de enteros con los id de cada cabecera introducida
+ */
+const addOrUpdateAllOrdersService = async (orders) => {
+    let res = [];
+    for (const order of orders) {
+        res.push(await addOrUpdateOrderService(order));
+    }
+    return res;
+};
+
+/**
  * Servicio que recibe un Json con la información de un pedidos, y lo graba en la base de datos
- * @param {Object} order - Json con toda la información del pedidos a ingresar
+ * @param {Object} order - Json con toda la información de los pedidos a ingresar, incluye la información del cliente y la del agente
  * @description - Toma la información de la cabecera con el servvicio `getHeaderData`. La graba con el modelo 'addHeaderModel', y luego usa el servicio 'addLineModel' para grabar todas las líneas del pedido
  * @returns - Devuelve el id de la cabecera introducida
  */
 const addOrderService = async (order) => {
+    await insertOrdersClientAndAgent(order);
     const orderId = await addHeaderModel(getHeaderData(order));
     for (const line of order.lines) {
         await addLineModel(orderId, line);
     }
     return orderId;
+};
+
+/**
+ * Servicio que recibe un Json con la información de un pedidos, y lo graba en la base de datos o la actualiza si ya estuviera
+ * @param {Object} order - Json con toda la información de los pedidos a ingresar, incluye la información del cliente y la del agente
+ * @description - Toma la información de la cabecera con el servvicio `getHeaderData`. La graba con el modelo 'addHeaderModel', y luego usa el servicio 'addLineModel' para grabar todas las líneas del pedido
+ * @returns - Devuelve el id de la cabecera introducida
+ */
+const addOrUpdateOrderService = async (order) => {
+    await insertOrdersClientAndAgent(order);
+
+    let orderId = await getHeaderIdByNumberModel(
+        order.type,
+        order.series,
+        order.number,
+    );
+    const header = getHeaderData(order);
+    if (!orderId) orderId = await addHeaderModel(header);
+    else {
+        header.id = orderId;
+        await updateHeaderModel(header);
+    }
+
+    console.log(`Cabecera: ${order.number} id: ${orderId}`);
+    for (const line of order.lines) {
+        const lineId = await getLineIdModel(orderId, line.line);
+        console.log(
+            `orderId: ${orderId} LineId: ${lineId}- Linea: ${line.line} ${line.reference} ${line.name} ${line.description} ${line.format} `,
+        );
+        if (!lineId) {
+            console.log('before addLineModel');
+            await addLineModel(orderId, line);
+            console.log('after addLineModel');
+        } else {
+            console.log('before updateLineModel');
+            line.id = lineId;
+
+            await updateLineModel(line);
+            console.log('after updateLineModel');
+        }
+        console.log(
+            `Finalizada orderId: ${orderId} LineId: ${lineId}- Linea: ${line.line} `,
+        );
+    }
+    return orderId;
+};
+
+/**
+ * Servicio que recibe un Json con la información de un pedidos,
+ * y si no tiene client_id o agent_id, pero tiene los datos de dicho usuario, los inserta en la base de datos, y actualiza los campos en el pedido
+ * @param {Object} order - Json con toda la información del pedidos a ingresar, incluye la información del cliente y la del agente
+ */
+const insertOrdersClientAndAgent = async (order) => {
+    if (!order.client_id) {
+        const username = order.client_username;
+        const password = order.client_password;
+        let email = order.client_email;
+        const code = order.client_code;
+        const role = 'cliente';
+        if (!email) email = username;
+        const user = await getUserByEmailModel(email);
+
+        if (!user)
+            order.client_id = await insertUserModel(
+                username,
+                password,
+                email,
+                code,
+                role,
+            );
+        else order.client_id = user.id;
+
+        delete order.client_username;
+        delete order.client_password;
+        delete order.client_email;
+        delete order.client_code;
+    }
+    if (!order.agent_id) {
+        const code = order.agent_code;
+        const username = order.agent_username;
+        const password = order.agent_password;
+        let email = order.agent_email;
+        const role = 'comercial';
+        if (!email) email = username;
+
+        const user = await getUserByEmailModel(email);
+        if (!user)
+            order.agent_id = await insertUserModel(
+                username,
+                password,
+                email,
+                code,
+                role,
+            );
+        else order.agent_id = user.id;
+
+        delete order.agent_username;
+        delete order.agent_password;
+        delete order.agent_email;
+        delete order.agent_code;
+    }
 };
 /*******************************************************************\
 ********************** CABECERA - POST ******************************
@@ -169,6 +305,9 @@ const getOrderByNumberService = async (type, serie, number, role, id) => {
     if (role === 'agente' && order.agent_id !== id)
         generateErrorUtil('Permisos insuficientes', 400);
 
+    if (role !== 'administrador' && role !== 'empleado')
+        generateErrorUtil('rol incorrecto', 400);
+
     order.lines = await getHeadersLinesModel(orderId);
 
     return order;
@@ -228,7 +367,6 @@ const updateHeadersTypeService = async (
         role,
         userId,
     );
-    console.log(id);
 
     if (id === undefined) generateErrorUtil('Pedido no encontrado', 404);
     const header = {
@@ -580,8 +718,11 @@ const sendTransportOrderService = async () => {
 
 export {
     //cabecera post
-    addOrderService,
     addAllOrdersService,
+    addOrUpdateAllOrdersService,
+    addOrderService,
+    addOrUpdateOrderService,
+    updateDBService,
     //cabecera get
     getOrderService,
     getOrderByNumberService,

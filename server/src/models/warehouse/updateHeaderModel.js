@@ -7,7 +7,6 @@ import getPool from '../../db/getPool.js';
  */
 const updateHeaderModel = async (header) => {
     const pool = await getPool();
-    console.log(header);
     if (!header.id) return;
     const headerId = header.id;
     delete header.id;
@@ -15,14 +14,16 @@ const updateHeaderModel = async (header) => {
     let sql = 'UPDATE invoice_headers SET modifiedAt = NOW()';
     let args = [];
 
-    for (const [key, value] of Object.entries(header)) {
+    for (let [key, value] of Object.entries(header)) {
         sql += ', ?? = ?';
         args.push(key);
+        if (key === 'date' || key === 'delivery_date')
+            value = value.slice(0, 10);
+        if (key === 'cif') value = value.replace(/[.,-]/g, '');
+
         args.push(value);
     }
     args.push(headerId);
-    console.log(sql + ' WHERE id = ?');
-    console.log(args);
 
     const [res] = await pool.query(sql + ' WHERE id = ?', args);
 

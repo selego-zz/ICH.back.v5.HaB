@@ -31,17 +31,6 @@ import { removePhotoUtil } from '../../utils/index.js';
  */
 const updateUserController = async (req, res, next) => {
     try {
-        /*         console.log('headers');
-        console.log(req.headers['content-type']);
-
-        console.log('files');
-        console.log(req.files);
-
-        console.log('body');
-        console.log(req.body);
-
-        console.log(req.body.avatar);
- */
         const user = req.user;
         const iduser = req.params.iduser;
 
