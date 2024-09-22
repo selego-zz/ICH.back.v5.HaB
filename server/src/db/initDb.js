@@ -15,6 +15,7 @@ const USER_TABLE_SQL = `
         code VARCHAR(10),
         role ENUM ('administrador', 'empleado', 'cliente', 'comercial') DEFAULT 'cliente',
         avatar VARCHAR(100),
+        recoverPassCode CHAR(30),
         createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
         modifiedAt DATETIME DEFAULT CURRENT_TIMESTAMP
     )`;

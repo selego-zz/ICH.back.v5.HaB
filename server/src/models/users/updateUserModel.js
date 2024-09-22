@@ -12,15 +12,29 @@ import bcrypt from 'bcrypt';
  * @param {string} [avatar] - Nombre del archivo con el avatar del usuario en la carpeta uploads. (Opcional).
  * @description - Actualiza en la base de datos la información del usuario con los datos especificados
  */
-const updateUserModel = async (
-    id,
-    username,
-    password,
-    email,
-    code,
-    role,
-    avatar,
-) => {
+
+const updateUserModel = async (user) => {
+    const pool = await getPool();
+    if (!user.id) return;
+    const userId = user.id;
+    delete user.id;
+
+    let sql = 'UPDATE users SET modifiedAt = NOW()';
+    let args = [];
+
+    for (let [key, value] of Object.entries(user)) {
+        sql += ', ?? = ?';
+        args.push(key);
+        if (key === 'password') value = await bcrypt.hash(value, 10);
+        args.push(value);
+    }
+    sql += ' where id = ?';
+    args.push(userId);
+    await pool.query(sql, args);
+    user.id = userId;
+};
+/* const updateUserModel = async (user) => {
+    const { id, username, password, email, code, role, avatar } = user;
     const pool = await getPool();
 
     let sql = 'UPDATE users SET modifiedAt = NOW()';
@@ -29,6 +43,7 @@ const updateUserModel = async (
         sql += ', username = ?';
         args.push(username);
     }
+
     if (password) {
         if (args.length > 0) sql;
         sql += ', password = ?';
@@ -57,6 +72,6 @@ const updateUserModel = async (
 
     args.push(id);
     await pool.query(sql + ' where id = ?', args);
-};
+}; */
 
 export default updateUserModel;

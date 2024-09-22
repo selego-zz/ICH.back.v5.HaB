@@ -43,17 +43,18 @@ O cambiar los permisos de los usuarios
 
 ### users
 
-| Campo      | Tipo         | Descripción                                  |
-| ---------- | ------------ | -------------------------------------------- |
-| id         | INT UNSIGNED | Identificador único del usuario              |
-| username   | VARCHAR(50)  | Nombre de usuario del usuario                |
-| password   | VARCHAR(100) | Contraseña del usuario (hash)                |
-| email      | VARCHAR(100) | Mail para enviar el albarán                  |
-| code       | VARCHAR(10)  | Codigo identificativo del usuario            |
-| role       | ENUM         | Rol("admin", "empleado", comercial, cliente) |
-| avatar     | VARCHAR(100) | URL del avatar del usuario                   |
-| createdAt  | DATETIME     | Fecha y hora de creación del usuario         |
-| modifiedAt | DATETIME     | Fecha y hora de la última modificación       |
+| Campo           | Tipo         | Descripción                                  |
+| --------------- | ------------ | -------------------------------------------- |
+| id              | INT UNSIGNED | Identificador único del usuario              |
+| username        | VARCHAR(50)  | Nombre de usuario del usuario                |
+| password        | VARCHAR(100) | Contraseña del usuario (hash)                |
+| email           | VARCHAR(100) | Mail para enviar el albarán                  |
+| code            | VARCHAR(10)  | Codigo identificativo del usuario            |
+| role            | ENUM         | Rol("admin", "empleado", comercial, cliente) |
+| avatar          | VARCHAR(100) | URL del avatar del usuario                   |
+| recoverPassCode | CHAR(30)     | Código de recuperación de contraseña         |
+| createdAt       | DATETIME     | Fecha y hora de creación del usuario         |
+| modifiedAt      | DATETIME     | Fecha y hora de la última modificación       |
 
 ### invoice_headers
 
@@ -122,7 +123,9 @@ O cambiar los permisos de los usuarios
 
 -   **POST** - [`/api/users/register`] - Crea un nuevo usuario, -requiere token de administrador. ✅
 -   **POST** - [`/api/users/login`] - Logea a un usuario retornando un token. ✅
--   **PUT** - [`/api/users/:iduser`] - Actualiza los datos de un usuario
+-   **PUT** - [`/api/users/:iduser`] - Actualiza los datos de un usuario ✅
+-   **PUT** - [`/users/password/recover`] - Permite enviar un email de recuperación de contraseña.
+-   **PUT** - [`/users/password/reset/:recoverPassCode`] - Permite crear una nueva contraseña a partir de un código.
 -   **GET** - [`/api/users`] - Retorna información privada del usuario con el id del token. ✅
 -   **GET** - [`/api/users/all`] - Retorna información de todos los usuarios -requiere token de administrador. ✅
 -   **DELETE** - [`/api/users`] - Borra el usuario con el id del token. ✅

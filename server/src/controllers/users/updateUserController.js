@@ -51,7 +51,7 @@ const updateUserController = async (req, res, next) => {
             avatar = await savePhotoUtil(avatarFile, 150);
         }
 
-        await updateUserModel(
+        await updateUserModel({
             iduser,
             username,
             password,
@@ -59,7 +59,7 @@ const updateUserController = async (req, res, next) => {
             code,
             role,
             avatar,
-        );
+        });
 
         const data = await getUserByIdModel(iduser);
 

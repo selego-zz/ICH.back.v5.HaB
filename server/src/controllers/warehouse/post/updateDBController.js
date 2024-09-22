@@ -1,4 +1,8 @@
-import updateDBService from '../../../services/updateDBService.js';
+import {
+    prepareAndUpdateDBService,
+    uploadDBService,
+    removeDBService,
+} from '../../../services/updateDBService.js';
 
 /**
  * Realiza una copia de la base de datos en el servidor, y actualiza los datos de la base de datos del servidor con la nueva
@@ -14,7 +18,9 @@ const updateDBController = async (req, res, next) => {
     try {
         const dbFile = req.files?.db;
 
-        await updateDBService(dbFile);
+        await uploadDBService(dbFile);
+        await prepareAndUpdateDBService();
+        await removeDBService();
 
         res.status(201).send({
             status: 'ok',
