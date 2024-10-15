@@ -1,7 +1,7 @@
 //importamos el contexto
 import { useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
-import OrdersHeaderForm from '../forms/OrdersHeaderForm';
+import OrdersPage from './warehouse/OrdersPage';
 
 const HomePage = () => {
     const { authUser } = useContext(AuthContext);
@@ -10,7 +10,7 @@ const HomePage = () => {
     return (
         <main>
             <h2>Pedidos Pendientes</h2>
-            <OrdersHeaderForm />
+            <OrdersPage />
         </main>
     );
 };

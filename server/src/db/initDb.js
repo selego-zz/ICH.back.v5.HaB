@@ -11,7 +11,7 @@ const USER_TABLE_SQL = `
         id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
         username VARCHAR(50) UNIQUE,
         password VARCHAR(100) NOT NULL,
-        email VARCHAR(100) UNIQUE NOT NULL
+        email VARCHAR(100) UNIQUE NOT NULL,
         code VARCHAR(10),
         role ENUM ('administrador', 'empleado', 'cliente', 'comercial') DEFAULT 'cliente',
         avatar VARCHAR(100),

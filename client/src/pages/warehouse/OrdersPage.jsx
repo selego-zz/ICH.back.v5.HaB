@@ -2,24 +2,28 @@
 import moment from 'moment';
 
 //importamos hooks
-import { useEffect, useState } from 'react';
-import useOrders from '../hooks/useOrders';
+import { useContext, useEffect, useState } from 'react';
+import useOrders from '../../hooks/useOrders';
 
 //importamos forms
-import { getProvinceByPostalcode } from '../utils';
+import { getProvinceByPostalcode } from '../../utils';
 
 //importamos funciones útiles
-import OrderLinesForm from '../forms/OrderLinesForm';
+import OrderLinesForm from '../../forms/OrderLinesForm';
+import { AuthContext } from '../../contexts/AuthContext';
 
-const OrdersHeaderForm = () => {
+const OrdersPage = () => {
+    const [mostrarPedido, setMostrarPedido] = useState([]);
     const [verMasDatos, setVerMasDatos] = useState([]);
     const { orders, ordersLoading, updateOrderCompleted, updateLineCompleted } =
         useOrders();
+    const { authUser } = useContext(AuthContext);
 
     useEffect(() => {
         if (orders) {
             const aux = Array(orders.length).fill(false);
             setVerMasDatos(aux);
+            setMostrarPedido(aux);
         }
     }, [orders]);
 
@@ -28,11 +32,13 @@ const OrdersHeaderForm = () => {
         aux[index] = !aux[index];
         setVerMasDatos(aux);
     };
+    const toggleOcultarPedido = (index) => {
+        const aux = [...mostrarPedido];
+        aux[index] = !aux[index];
+        setMostrarPedido(aux);
+    };
 
     const toggleType = (orderId) => {
-        console.log(orderId);
-        console.log(orders.find((order) => order.id == orderId));
-
         const oldType = orders.find((order) => order.id === orderId).type;
 
         updateOrderCompleted(
@@ -44,6 +50,12 @@ const OrdersHeaderForm = () => {
 
     if (ordersLoading) return <h2>Orders Loading...</h2>;
     if (!orders) return <h2>Orders Loading...</h2>;
+    if (orders.length < 1)
+        return (
+            <h2>
+                No se han encontrado pedidos pendientes de {authUser.username}
+            </h2>
+        );
 
     return (
         <ul className="pedidos_pendientes">
@@ -77,6 +89,15 @@ const OrdersHeaderForm = () => {
                                     </button>
                                     <button
                                         onClick={() => {
+                                            toggleOcultarPedido(index);
+                                        }}
+                                    >
+                                        {mostrarPedido[index]
+                                            ? 'Mostrar Pedido'
+                                            : 'Ocultar Pedido'}
+                                    </button>
+                                    <button
+                                        onClick={() => {
                                             toggleType(order.id);
                                         }}
                                     >
@@ -99,10 +120,12 @@ const OrdersHeaderForm = () => {
                                     </section>
                                 )}
                             </header>
-                            <OrderLinesForm
-                                order={order}
-                                updateLineCompleted={updateLineCompleted}
-                            />
+                            {!mostrarPedido[index] && (
+                                <OrderLinesForm
+                                    order={order}
+                                    updateLineCompleted={updateLineCompleted}
+                                />
+                            )}
                         </article>
                     </li>
                 );
@@ -111,4 +134,4 @@ const OrdersHeaderForm = () => {
     );
 };
 
-export default OrdersHeaderForm;
+export default OrdersPage;

@@ -244,6 +244,7 @@ const AuthProvider = ({ children }) => {
         setAuthToken(null);
         //eliminamos el token en el local storage
         localStorage.removeItem(VITE_AUTH_TOKEN);
+        setAuthUserLoading(false);
     };
 
     // devolvemos el proveedor de autenticación, que tenemos que poner en main, todo lo que envuelva tendrá acceso a este contexto

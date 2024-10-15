@@ -36,7 +36,7 @@ router.put(`/users/:iduser`, authUserController, updateUserController);
 router.put(`/users/password/recover`, passwordSendRecoveryCodeController);
 
 //-   **PUT** - [`/users/password/reset/:recoverPassCode`] - Permite crear una nueva contraseña a partir de un código.
-router.put(`/users/password/reset/:recoverPassCode`, passwordResetController);
+router.put(`/users/password/recover/:recoverPassCode`, passwordResetController);
 
 //GET-[`/api/users`] - Retorna información privada del usuario con el id del token.
 router.get(`/users`, authUserController, getUserController);
