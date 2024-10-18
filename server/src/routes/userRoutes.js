@@ -5,6 +5,8 @@ import express from 'express';
 import {
     addUserController,
     loginController,
+    passwordSendRecoveryCodeController,
+    passwordResetController,
     updateUserController,
     getUserController,
     getAllUsersController,
@@ -29,6 +31,12 @@ router.post(`/users/login`, loginController);
 
 //PUT-[`/api/users`] -  Actualiza los datos de un usuario.
 router.put(`/users/:iduser`, authUserController, updateUserController);
+
+// -   **PUT** - [`/users/password/recover`] - Permite enviar un email de recuperación de contraseña.
+router.put(`/users/password/recover`, passwordSendRecoveryCodeController);
+
+//-   **PUT** - [`/users/password/reset/:recoverPassCode`] - Permite crear una nueva contraseña a partir de un código.
+router.put(`/users/password/recover/:recoverPassCode`, passwordResetController);
 
 //GET-[`/api/users`] - Retorna información privada del usuario con el id del token.
 router.get(`/users`, authUserController, getUserController);

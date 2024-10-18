@@ -8,13 +8,15 @@ import {
     addLinesController,
     addOrderController,
     addAllOrdersController,
+    addOrUpdateAllOrdersController,
+    updateDBController,
 } from './post/index.js';
 import {
     updateLineController,
     updateOrderController,
     updateServedUnitsController,
     updateOrderTypeController,
-    updateLineTypeController,
+    updateLineCompletedController,
 } from './put/index.js';
 import { sendTransportOrderController } from './readyAndSent/index.js';
 
@@ -27,10 +29,12 @@ export {
     addLinesController,
     addOrderController,
     addAllOrdersController,
+    addOrUpdateAllOrdersController,
+    updateDBController,
     updateLineController,
     updateOrderController,
     updateOrderTypeController,
-    updateLineTypeController,
+    updateLineCompletedController,
     updateServedUnitsController,
     sendTransportOrderController,
 };

@@ -24,6 +24,10 @@ import {
     getAllHeadersByClientModel,
     getLineIdByNumberModel,
     getLineIdModel,
+    getOrdersAgentByNumberModel,
+    getOrdersAgentModel,
+    getOrdersClientByNumberModel,
+    getOrdersClientModel,
     updateHeaderModel,
     updateLineModel,
 } from './warehouse/index.js';
@@ -65,6 +69,10 @@ export {
     getHeadersLinesModel,
     getLineIdByNumberModel,
     getLineIdModel,
+    getOrdersAgentByNumberModel,
+    getOrdersAgentModel,
+    getOrdersClientByNumberModel,
+    getOrdersClientModel,
     updateHeaderModel,
     updateLineModel,
     //shipping

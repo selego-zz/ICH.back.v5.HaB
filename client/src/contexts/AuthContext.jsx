@@ -118,9 +118,10 @@ const AuthProvider = ({ children }) => {
         };
         //hasta aqui no se ha ejecutado nada, solo hemos definido la función fetch.
         //si existe token, hacemos fetch, sino, vaciamos usuario, y dejamos de cargar
-        if (authToken) fetchUser();
-        else {
-            authLogout();
+        if (authToken) {
+            fetchUser();
+        } else {
+            setAuthUser(null);
         }
     }, [authToken]);
 
@@ -134,24 +135,6 @@ const AuthProvider = ({ children }) => {
             setAuthUserLoading(true);
             console.log(avatar);
             // Creamos un objeto FormData.
-            const formData = new FormData();
-
-            // Adjuntamos el avatar como propiedad del objeto anterior.
-            formData.append('avatar', avatar);
-
-            // Obtenemos una respuesta del servidor.
-            const res = await fetch(
-                `${VITE_API_URL}/api/users/${authUser.id}`,
-                {
-                    method: 'put',
-                    headers: {
-                        Authorization: authToken,
-                    },
-                    body: formData,
-                }
-            );
-
-            /*             // Creamos un objeto FormData.
             const formData = new FormData();
 
             if (avatar) {
@@ -180,7 +163,7 @@ const AuthProvider = ({ children }) => {
                     body: sentBody,
                 }
             );
- */
+
             // obtenemos la respuesta
             const body = await res.json();
             console.log(body);
@@ -255,10 +238,13 @@ const AuthProvider = ({ children }) => {
      * @description - Elimina el token de autenticación en el State, y en el local Storage
      */
     const authLogout = () => {
+        console.log('authLogout');
+
         //eliminamos el token en el state
         setAuthToken(null);
         //eliminamos el token en el local storage
         localStorage.removeItem(VITE_AUTH_TOKEN);
+        setAuthUserLoading(false);
     };
 
     // devolvemos el proveedor de autenticación, que tenemos que poner en main, todo lo que envuelva tendrá acceso a este contexto

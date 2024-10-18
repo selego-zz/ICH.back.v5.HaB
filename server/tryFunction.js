@@ -1,16 +1,30 @@
 // importamos dotenv, por si acaso
 import 'dotenv/config';
-import updateShippingModel from './src/models/shipping/updateShippingModel.js';
 
-// importamos la función que queremos testear
-///import { sendTransportOrderService } from './src/services/index.js';
-//import sendMail from './src/utils/sendMailUtil.js';
+/* import {
+    prepareAndUpdateDBService,
+    setDefaultDBService,
+} from './src/services/updateDBService.js';
 
-//console.log(await sendTransportOrderService());
-//console.log(await sendMail('selego@gmail.com', 'hoola', 'hola'));
+console.clear();
+await setDefaultDBService();
+await prepareAndUpdateDBService();
+ */
+/* import bcrypt from 'bcrypt';
+import getPool from './src/db/getPool.js';
 
+const pool = await getPool();
+const pass = await bcrypt.hash('123456', 10);
+await pool.query(`update users set password = '${pass}' where id = 1`);
+ */
+
+import sendHtmlMail from './src/utils/sendHtmlMailUtil.js';
 console.log(
-    await updateShippingModel(1, 'TXT', '923923923', 'selego@gmail.com'),
+    await sendHtmlMail(
+        'selego@gmail.com',
+        'p1',
+        '<h1>hola</h1><p>caracola</p>',
+    ),
 );
 
 process.exit(0);

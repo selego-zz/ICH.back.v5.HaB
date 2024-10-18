@@ -13,6 +13,10 @@ import getHeaderIdByNumberModel from './getHeaderIdByNumberModel.js';
 import getHeaderModel from './getHeaderModel.js';
 import getLineIdByNumberModel from './getLineIdByNumberModel.js';
 import getLineIdModel from './getLineIdModel.js';
+import getOrdersAgentByNumberModel from './getOrdersAgentByNumberModel.js';
+import getOrdersAgentModel from './getOrdersAgentModel.js';
+import getOrdersClientByNumberModel from './getOrdersClientByNumberModel.js';
+import getOrdersClientModel from './getOrdersClientModel.js';
 import updateHeaderModel from './updateHeaderModel.js';
 import updateLineModel from './updateLineModel.js';
 
@@ -32,6 +36,10 @@ export {
     getHeadersLinesModel,
     getLineIdByNumberModel,
     getLineIdModel,
+    getOrdersAgentByNumberModel,
+    getOrdersAgentModel,
+    getOrdersClientByNumberModel,
+    getOrdersClientModel,
     updateHeaderModel,
     updateLineModel,
 };

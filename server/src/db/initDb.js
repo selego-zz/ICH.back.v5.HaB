@@ -9,12 +9,13 @@ const DROP_TABLES =
 const USER_TABLE_SQL = `
     CREATE TABLE IF NOT EXISTS users(
         id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-        username VARCHAR(30) UNIQUE,
+        username VARCHAR(50) UNIQUE,
         password VARCHAR(100) NOT NULL,
-        email VARCHAR(100) UNIQUE NOT NULL
+        email VARCHAR(100) UNIQUE NOT NULL,
         code VARCHAR(10),
         role ENUM ('administrador', 'empleado', 'cliente', 'comercial') DEFAULT 'cliente',
         avatar VARCHAR(100),
+        recoverPassCode CHAR(30),
         createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
         modifiedAt DATETIME DEFAULT CURRENT_TIMESTAMP
     )`;
@@ -25,7 +26,7 @@ const INVOICE_HEADERS_TABLE_SQL = `
         series CHAR(3) NOT NULL,
         number CHAR(7) NOT NULL,
         CONSTRAINT UC_type_series_number UNIQUE (type, series, number),
-        client_number  VARCHAR(7),
+        client_number  VARCHAR(20),
         date DATE DEFAULT (CURRENT_DATE),
         delivery_date DATE DEFAULT (CURRENT_DATE),
         agent_id INT UNSIGNED   NOT NULL,
@@ -59,7 +60,7 @@ const INVOICE_LINES_TABLE_SQL = `
         FOREIGN KEY (header_id) REFERENCES invoice_headers(id),
         line TINYINT UNSIGNED NOT NULL,
         CONSTRAINT UC_header_id_line UNIQUE (header_id, line),
-        type ENUM ('p', 'a', 'f') DEFAULT 'p',
+        completed BOOLEAN DEFAULT FALSE,
         reference VARCHAR(15) NOT NULL,
         name VARCHAR(30) NOT NULL,
         description VARCHAR(30) NOT NULL,

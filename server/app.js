@@ -54,7 +54,7 @@ app.use((err, req, res, next) => {
 //middleware de ruta no encontrada
 // eslint-disable-next-line no-unused-vars
 app.use((req, res, next) => {
-    console.log('ruta no encontrada');
+    console.error('ruta no encontrada');
 
     res.status(404).send({
         status: 'error',

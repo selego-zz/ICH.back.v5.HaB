@@ -8,9 +8,11 @@ import {
     getOrderController,
     addLinesController,
     addOrderController,
+    addOrUpdateAllOrdersController,
     addAllOrdersController,
+    updateDBController,
     updateLineController,
-    updateLineTypeController,
+    updateLineCompletedController,
     updateOrderTypeController,
     updateOrderController,
     updateServedUnitsController,
@@ -26,8 +28,17 @@ const router = express.Router();
 
 //creamos las rutas
 
+//POST [`/api/warehouse/updatedb`] - Copia la base de datos desde la raiz del pc, y actualiza la base de datos
+router.post(`/warehouse/updatedb`, authWorkerController, updateDBController);
+
 //POST [`/api/warehouse`] - Inserta un conjunto de pedidos completos
 router.post(`/warehouse/all`, authWorkerController, addAllOrdersController);
+//POST [`/api/warehouse`] - Inserta un conjunto de pedidos completos
+router.post(
+    `/warehouse/addorupdate`,
+    authWorkerController,
+    addOrUpdateAllOrdersController,
+);
 //POST [`/api/warehouse`] - Inserta un conjunto de pedidos completos
 router.post(`/warehouse`, authWorkerController, addOrderController);
 //POST [`/api/warehouse/:type/:series/:number`] - Añade un conjunto de líneas a un pedido
@@ -38,6 +49,7 @@ router.post(
 );
 
 //GET [`/api/warehouse`] - Retorna el listado completo de pedidos, si se especifica un tipo, solo los de ese tipo
+router.get(`/warehouse/`, authUserController, getAllOrdersController);
 router.get(`/warehouse/:type`, authUserController, getAllOrdersController);
 //GET [`/api/warehouse/:type/:series/:number`] - Retorna un pedido
 router.get(
@@ -59,15 +71,15 @@ router.put(
 
 //-   **PUT** - [`/api/warehouse/changeType/:type/:series/:number`] - Cambia el tipo de un pedido. P, A, F
 router.put(
-    `/api/warehouse/changeType/:type/:series/:number`,
+    `/warehouse/changeType/:type/:series/:number`,
     authWorkerController,
     updateOrderTypeController,
 );
-//-   **PUT** - [`/api/warehouse/changeType/:type/:series/:number/:line`] - Cambia el tipo de una línea. P, A, F
+//-   **PUT** - [`/api/warehouse/changeCompleted/:type/:series/:number/:line`] - Cambia el estado 'completa' de una línea
 router.put(
-    `/api/warehouse/changeType/:type/:series/:number/:line`,
+    `/warehouse/changeCompleted/:type/:series/:number/:line`,
     authWorkerController,
-    updateLineTypeController,
+    updateLineCompletedController,
 );
 
 //PUT [`/api/warehouse/shippingemail`] - envía un correo electrónico a la empresa de transporte

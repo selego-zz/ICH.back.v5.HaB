@@ -18,9 +18,12 @@ const addHeaderModel = async (header) => {
     const SQLEnd = ')';
     const args = [];
 
-    for (const [key, value] of Object.entries(header)) {
+    for (let [key, value] of Object.entries(header)) {
         SQLInit += key + ', ';
         SQLMiddle += '?, ';
+        if (key === 'date' || key === 'delivery_date')
+            value = value.slice(0, 10);
+        if (key === 'cif') value = value.replace(/[.,-]/g, '');
         args.push(value);
     }
     SQLInit = SQLInit.slice(0, -2);

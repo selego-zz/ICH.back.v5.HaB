@@ -45,3 +45,33 @@ div#root > main {
     flex-grow: 1;
     padding: 1rem;
 }
+
+/*********************************************\
+************** Pedidos Pendientes *************
+\*********************************************/
+
+.pedidos_pendientes {
+    list-style: none;
+    border-bottom: 2px solid;
+    border-right: 10px solid;
+}
+.orderData > ul {
+    list-style: none;
+    margin-left: 1rem;
+    border-bottom: 1px solid lightcoral;
+}
+
+.albaranGenerado {
+    background-color: dimgray;
+}
+
+.completo {
+    text-decoration: line-through;
+}
+.orderLine {
+    list-style: none;
+    display: grid;
+    grid-template-columns: auto 1fr 1fr 1fr 1fr 1fr;
+    gap: 1.5rem;
+    align-items: center;
+}

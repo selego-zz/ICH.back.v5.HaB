@@ -9,14 +9,21 @@ import { getPool } from '../../db/index.js';
  */
 const getUserByEmailModel = async (email) => {
     try {
+        if (!email) {
+            return;
+        }
         // establecemos conexion a la base de datos
         const pool = await getPool();
+
         const [user] = await pool.query('SELECT * FROM users WHERE email = ?', [
             email,
         ]);
 
+        if (user.length < 1) return; //así nos aseguramos que si no hay user, devuelve undefined
         return user[0];
     } catch (err) {
+        console.error(err);
+
         err.httpStatus = 404;
         throw err;
     }

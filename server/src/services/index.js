@@ -1,7 +1,10 @@
 import {
     //cabecera post
     addOrderService,
+    addOrUpdateOrderService,
     addAllOrdersService,
+    addOrUpdateAllOrdersService,
+    updateDBService,
     //cabecera get
     getOrderService,
     getOrderByNumberService,
@@ -20,7 +23,7 @@ import {
     // lines put
     updateLinesService,
     updateOrInsertLinesService,
-    updateLinesTypeService,
+    updateLineCompletedService,
     // lines get
     getLineIdByNumberService,
 
@@ -34,8 +37,11 @@ import {
 
 export {
     //cabecera post
+    updateDBService,
     addOrderService,
+    addOrUpdateOrderService,
     addAllOrdersService,
+    addOrUpdateAllOrdersService,
     //cabecera get
     getOrderService,
     getOrderByNumberService,
@@ -54,7 +60,7 @@ export {
     // lines put
     updateLinesService,
     updateOrInsertLinesService,
-    updateLinesTypeService,
+    updateLineCompletedService,
     // lines get
     getLineIdByNumberService,
 

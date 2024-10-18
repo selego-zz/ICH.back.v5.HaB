@@ -31,17 +31,6 @@ import { removePhotoUtil } from '../../utils/index.js';
  */
 const updateUserController = async (req, res, next) => {
     try {
-        /*         console.log('headers');
-        console.log(req.headers['content-type']);
-
-        console.log('files');
-        console.log(req.files);
-
-        console.log('body');
-        console.log(req.body);
-
-        console.log(req.body.avatar);
-        */
         const user = req.user;
         const iduser = req.params.iduser;
 
@@ -62,7 +51,7 @@ const updateUserController = async (req, res, next) => {
             avatar = await savePhotoUtil(avatarFile, 150);
         }
 
-        await updateUserModel(
+        await updateUserModel({
             iduser,
             username,
             password,
@@ -70,7 +59,7 @@ const updateUserController = async (req, res, next) => {
             code,
             role,
             avatar,
-        );
+        });
 
         const data = await getUserByIdModel(iduser);
 

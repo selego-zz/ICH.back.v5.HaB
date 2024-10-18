@@ -3,7 +3,7 @@ import Joi from '@hapi/joi';
 /*
  *     CREATE TABLE IF NOT EXISTS invoice_lines(
  *         line TINYINT UNSIGNED NOT NULL,
- *         type ENUM ('p', 'a', 'f') DEFAULT 'p',
+ *         completed BOOLEAN,
  *         reference VARCHAR(15) NOT NULL,
  *         name VARCHAR(30) NOT NULL,
  *         description VARCHAR(30) NOT NULL,
@@ -22,7 +22,7 @@ import Joi from '@hapi/joi';
  */
 
 const invoiceLineUpdateSchema = Joi.object().keys({
-    type: Joi.string().valid('p', 'a', 'f').required(),
+    completed: Joi.boolean().required(),
     series: Joi.string().max(3).required(),
     number: Joi.string().max(7).required(),
     line: Joi.number().positive().required(),

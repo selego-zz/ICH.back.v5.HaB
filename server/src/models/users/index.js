@@ -5,6 +5,7 @@ import deleteUserModel from './deleteUserModel.js';
 import updateUserModel from './updateUserModel.js';
 import getUserByIdModel from './getUserByIdModel.js';
 import getUserByEmailModel from './getUserByEmailModel.js';
+import passwordResetModel from './passwordResetModel.js';
 
 export {
     insertUserModel,
@@ -14,4 +15,5 @@ export {
     updateUserModel,
     getUserByIdModel,
     getUserByEmailModel,
+    passwordResetModel,
 };

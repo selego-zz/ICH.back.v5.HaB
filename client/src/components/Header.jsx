@@ -16,7 +16,7 @@ const Header = () => {
     return (
         <header>
             <h1>
-                <NavLink to="/">Pedidos pendientes</NavLink>
+                <NavLink to="/">ICH española</NavLink>
             </h1>
             {authUser && (
                 <article>
@@ -83,9 +83,16 @@ const Header = () => {
                             </li>
                         </>
                     ) : (
-                        <li>
-                            <NavLink to="/login">Login</NavLink>
-                        </li>
+                        <>
+                            <li>
+                                <NavLink to="/login">Login</NavLink>
+                            </li>
+                            <li>
+                                <NavLink to="/recoverPass">
+                                    Recuperar Contraseña
+                                </NavLink>
+                            </li>
+                        </>
                     )}
                 </ul>
             </nav>
